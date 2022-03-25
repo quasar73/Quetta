@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { GoogleLoginProvider, SocialAuthService, VKLoginProvider } from 'angularx-social-login';
 
 @Component({
     selector: 'qtt-sign-in',
@@ -6,5 +7,16 @@ import { Component } from '@angular/core';
     styleUrls: ['./sign-in.component.scss'],
 })
 export class SignInComponent {
-    constructor() {}
+    providers = {
+        google: GoogleLoginProvider.PROVIDER_ID,
+        vk: VKLoginProvider.PROVIDER_ID,
+    };
+
+    constructor(private authService: SocialAuthService) {}
+
+    signInWithService(service: 'google' | 'vk'): void {
+        this.authService.signIn(this.providers[`${service}`]).then(result => {
+            console.log(result);
+        });
+    }
 }

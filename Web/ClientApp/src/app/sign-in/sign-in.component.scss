@@ -1,0 +1,28 @@
+.wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .title {
+            text-align: center;
+
+            .special-text {
+                color: var(--tui-primary-hover);
+            }
+        }
+
+        .buttons {
+            width: 200px;
+
+            button {
+                width: 100%;
+            }
+        }
+    }
+}

@@ -27,5 +27,18 @@ namespace Web.Controllers
 
             return Ok(token);
         }
+
+        [HttpPost("RegisterGoogleUser")]
+        public async Task<IActionResult> RegisterGoogleUser(RegisterGoogleUserDto registerGoogleUser)
+        {
+            var token = await authService.RegisterGoogleUserAsync(registerGoogleUser);
+
+            if (token == null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(token);
+        }
     }
 }

@@ -5,5 +5,6 @@ namespace Logic.Interfaces
     public interface IAuthService
     {
         public Task<string?> AuthenticateGoogleUserAsync(GoogleUserDto googleUser);
+        public Task<string?> RegisterGoogleUserAsync(RegisterGoogleUserDto googleUser);
     }
 }

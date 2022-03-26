@@ -31,23 +31,51 @@ namespace Logic.Services
                 Audience = new[] { clientId }
             });
 
-            var user = await GetExternalLoginUser(GoogleUserDto.PROVIDER, payload.Subject);
+            var user = await GetExternalLoginUserAsync(GoogleUserDto.PROVIDER, payload.Subject);
 
             if (user == null)
             {
                 return null;
             }
 
-            return await GenerateJwtToken(user);
+            return await GenerateJwtTokenAsync(user);
         }
 
-        private async Task<User?> GetExternalLoginUser(string provider, string key)
+        public async Task<string?> RegisterGoogleUserAsync(RegisterGoogleUserDto registerGoogleUser)
+        {
+            var clientId = configuration["Authentication:Google:ClientId"];
+
+            Payload payload = await ValidateAsync(registerGoogleUser.IdToken, new ValidationSettings
+            {
+                Audience = new[] { clientId }
+            });
+
+            var user = new User
+            {
+                UserName = registerGoogleUser.Username,
+                FirstName = registerGoogleUser.FirstName,
+                LastName = registerGoogleUser.LastName
+            };
+            await userManager.CreateAsync(user);
+
+            var info = new UserLoginInfo(RegisterGoogleUserDto.PROVIDER, payload.Subject, RegisterGoogleUserDto.PROVIDER.ToUpperInvariant());
+            var result = await userManager.AddLoginAsync(user, info);
+
+            if (result.Succeeded)
+            {
+                return await GenerateJwtTokenAsync(user);
+            }
+
+            return null;
+        }
+
+        private async Task<User?> GetExternalLoginUserAsync(string provider, string key)
         {
             var user = await userManager.FindByLoginAsync(provider, key);
             return user;
         }
 
-        private async Task<string> GenerateJwtToken(User user)
+        private async Task<string> GenerateJwtTokenAsync(User user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(configuration["Authentication:Jwt:Secret"]);

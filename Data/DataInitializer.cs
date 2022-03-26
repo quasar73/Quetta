@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Data
@@ -9,6 +10,9 @@ namespace Data
         public async static Task Seed(IServiceScope scope)
         { 
             var context = scope.ServiceProvider.GetService<QuettaDbContext>();
+
+            context?.Database?.Migrate();
+
             await SeedRoles(context);
             context?.SaveChanges();
         }

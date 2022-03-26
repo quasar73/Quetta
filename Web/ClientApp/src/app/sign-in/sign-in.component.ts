@@ -15,7 +15,7 @@ export class SignInComponent {
     constructor(private authService: SocialAuthService) {}
 
     signInWithService(service: 'google' | 'vk'): void {
-        this.authService.signIn(this.providers[`${service}`]).then(result => {
+        this.authService.signIn(this.providers[service]).then(result => {
             console.log(result);
         });
     }

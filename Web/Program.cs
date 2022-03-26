@@ -1,4 +1,9 @@
+using Data;
+using Data.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +14,18 @@ var logger = new LoggerConfiguration()
     .CreateLogger();
 
 builder.Logging.AddSerilog(logger);
+
+var connectionString = builder.Configuration.GetConnectionString("PostgresConnection");
+
+builder.Services.AddDbContext<QuettaDbContext>(options =>
+{
+    options.UseNpgsql(connectionString, b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName));
+});
+
+builder.Services.AddIdentity<User, IdentityRole>()
+    .AddEntityFrameworkStores<QuettaDbContext>()
+    .AddDefaultTokenProviders();
+
 
 builder.Services.AddControllers();
 
@@ -28,5 +45,10 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    await DataInitializer.Seed(scope);
+}
 
 app.Run();

@@ -13,9 +13,10 @@ import {
     SocialLoginModule,
     VKLoginProvider,
 } from 'angularx-social-login';
+import { SignOnComponent } from './sign-on/sign-on.component';
 
 @NgModule({
-    declarations: [SignInComponent],
+    declarations: [SignInComponent, SignOnComponent],
     providers: [
         { provide: TRANSLOCO_SCOPE, useValue: 'sign-in' },
         {

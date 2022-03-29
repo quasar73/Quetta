@@ -16,6 +16,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslocoRootModule } from './translate/transloco-root.module';
+import { TuiInputModule } from '@taiga-ui/kit';
 
 @NgModule({
     declarations: [AppComponent],
@@ -28,6 +29,7 @@ import { TranslocoRootModule } from './translate/transloco-root.module';
         TuiNotificationsModule,
         TuiThemeNightModule,
         TuiModeModule,
+        TuiInputModule,
         HttpClientModule,
         TranslocoRootModule,
     ],

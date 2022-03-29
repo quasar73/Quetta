@@ -1,8 +1,8 @@
 import { environment } from './../../environments/environment';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TuiButtonModule } from '@taiga-ui/core';
-import { TuiAvatarModule } from '@taiga-ui/kit';
+import { TuiButtonModule, TuiTextfieldControllerModule } from '@taiga-ui/core';
+import { TuiAvatarModule, TuiInputModule, TuiStepperModule } from '@taiga-ui/kit';
 
 import { SignInRoutingModule } from './sign-in-routing.module';
 import { SignInComponent } from './sign-in.component';
@@ -14,9 +14,11 @@ import {
     VKLoginProvider,
 } from 'angularx-social-login';
 import { SignOnComponent } from './sign-on/sign-on.component';
+import { SignOnFormComponent } from './sign-on/sign-on-form/sign-on-form.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-    declarations: [SignInComponent, SignOnComponent],
+    declarations: [SignInComponent, SignOnComponent, SignOnFormComponent],
     providers: [
         { provide: TRANSLOCO_SCOPE, useValue: 'sign-in' },
         {
@@ -37,6 +39,17 @@ import { SignOnComponent } from './sign-on/sign-on.component';
             } as SocialAuthServiceConfig,
         },
     ],
-    imports: [CommonModule, SignInRoutingModule, SocialLoginModule, TranslocoModule, TuiButtonModule, TuiAvatarModule],
+    imports: [
+        CommonModule,
+        SignInRoutingModule,
+        SocialLoginModule,
+        TranslocoModule,
+        ReactiveFormsModule,
+        TuiButtonModule,
+        TuiAvatarModule,
+        TuiInputModule,
+        TuiStepperModule,
+        TuiTextfieldControllerModule,
+    ],
 })
 export class SignInModule {}

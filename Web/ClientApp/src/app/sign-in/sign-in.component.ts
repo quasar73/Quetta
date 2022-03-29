@@ -30,7 +30,11 @@ export class SignInComponent {
                 },
                 err => {
                     if (err.status === 401) {
-                        this.registerUserDataService.setUserData(result);
+                        this.registerUserDataService.setUserData({
+                            firstName: result.firstName,
+                            lastName: result.lastName,
+                            username: result.email.split('@')[0],
+                        });
                         this.router.navigate(['sign-on']);
                     }
                 }

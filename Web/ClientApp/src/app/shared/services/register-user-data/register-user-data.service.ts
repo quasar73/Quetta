@@ -1,20 +1,20 @@
+import { SignOnData } from './../../models/sign-on-data.model';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { GoogleUserData } from '../../models/google-user-data.mode';
 
 @Injectable({
     providedIn: 'root',
 })
 export class RegisterUserDataService {
-    private readonly userData = new BehaviorSubject<GoogleUserData | null>(null);
+    private readonly userData = new BehaviorSubject<SignOnData | null>(null);
 
     constructor() {}
 
-    getUserData(): Observable<GoogleUserData | null> {
+    getUserData(): Observable<SignOnData | null> {
         return this.userData.asObservable();
     }
 
-    setUserData(userData: GoogleUserData): void {
+    setUserData(userData: SignOnData): void {
         this.userData.next(userData);
     }
 }

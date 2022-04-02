@@ -15,7 +15,10 @@
         }
 
         form {
-            width: 260px;
+            .avatar-wrap {
+                display: flex;
+                justify-content: center;
+            }
         }
     }
 }

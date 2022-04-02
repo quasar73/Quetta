@@ -1,9 +1,13 @@
 .wrap {
-    .title {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+
+    .title, .subtitle {
         text-align: center;
     }
 
-    button {
-        width: 100%;
+    button, .content {
+        width: 260px
     }
 }

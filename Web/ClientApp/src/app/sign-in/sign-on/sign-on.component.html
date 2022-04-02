@@ -1,27 +1,39 @@
 <div class="wrap">
     <div class="content">
-        <tui-stepper [activeItemIndex]="1" class="stepper tui-space_bottom-5">
-            <button tuiStep state="pass">Username</button>
-            <button tuiStep>Name</button>
-            <button tuiStep>Avatar</button>
+        <tui-stepper [(activeItemIndex)]="activeIndex" class="stepper tui-space_bottom-5">
+            <button *ngFor="let step of getStepper; let i = index" tuiStep [state]="getState(i)">{{ step }}</button>
         </tui-stepper>
         <form [formGroup]="signOnForm">
-            <ng-container *transloco="let t">
-                <qtt-sign-on-form *ngIf="false" [title]="t('signIn.signOn.username.title')">
+            <ng-container *transloco="let t" [ngSwitch]="activeIndex">
+                <qtt-sign-on-form
+                    *ngSwitchCase="0"
+                    [title]="t('signIn.signOn.username.title')"
+                    (completed)="onCompleted()"
+                >
                     <tui-input formControlName="username" tuiTextfieldSize="l">
                         {{ t('signIn.signOn.username.placeholder') }}
-                        <input tuiTextfield type="email" />
+                        <input tuiTextfield />
                     </tui-input>
                 </qtt-sign-on-form>
-                <qtt-sign-on-form [title]="t('signIn.signOn.name.title')">
+                <qtt-sign-on-form *ngSwitchCase="1" [title]="t('signIn.signOn.name.title')" (completed)="onCompleted()">
                     <tui-input formControlName="firstName" tuiTextfieldSize="l">
                         {{ t('signIn.signOn.name.firstName') }}
-                        <input tuiTextfield type="email" />
+                        <input tuiTextfield />
                     </tui-input>
                     <tui-input class="tui-space_top-2" formControlName="lastName" tuiTextfieldSize="l">
                         {{ t('signIn.signOn.name.lastName') }}
-                        <input tuiTextfield type="email" />
+                        <input tuiTextfield />
                     </tui-input>
+                </qtt-sign-on-form>
+                <qtt-sign-on-form
+                    *ngSwitchCase="2"
+                    [title]="t('signIn.signOn.avatar.title')"
+                    [isFinish]="true"
+                    (completed)="onCompleted()"
+                >
+                    <div class="avatar-wrap tui-space_bottom-3">
+                        <tui-avatar [text]="getFullName" size="xxl" [autoColor]="false" [rounded]="true"></tui-avatar>
+                    </div>
                 </qtt-sign-on-form>
             </ng-container>
         </form>

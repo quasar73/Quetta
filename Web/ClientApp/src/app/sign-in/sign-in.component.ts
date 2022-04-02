@@ -10,11 +10,6 @@ import { GoogleLoginProvider, SocialAuthService, VKLoginProvider } from 'angular
     styleUrls: ['./sign-in.component.scss'],
 })
 export class SignInComponent {
-    providers = {
-        google: GoogleLoginProvider.PROVIDER_ID,
-        vk: VKLoginProvider.PROVIDER_ID,
-    };
-
     constructor(
         private socialAuthService: SocialAuthService,
         private authService: AuthService,
@@ -22,8 +17,8 @@ export class SignInComponent {
         private registerUserDataService: RegisterUserDataService
     ) {}
 
-    signInWithService(service: 'google' | 'vk'): void {
-        this.socialAuthService.signIn(this.providers[service]).then(result => {
+    signInWithGoogle(): void {
+        this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(result => {
             this.authService.authenticateWithGoogle(result.idToken).subscribe(
                 token => {
                     console.log(token);
@@ -34,6 +29,7 @@ export class SignInComponent {
                             firstName: result.firstName,
                             lastName: result.lastName,
                             username: result.email.split('@')[0],
+                            idToken: result.idToken,
                         });
                         this.router.navigate(['sign-on']);
                     }

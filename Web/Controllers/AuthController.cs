@@ -27,7 +27,10 @@ namespace Web.Controllers
                 return Unauthorized();
             }
 
-            return Ok(token);
+            return Ok(new TokenDto
+            {
+                Token = token,
+            });
         }
 
         [HttpPost("RegisterGoogleUser")]
@@ -40,7 +43,10 @@ namespace Web.Controllers
                 return BadRequest();
             }
 
-            return Ok(token);
+            return Ok(new TokenDto
+            {
+                Token = token,
+            });
         }
     }
 }

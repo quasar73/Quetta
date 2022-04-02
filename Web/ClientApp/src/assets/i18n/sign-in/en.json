@@ -4,7 +4,9 @@
         "chooseService": "Choose the service to sign in:"
     },
     "signOn": {
+        "title": "Signing on",
         "next": "Next",
+        "finish": "Finish",
         "username": {
             "title": "Enter your username",
             "placeholder": "Username"
@@ -13,6 +15,9 @@
             "title": "Enter your first name and last name",
             "firstName": "First name",
             "lastName": "Last name"
+        },
+        "avatar": {
+            "title": "Choose your avatar"
         }
     }
 }

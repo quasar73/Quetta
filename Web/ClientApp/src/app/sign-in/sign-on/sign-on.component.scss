@@ -19,6 +19,15 @@
                 display: flex;
                 justify-content: center;
             }
+
+            .success {
+                position: relative;
+                color: var(--tui-positive);
+            }
+
+            .error {
+                color: var(--tui-negative);
+            }
         }
     }
 }

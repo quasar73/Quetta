@@ -8,6 +8,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class SignOnFormComponent {
     @Input() title!: string;
     @Input() isFinish = false;
+    @Input() disabled = false;
 
     @Output() completed = new EventEmitter();
 

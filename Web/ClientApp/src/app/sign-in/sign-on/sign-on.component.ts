@@ -1,6 +1,6 @@
 import { RegisterUserDataService } from './../../shared/services/register-user-data/register-user-data.service';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { lastStepIndex, stepper } from 'src/app/shared/consts/sign-on.const';
 import { AuthService } from 'src/app/shared/services/api/auth/auth.service';
 
@@ -11,10 +11,10 @@ import { AuthService } from 'src/app/shared/services/api/auth/auth.service';
 })
 export class SignOnComponent implements OnInit {
     signOnForm = new FormGroup({
-        username: new FormControl(),
-        firstName: new FormControl(),
-        lastName: new FormControl(),
-        idToken: new FormControl(),
+        username: new FormControl('', Validators.required),
+        firstName: new FormControl('', Validators.required),
+        lastName: new FormControl('', Validators.required),
+        idToken: new FormControl('', Validators.required),
     });
     activeIndex!: number;
 

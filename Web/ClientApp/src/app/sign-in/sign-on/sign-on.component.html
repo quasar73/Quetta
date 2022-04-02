@@ -7,15 +7,31 @@
             <ng-container *transloco="let t" [ngSwitch]="activeIndex">
                 <qtt-sign-on-form
                     *ngSwitchCase="0"
+                    [disabled]="signOnForm.invalid"
                     [title]="t('signIn.signOn.username.title')"
                     (completed)="onCompleted()"
                 >
-                    <tui-input formControlName="username" tuiTextfieldSize="l">
+                    <tui-input
+                        formControlName="username"
+                        tuiTextfieldSize="l"
+                        [tuiTextfieldCustomContent]="signOnForm.get('username')?.valid ? success : error"
+                    >
                         {{ t('signIn.signOn.username.placeholder') }}
                         <input tuiTextfield />
                     </tui-input>
+                    <ng-template #success>
+                        <tui-svg src="tuiIconCheckLarge" class="success tui-space_left-3"></tui-svg>
+                    </ng-template>
+                    <ng-template #error>
+                        <tui-svg src="tuiIconCloseLarge" class="error tui-space_left-3"></tui-svg>
+                    </ng-template>
                 </qtt-sign-on-form>
-                <qtt-sign-on-form *ngSwitchCase="1" [title]="t('signIn.signOn.name.title')" (completed)="onCompleted()">
+                <qtt-sign-on-form
+                    *ngSwitchCase="1"
+                    [disabled]="signOnForm.invalid"
+                    [title]="t('signIn.signOn.name.title')"
+                    (completed)="onCompleted()"
+                >
                     <tui-input formControlName="firstName" tuiTextfieldSize="l">
                         {{ t('signIn.signOn.name.firstName') }}
                         <input tuiTextfield />
@@ -29,6 +45,7 @@
                     *ngSwitchCase="2"
                     [title]="t('signIn.signOn.avatar.title')"
                     [isFinish]="true"
+                    [disabled]="signOnForm.invalid"
                     (completed)="onCompleted()"
                 >
                     <div class="avatar-wrap tui-space_bottom-3">

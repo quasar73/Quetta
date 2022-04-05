@@ -14,16 +14,20 @@
                     <tui-input
                         formControlName="username"
                         tuiTextfieldSize="l"
-                        [tuiTextfieldCustomContent]="signOnForm.get('username')?.valid ? success : error"
+                        [tuiTextfieldCustomContent]="
+                            signOnForm.get('username')?.hasError('usernameAlreadyExists') ? error : success
+                        "
                     >
                         {{ t('signIn.signOn.username.placeholder') }}
                         <input tuiTextfield />
                     </tui-input>
+                    <tui-error formControlName="username" [error]="[] | tuiFieldError | async"></tui-error>
+
                     <ng-template #success>
                         <tui-svg src="tuiIconCheckLarge" class="success tui-space_left-3"></tui-svg>
                     </ng-template>
                     <ng-template #error>
-                        <tui-svg src="tuiIconCloseLarge" class="error tui-space_left-3"></tui-svg>
+                        <tui-svg src="tuiIconAlertCircleLarge" class="error tui-space_left-3"></tui-svg>
                     </ng-template>
                 </qtt-sign-on-form>
                 <qtt-sign-on-form
@@ -36,10 +40,13 @@
                         {{ t('signIn.signOn.name.firstName') }}
                         <input tuiTextfield />
                     </tui-input>
+                    <tui-error formControlName="firstName" [error]="[] | tuiFieldError | async"></tui-error>
+
                     <tui-input class="tui-space_top-2" formControlName="lastName" tuiTextfieldSize="l">
                         {{ t('signIn.signOn.name.lastName') }}
                         <input tuiTextfield />
                     </tui-input>
+                    <tui-error formControlName="lastName" [error]="[] | tuiFieldError | async"></tui-error>
                 </qtt-sign-on-form>
                 <qtt-sign-on-form
                     *ngSwitchCase="2"

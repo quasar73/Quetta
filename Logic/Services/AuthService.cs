@@ -69,6 +69,13 @@ namespace Logic.Services
             return null;
         }
 
+        public async Task<bool> CheckOutUsername(string username)
+        {
+            var user = await userManager.FindByNameAsync(username);
+
+            return user != null;
+        }
+
         private async Task<User?> GetExternalLoginUserAsync(string provider, string key)
         {
             var user = await userManager.FindByLoginAsync(provider, key);

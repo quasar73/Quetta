@@ -48,5 +48,13 @@ namespace Web.Controllers
                 Token = token,
             });
         }
+
+        [HttpGet("CheckOutUsername")]
+        public async Task<IActionResult> CheckOutUsername([FromQuery] string username)
+        {
+            var result = await authService.CheckOutUsername(username);
+
+            return Ok(result);
+        }
     }
 }

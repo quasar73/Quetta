@@ -3,11 +3,22 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { lastStepIndex, stepper } from 'src/app/shared/consts/sign-on.const';
 import { AuthService } from 'src/app/shared/services/api/auth/auth.service';
+import { UsernameValidator } from 'src/app/shared/validators/username.validator';
+import { TUI_VALIDATION_ERRORS } from '@taiga-ui/kit';
 
 @Component({
     selector: 'qtt-sign-on',
     templateUrl: './sign-on.component.html',
     styleUrls: ['./sign-on.component.scss'],
+    providers: [
+        {
+            provide: TUI_VALIDATION_ERRORS,
+            useValue: {
+                required: 'Enter this!',
+                usernameAlreadyExists: 'Username already exists!',
+            },
+        },
+    ],
 })
 export class SignOnComponent implements OnInit {
     signOnForm = new FormGroup({
@@ -30,12 +41,17 @@ export class SignOnComponent implements OnInit {
 
     ngOnInit(): void {
         this.activeIndex = 0;
+        this.signOnForm.controls['username'].addAsyncValidators(UsernameValidator.createValidator(this.authService));
 
         this.registerUserDataService.getUserData().subscribe(data => {
             if (data) {
                 console.log(data);
                 this.signOnForm.setValue(data);
             }
+        });
+
+        this.signOnForm.valueChanges.subscribe(() => {
+            console.log(this.signOnForm.get('username')?.hasError('usernameAlreadyExists'));
         });
     }
 

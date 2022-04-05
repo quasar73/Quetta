@@ -16,4 +16,8 @@ export class AuthService {
     registerGoogleUser(dto: RegisterGoogleUserDto): Observable<string | null> {
         return this.baseService.post<string>('auth/registerGoogleUser', dto);
     }
+
+    checkOutUsername(username: string): Observable<boolean | null> {
+        return this.baseService.get<boolean>('auth/checkOutUsername', { username });
+    }
 }

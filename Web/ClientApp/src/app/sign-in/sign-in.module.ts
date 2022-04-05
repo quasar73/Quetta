@@ -1,8 +1,8 @@
 import { environment } from './../../environments/environment';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TuiButtonModule, TuiSvgModule, TuiTextfieldControllerModule } from '@taiga-ui/core';
-import { TuiAvatarModule, TuiInputModule, TuiStepperModule } from '@taiga-ui/kit';
+import { TuiButtonModule, TuiErrorModule, TuiSvgModule, TuiTextfieldControllerModule } from '@taiga-ui/core';
+import { TuiAvatarModule, TuiFieldErrorPipeModule, TuiInputModule, TuiStepperModule } from '@taiga-ui/kit';
 
 import { SignInRoutingModule } from './sign-in-routing.module';
 import { SignInComponent } from './sign-in.component';
@@ -42,6 +42,8 @@ import { ReactiveFormsModule } from '@angular/forms';
         TuiStepperModule,
         TuiTextfieldControllerModule,
         TuiSvgModule,
+        TuiFieldErrorPipeModule,
+        TuiErrorModule,
     ],
 })
 export class SignInModule {}

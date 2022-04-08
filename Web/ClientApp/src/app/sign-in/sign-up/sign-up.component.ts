@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { RegisterUserDataService } from '../../shared/services/register-user-data/register-user-data.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -37,7 +38,7 @@ export class SignUpComponent implements OnInit {
         return `${this.signUpForm.get('firstName')?.value} ${this.signUpForm.get('lastName')?.value}`;
     }
 
-    constructor(private registerUserDataService: RegisterUserDataService, private authService: AuthService) {}
+    constructor(private registerUserDataService: RegisterUserDataService, private authService: AuthService, private router: Router) {}
 
     ngOnInit(): void {
         this.activeIndex = 0;
@@ -51,16 +52,23 @@ export class SignUpComponent implements OnInit {
         });
 
         this.signUpForm.valueChanges.subscribe(() => {
-            console.log(this.signUpForm.get('username')?.hasError('usernameAlreadyExists'));
+            console.log(this.signUpForm.invalid);
+            setTimeout(() => {
+                console.log(this.signUpForm.invalid);
+            }, 2000);
         });
     }
 
-    onCompleted(): void {
+    nextStep(): void {
         if (this.activeIndex === lastStepIndex) {
             this.registrateUser();
         } else {
             this.activeIndex++;
         }
+    }
+
+    comeBack(): void {
+        this.router.navigate(['/sign-in']);
     }
 
     getState(index: number): 'normal' | 'pass' | 'error' {

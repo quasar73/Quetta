@@ -1,13 +1,15 @@
 .wrap {
+    width: 300px;
     display: flex;
     flex-flow: column;
     align-items: center;
 
     .title, .subtitle {
         text-align: center;
+        max-width: 100%;
     }
 
-    button, .content {
-        width: 260px
+    .content {
+        width: 100%;
     }
 }

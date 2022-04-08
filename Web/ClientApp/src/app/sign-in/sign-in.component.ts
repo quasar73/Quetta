@@ -10,9 +10,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
     templateUrl: './sign-in.component.html',
     styleUrls: ['./sign-in.component.scss'],
     animations: [
-        trigger('signInPageTrigger', [
-            transition(':enter', [style({ opacity: 0 }), animate('0.8s ease-in', style({ opacity: 1 }))]),
-        ]),
+        trigger('signInPageTrigger', [transition(':enter', [style({ opacity: 0 }), animate('0.8s ease-in', style({ opacity: 1 }))])]),
     ],
 })
 export class SignInComponent {

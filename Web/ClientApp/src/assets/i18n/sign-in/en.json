@@ -7,6 +7,7 @@
         "title": "Signing up",
         "next": "Next",
         "finish": "Finish",
+        "comeBack": "Sign in",
         "username": {
             "title": "Enter your username",
             "placeholder": "Username"

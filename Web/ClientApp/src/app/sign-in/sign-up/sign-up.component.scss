@@ -28,6 +28,11 @@
             .error {
                 color: var(--tui-negative);
             }
+
+            button {
+                display: block;
+                width: 300px;
+            }
         }
     }
 }

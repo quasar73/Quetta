@@ -8,9 +8,4 @@
     <div class="content">
         <ng-content></ng-content>
     </div>
-    <ng-container *transloco="let t">
-        <button tuiButton type="button" class="tui-space_top-5" [disabled]="disabled" (click)="completed.emit()">
-            {{ isFinish ? t('signIn.signUp.finish') : t('signIn.signUp.next') }}
-        </button>
-    </ng-container>
 </div>

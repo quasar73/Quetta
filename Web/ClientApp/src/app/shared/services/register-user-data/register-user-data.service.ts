@@ -1,4 +1,4 @@
-import { SignOnData } from './../../models/sign-on-data.model';
+import { signUpData } from './../../models/sign-up-data.model';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
@@ -6,15 +6,15 @@ import { BehaviorSubject, Observable } from 'rxjs';
     providedIn: 'root',
 })
 export class RegisterUserDataService {
-    private readonly userData = new BehaviorSubject<SignOnData | null>(null);
+    private readonly userData = new BehaviorSubject<signUpData | null>(null);
 
     constructor() {}
 
-    getUserData(): Observable<SignOnData | null> {
+    getUserData(): Observable<signUpData | null> {
         return this.userData.asObservable();
     }
 
-    setUserData(userData: SignOnData): void {
+    setUserData(userData: signUpData): void {
         this.userData.next(userData);
     }
 }

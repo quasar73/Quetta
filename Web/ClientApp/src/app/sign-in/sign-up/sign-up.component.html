@@ -3,22 +3,22 @@
         <tui-stepper [(activeItemIndex)]="activeIndex" class="stepper tui-space_bottom-5">
             <button *ngFor="let step of getStepper; let i = index" tuiStep [state]="getState(i)">{{ step }}</button>
         </tui-stepper>
-        <form [formGroup]="signOnForm">
+        <form [formGroup]="signUpForm">
             <ng-container *transloco="let t" [ngSwitch]="activeIndex">
                 <qtt-sign-up-form
                     *ngSwitchCase="0"
-                    [disabled]="signOnForm.invalid"
-                    [title]="t('signIn.signOn.username.title')"
+                    [disabled]="signUpForm.invalid"
+                    [title]="t('signIn.signUp.username.title')"
                     (completed)="onCompleted()"
                 >
                     <tui-input
                         formControlName="username"
                         tuiTextfieldSize="l"
                         [tuiTextfieldCustomContent]="
-                            signOnForm.get('username')?.hasError('usernameAlreadyExists') ? error : success
+                            signUpForm.get('username')?.hasError('usernameAlreadyExists') ? error : success
                         "
                     >
-                        {{ t('signIn.signOn.username.placeholder') }}
+                        {{ t('signIn.signUp.username.placeholder') }}
                         <input tuiTextfield />
                     </tui-input>
                     <tui-error formControlName="username" [error]="[] | tuiFieldError | async"></tui-error>
@@ -32,27 +32,27 @@
                 </qtt-sign-up-form>
                 <qtt-sign-up-form
                     *ngSwitchCase="1"
-                    [disabled]="signOnForm.invalid"
-                    [title]="t('signIn.signOn.name.title')"
+                    [disabled]="signUpForm.invalid"
+                    [title]="t('signIn.signUp.name.title')"
                     (completed)="onCompleted()"
                 >
                     <tui-input formControlName="firstName" tuiTextfieldSize="l">
-                        {{ t('signIn.signOn.name.firstName') }}
+                        {{ t('signIn.signUp.name.firstName') }}
                         <input tuiTextfield />
                     </tui-input>
                     <tui-error formControlName="firstName" [error]="[] | tuiFieldError | async"></tui-error>
 
                     <tui-input class="tui-space_top-2" formControlName="lastName" tuiTextfieldSize="l">
-                        {{ t('signIn.signOn.name.lastName') }}
+                        {{ t('signIn.signUp.name.lastName') }}
                         <input tuiTextfield />
                     </tui-input>
                     <tui-error formControlName="lastName" [error]="[] | tuiFieldError | async"></tui-error>
                 </qtt-sign-up-form>
                 <qtt-sign-up-form
                     *ngSwitchCase="2"
-                    [title]="t('signIn.signOn.avatar.title')"
+                    [title]="t('signIn.signUp.avatar.title')"
                     [isFinish]="true"
-                    [disabled]="signOnForm.invalid"
+                    [disabled]="signUpForm.invalid"
                     (completed)="onCompleted()"
                 >
                     <div class="avatar-wrap tui-space_bottom-3">

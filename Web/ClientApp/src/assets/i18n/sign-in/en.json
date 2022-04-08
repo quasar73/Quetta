@@ -3,8 +3,8 @@
         "welcome": "Welcome to ",
         "chooseService": "Choose the service to sign in:"
     },
-    "signOn": {
-        "title": "Signing on",
+    "signUp": {
+        "title": "Signing up",
         "next": "Next",
         "finish": "Finish",
         "username": {

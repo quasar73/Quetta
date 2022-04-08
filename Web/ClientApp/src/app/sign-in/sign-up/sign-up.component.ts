@@ -21,7 +21,7 @@ import { TUI_VALIDATION_ERRORS } from '@taiga-ui/kit';
     ],
 })
 export class SignUpComponent implements OnInit {
-    signOnForm = new FormGroup({
+    signUpForm = new FormGroup({
         username: new FormControl('', Validators.required),
         firstName: new FormControl('', Validators.required),
         lastName: new FormControl('', Validators.required),
@@ -34,24 +34,24 @@ export class SignUpComponent implements OnInit {
     }
 
     get getFullName(): string {
-        return `${this.signOnForm.get('firstName')?.value} ${this.signOnForm.get('lastName')?.value}`;
+        return `${this.signUpForm.get('firstName')?.value} ${this.signUpForm.get('lastName')?.value}`;
     }
 
     constructor(private registerUserDataService: RegisterUserDataService, private authService: AuthService) {}
 
     ngOnInit(): void {
         this.activeIndex = 0;
-        this.signOnForm.controls['username'].addAsyncValidators(UsernameValidator.createValidator(this.authService));
+        this.signUpForm.controls['username'].addAsyncValidators(UsernameValidator.createValidator(this.authService));
 
         this.registerUserDataService.getUserData().subscribe(data => {
             if (data) {
                 console.log(data);
-                this.signOnForm.setValue(data);
+                this.signUpForm.setValue(data);
             }
         });
 
-        this.signOnForm.valueChanges.subscribe(() => {
-            console.log(this.signOnForm.get('username')?.hasError('usernameAlreadyExists'));
+        this.signUpForm.valueChanges.subscribe(() => {
+            console.log(this.signUpForm.get('username')?.hasError('usernameAlreadyExists'));
         });
     }
 
@@ -72,7 +72,7 @@ export class SignUpComponent implements OnInit {
     }
 
     private registrateUser(): void {
-        this.authService.registerGoogleUser(this.signOnForm.value).subscribe(data => {
+        this.authService.registerGoogleUser(this.signUpForm.value).subscribe(data => {
             console.log(data);
         });
     }

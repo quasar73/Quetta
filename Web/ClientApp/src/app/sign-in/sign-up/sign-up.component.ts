@@ -1,4 +1,4 @@
-import { RegisterUserDataService } from './../../shared/services/register-user-data/register-user-data.service';
+import { RegisterUserDataService } from '../../shared/services/register-user-data/register-user-data.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { lastStepIndex, stepper } from 'src/app/shared/consts/sign-on.const';
@@ -7,9 +7,9 @@ import { UsernameValidator } from 'src/app/shared/validators/username.validator'
 import { TUI_VALIDATION_ERRORS } from '@taiga-ui/kit';
 
 @Component({
-    selector: 'qtt-sign-on',
-    templateUrl: './sign-on.component.html',
-    styleUrls: ['./sign-on.component.scss'],
+    selector: 'qtt-sign-up',
+    templateUrl: './sign-up.component.html',
+    styleUrls: ['./sign-up.component.scss'],
     providers: [
         {
             provide: TUI_VALIDATION_ERRORS,
@@ -20,7 +20,7 @@ import { TUI_VALIDATION_ERRORS } from '@taiga-ui/kit';
         },
     ],
 })
-export class SignOnComponent implements OnInit {
+export class SignUpComponent implements OnInit {
     signOnForm = new FormGroup({
         username: new FormControl('', Validators.required),
         firstName: new FormControl('', Validators.required),

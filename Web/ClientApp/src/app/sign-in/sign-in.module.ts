@@ -8,12 +8,12 @@ import { SignInRoutingModule } from './sign-in-routing.module';
 import { SignInComponent } from './sign-in.component';
 import { TranslocoModule, TRANSLOCO_SCOPE } from '@ngneat/transloco';
 import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from 'angularx-social-login';
-import { SignOnComponent } from './sign-on/sign-on.component';
-import { SignOnFormComponent } from './sign-on/sign-on-form/sign-on-form.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
+import { SignUpFormComponent } from './sign-up/sign-up-form/sign-up-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-    declarations: [SignInComponent, SignOnComponent, SignOnFormComponent],
+    declarations: [SignInComponent, SignUpComponent, SignUpFormComponent],
     providers: [
         { provide: TRANSLOCO_SCOPE, useValue: 'sign-in' },
         {

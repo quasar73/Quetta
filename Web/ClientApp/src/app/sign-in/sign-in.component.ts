@@ -37,7 +37,7 @@ export class SignInComponent {
                             username: result.email.split('@')[0],
                             idToken: result.idToken,
                         });
-                        this.router.navigate(['sign-on']);
+                        this.router.navigate(['sign-up']);
                     }
                 }
             );

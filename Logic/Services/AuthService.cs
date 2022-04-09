@@ -23,7 +23,7 @@ namespace Logic.Services
             this.configuration = configuration;
         }
 
-        public async Task<string?> AuthenticateGoogleUserAsync(GoogleUserDto googleUser)
+        public async Task<string> AuthenticateGoogleUserAsync(GoogleUserDto googleUser)
         {
             var clientId = configuration["Authentication:Google:ClientId"];
 

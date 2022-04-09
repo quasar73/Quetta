@@ -1,7 +1,7 @@
 import { TranslocoService } from '@ngneat/transloco';
 import { Router } from '@angular/router';
 import { RegisterUserDataService } from '../../shared/services/register-user-data/register-user-data.service';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { lastStepIndex, stepper, usernameMinLength } from 'src/app/shared/consts/sign-on.const';
 import { AuthService } from 'src/app/shared/services/api/auth/auth.service';
@@ -13,6 +13,7 @@ import { availableLanguage } from 'src/app/shared/consts/languages.const';
     selector: 'qtt-sign-up',
     templateUrl: './sign-up.component.html',
     styleUrls: ['./sign-up.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [
         {
             provide: TUI_VALIDATION_ERRORS,

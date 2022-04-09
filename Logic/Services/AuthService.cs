@@ -1,4 +1,5 @@
 ﻿using Common.DTO;
+using Common.Exceptions;
 using Data.Models;
 using Logic.Interfaces;
 using Microsoft.AspNetCore.Identity;
@@ -35,13 +36,13 @@ namespace Logic.Services
 
             if (user == null)
             {
-                return null;
+                throw new UnregisteredException();
             }
 
-            return await GenerateJwtTokenAsync(user);
+            return GenerateJwtToken(user);
         }
 
-        public async Task<string?> RegisterGoogleUserAsync(RegisterGoogleUserDto registerGoogleUser)
+        public async Task<string> RegisterGoogleUserAsync(RegisterGoogleUserDto registerGoogleUser)
         {
             var clientId = configuration["Authentication:Google:ClientId"];
 
@@ -63,10 +64,10 @@ namespace Logic.Services
 
             if (result.Succeeded)
             {
-                return await GenerateJwtTokenAsync(user);
+                return GenerateJwtToken(user);
             }
 
-            return null;
+            throw new NotImplementedException();
         }
 
         public async Task<bool> CheckOutUsername(string username)
@@ -82,7 +83,7 @@ namespace Logic.Services
             return user;
         }
 
-        private async Task<string> GenerateJwtTokenAsync(User user)
+        private string GenerateJwtToken(User user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(configuration["Authentication:Jwt:Secret"]);

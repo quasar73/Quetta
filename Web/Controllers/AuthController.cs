@@ -17,38 +17,35 @@ namespace Web.Controllers
             this.authService = authService;
         }
 
+        [ProducesResponseType(typeof(TokenDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [HttpPost("AuthenticateWithGoogle")]
-        public async Task<IActionResult> AuthenticateWithGoogle(GoogleUserDto googleUser)
+        public async Task<IActionResult> AuthenticateWithGoogle([FromBody] GoogleUserDto googleUser)
         {
             var token = await authService.AuthenticateGoogleUserAsync(googleUser);
 
-            if (token == null)
-            {
-                return Unauthorized();
-            }
-
             return Ok(new TokenDto
             {
                 Token = token,
             });
         }
 
+        [ProducesResponseType(typeof(TokenDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPost("RegisterGoogleUser")]
-        public async Task<IActionResult> RegisterGoogleUser(RegisterGoogleUserDto registerGoogleUser)
+        public async Task<IActionResult> RegisterGoogleUser([FromBody] RegisterGoogleUserDto registerGoogleUser)
         {
             var token = await authService.RegisterGoogleUserAsync(registerGoogleUser);
 
-            if (token == null)
-            {
-                return BadRequest();
-            }
-
             return Ok(new TokenDto
             {
                 Token = token,
             });
         }
 
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpGet("CheckOutUsername")]
         public async Task<IActionResult> CheckOutUsername([FromQuery] string username)
         {

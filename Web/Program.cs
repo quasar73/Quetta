@@ -9,8 +9,11 @@ using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using System.Reflection;
 using System.Text;
+using Web.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddCors();
 
 #region Serilog set up
 
@@ -80,10 +83,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors(it => it.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+
 app.UseHttpsRedirection();
+
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.MapControllers();
 

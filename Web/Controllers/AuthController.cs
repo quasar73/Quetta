@@ -1,9 +1,11 @@
 ﻿using Common.DTO;
 using Logic.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Controllers
 {
+    [AllowAnonymous]
     [Route("api/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
@@ -15,30 +17,41 @@ namespace Web.Controllers
             this.authService = authService;
         }
 
+        [ProducesResponseType(typeof(TokenDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [HttpPost("AuthenticateWithGoogle")]
-        public async Task<IActionResult> AuthenticateWithGoogle(GoogleUserDto googleUser)
+        public async Task<IActionResult> AuthenticateWithGoogle([FromBody] GoogleUserDto googleUser)
         {
             var token = await authService.AuthenticateGoogleUserAsync(googleUser);
 
-            if (token == null)
+            return Ok(new TokenDto
             {
-                return Unauthorized();
-            }
-
-            return Ok(token);
+                Token = token,
+            });
         }
 
+        [ProducesResponseType(typeof(TokenDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPost("RegisterGoogleUser")]
-        public async Task<IActionResult> RegisterGoogleUser(RegisterGoogleUserDto registerGoogleUser)
+        public async Task<IActionResult> RegisterGoogleUser([FromBody] RegisterGoogleUserDto registerGoogleUser)
         {
             var token = await authService.RegisterGoogleUserAsync(registerGoogleUser);
 
-            if (token == null)
+            return Ok(new TokenDto
             {
-                return BadRequest();
-            }
+                Token = token,
+            });
+        }
 
-            return Ok(token);
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [HttpGet("CheckOutUsername")]
+        public async Task<IActionResult> CheckOutUsername([FromQuery] string username)
+        {
+            var result = await authService.CheckOutUsername(username);
+
+            return Ok(result);
         }
     }
 }

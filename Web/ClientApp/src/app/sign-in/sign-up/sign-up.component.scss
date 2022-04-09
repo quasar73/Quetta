@@ -1,0 +1,43 @@
+.wrap {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    .content {
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+
+        .stepper {
+            margin-right: -32px;
+        }
+
+        form {
+            .avatar-wrap {
+                display: flex;
+                justify-content: center;
+            }
+
+            .success {
+                position: relative;
+                color: var(--tui-positive);
+            }
+
+            .error {
+                color: var(--tui-negative);
+            }
+
+            .pending {
+                color: var(--tui-text-03);
+            }
+
+            button {
+                display: block;
+                width: 300px;
+            }
+        }
+    }
+}

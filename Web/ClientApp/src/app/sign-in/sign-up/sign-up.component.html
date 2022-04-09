@@ -55,7 +55,7 @@
                             [disabled]="signUpForm.invalid || isFormPending"
                             (click)="nextStep()"
                         >
-                            {{ activeIndex === getStepper.length ? t('signIn.signUp.finish') : t('signIn.signUp.next') }}
+                            {{ isLastStep ? t('signIn.signUp.finish') : t('signIn.signUp.next') }}
                         </button>
                         <button tuiButton appearance="flat" type="button" class="tui-space_top-3" (click)="comeBack()">
                             {{ t('signIn.signUp.comeBack') }}

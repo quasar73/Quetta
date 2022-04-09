@@ -48,6 +48,10 @@ export class SignUpComponent implements OnInit {
         return availableLanguage;
     }
 
+    get isLastStep(): boolean {
+        return lastStepIndex === this.activeIndex;
+    }
+
     constructor(
         private registerUserDataService: RegisterUserDataService,
         private authService: AuthService,

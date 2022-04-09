@@ -48,7 +48,13 @@
                 </qtt-sign-up-form>
                 <div class="buttons">
                     <ng-container *transloco="let t">
-                        <button tuiButton type="button" class="tui-space_top-5" [disabled]="signUpForm.invalid || isFormPending" (click)="nextStep()">
+                        <button
+                            tuiButton
+                            type="button"
+                            class="tui-space_top-5"
+                            [disabled]="signUpForm.invalid || isFormPending"
+                            (click)="nextStep()"
+                        >
                             {{ activeIndex === getStepper.length ? t('signIn.signUp.finish') : t('signIn.signUp.next') }}
                         </button>
                         <button tuiButton appearance="flat" type="button" class="tui-space_top-3" (click)="comeBack()">

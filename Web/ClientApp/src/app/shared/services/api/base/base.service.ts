@@ -51,8 +51,13 @@ export class BaseService {
     }
 
     private extendPipe<T>(httpObservable: Observable<T>): Observable<T> {
+        const ignorableErrors = [401];
         return httpObservable.pipe(
             catchError((err: HttpResponse<T>) => {
+                if (ignorableErrors.includes(err.status)) {
+                    return throwError(err);
+                }
+
                 this.notificationsService
                     .show(`HTTP ERROR ${err.status}`, {
                         label: 'Ошибка!',

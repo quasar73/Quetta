@@ -1,3 +1,4 @@
+import { TranslocoService } from '@ngneat/transloco';
 import { Router } from '@angular/router';
 import { RegisterUserDataService } from '../../shared/services/register-user-data/register-user-data.service';
 import { Component, OnInit } from '@angular/core';
@@ -6,6 +7,7 @@ import { lastStepIndex, stepper, usernameMinLength } from 'src/app/shared/consts
 import { AuthService } from 'src/app/shared/services/api/auth/auth.service';
 import { UsernameValidator } from 'src/app/shared/validators/username.validator';
 import { TUI_VALIDATION_ERRORS } from '@taiga-ui/kit';
+import { availableLanguage } from 'src/app/shared/consts/languages.const';
 
 @Component({
     selector: 'qtt-sign-up',
@@ -29,6 +31,8 @@ export class SignUpComponent implements OnInit {
         lastName: new FormControl('', Validators.required),
         idToken: new FormControl('', Validators.required),
     });
+    languagesControl = new FormControl('en');
+
     activeIndex!: number;
     isFormPending!: boolean;
 
@@ -40,11 +44,25 @@ export class SignUpComponent implements OnInit {
         return `${this.signUpForm.get('firstName')?.value} ${this.signUpForm.get('lastName')?.value}`;
     }
 
-    constructor(private registerUserDataService: RegisterUserDataService, private authService: AuthService, private router: Router) {}
+    get languages(): string[] {
+        return availableLanguage;
+    }
+
+    constructor(
+        private registerUserDataService: RegisterUserDataService,
+        private authService: AuthService,
+        private router: Router,
+        private translocoService: TranslocoService
+    ) {}
 
     ngOnInit(): void {
         this.activeIndex = 0;
         this.signUpForm.controls['username'].addAsyncValidators(UsernameValidator.createValidator(this.authService));
+        this.languagesControl.setValue(this.translocoService.getActiveLang());
+
+        this.languagesControl.valueChanges.subscribe(language => {
+            this.translocoService.setActiveLang(language);
+        });
 
         this.registerUserDataService.getUserData().subscribe(data => {
             if (data) {

@@ -1,13 +1,6 @@
 import { NgDompurifySanitizer } from '@tinkoff/ng-dompurify';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {
-    TuiRootModule,
-    TuiDialogModule,
-    TuiNotificationsModule,
-    TUI_SANITIZER,
-    TuiThemeNightModule,
-    TuiModeModule,
-} from '@taiga-ui/core';
+import { TuiRootModule, TuiDialogModule, TuiNotificationsModule, TUI_SANITIZER, TuiThemeNightModule, TuiModeModule } from '@taiga-ui/core';
 import {} from '@taiga-ui/core';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';

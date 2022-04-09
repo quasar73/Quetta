@@ -12,4 +12,13 @@
             <button tuiButton type="button" (click)="signInWithGoogle()">Google</button>
         </div>
     </div>
+    <div class="footer">
+        <div class="languages-wrap">
+            <tui-select tuiTextfieldSize="s" [formControl]="languagesControl">
+                Languages
+                <input tuiTextfield />
+                <tui-data-list-wrapper *tuiDataList [items]="languages"></tui-data-list-wrapper>
+            </tui-select>
+        </div>
+    </div>
 </div>

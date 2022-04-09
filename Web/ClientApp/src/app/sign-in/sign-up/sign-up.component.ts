@@ -29,6 +29,7 @@ export class SignUpComponent implements OnInit {
         idToken: new FormControl('', Validators.required),
     });
     activeIndex!: number;
+    isFormPending!: boolean;
 
     get getStepper(): string[] {
         return stepper;
@@ -51,12 +52,7 @@ export class SignUpComponent implements OnInit {
             }
         });
 
-        this.signUpForm.valueChanges.subscribe(() => {
-            console.log(this.signUpForm.invalid);
-            setTimeout(() => {
-                console.log(this.signUpForm.invalid);
-            }, 2000);
-        });
+        this.signUpForm.statusChanges.subscribe(value => (this.isFormPending = value === 'PENDING'));
     }
 
     nextStep(): void {

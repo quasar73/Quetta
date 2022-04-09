@@ -9,7 +9,9 @@
                     <tui-input
                         formControlName="username"
                         tuiTextfieldSize="l"
-                        [tuiTextfieldCustomContent]="signUpForm.get('username')?.hasError('usernameAlreadyExists') ? error : success"
+                        [tuiTextfieldCustomContent]="
+                            isFormPending ? pending : signUpForm.get('username')?.hasError('usernameAlreadyExists') ? error : success
+                        "
                     >
                         {{ t('signIn.signUp.username.placeholder') }}
                         <input tuiTextfield />
@@ -21,6 +23,9 @@
                     </ng-template>
                     <ng-template #error>
                         <tui-svg src="tuiIconAlertCircleLarge" class="error tui-space_left-3"></tui-svg>
+                    </ng-template>
+                    <ng-template #pending>
+                        <tui-svg src="tuiIconMoreHorLarge" class="pending tui-space_left-3"></tui-svg>
                     </ng-template>
                 </qtt-sign-up-form>
                 <qtt-sign-up-form *ngSwitchCase="1" [title]="t('signIn.signUp.name.title')">
@@ -43,7 +48,7 @@
                 </qtt-sign-up-form>
                 <div class="buttons">
                     <ng-container *transloco="let t">
-                        <button tuiButton type="button" class="tui-space_top-5" [disabled]="signUpForm.invalid" (click)="nextStep()">
+                        <button tuiButton type="button" class="tui-space_top-5" [disabled]="signUpForm.invalid || isFormPending" (click)="nextStep()">
                             {{ activeIndex === getStepper.length ? t('signIn.signUp.finish') : t('signIn.signUp.next') }}
                         </button>
                         <button tuiButton appearance="flat" type="button" class="tui-space_top-3" (click)="comeBack()">

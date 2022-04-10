@@ -25,10 +25,7 @@ namespace Web.Controllers
         {
             var token = await authService.AuthenticateGoogleUserAsync(googleUser);
 
-            return Ok(new TokenDto
-            {
-                Token = token,
-            });
+            return Ok(token);
         }
 
         [ProducesResponseType(typeof(TokenDto), StatusCodes.Status200OK)]
@@ -38,10 +35,7 @@ namespace Web.Controllers
         {
             var token = await authService.RegisterGoogleUserAsync(registerGoogleUser);
 
-            return Ok(new TokenDto
-            {
-                Token = token,
-            });
+            return Ok(token);
         }
 
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
@@ -50,6 +44,17 @@ namespace Web.Controllers
         public async Task<IActionResult> CheckOutUsername([FromQuery] string username)
         {
             var result = await authService.CheckOutUsername(username);
+
+            return Ok(result);
+        }
+
+        [ProducesResponseType(typeof(TokenDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [HttpGet("Refresh")]
+        public async Task<IActionResult> RefreshToken([FromQuery] string refreshToken)
+        {
+            var result = await authService.RefreshToken(refreshToken);
 
             return Ok(result);
         }

@@ -41,12 +41,20 @@ namespace Web.Middlewares
                     response.StatusCode = (int)HttpStatusCode.Unauthorized;
                     errorResponse.Message = ex.Message;
                     break;
-                case NotImplementedException ex:
-                    response.StatusCode = (int)HttpStatusCode.NotImplemented;
-                    errorResponse.Message = ex.Message;
-                    break;
                 case UnregisteredException ex:
                     response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                    errorResponse.Message = ex.Message;
+                    break;
+                case InvalidTokenException ex:
+                    response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    errorResponse.Message = ex.Message;
+                    break;
+                case TokenExpiredException ex:
+                    response.StatusCode = (int)HttpStatusCode.Forbidden;
+                    errorResponse.Message = ex.Message;
+                    break;
+                case NotImplementedException ex:
+                    response.StatusCode = (int)HttpStatusCode.NotImplemented;
                     errorResponse.Message = ex.Message;
                     break;
                 default:

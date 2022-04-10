@@ -17,6 +17,6 @@ namespace Data.Models
         public string? UserId { get; set; }
 
         [Required]
-        public virtual User? Users { get; set; }
+        public virtual User? User { get; set; }
     }
 }

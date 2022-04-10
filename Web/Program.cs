@@ -69,6 +69,7 @@ builder.Services.AddAuthentication(options =>
 #endregion
 
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<ITokenGenerator, TokenGenerator>();
 
 builder.Services.AddControllers();
 
@@ -86,7 +87,6 @@ if (app.Environment.IsDevelopment())
 app.UseCors(it => it.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
 app.UseHttpsRedirection();
-
 
 app.UseAuthentication();
 app.UseAuthorization();

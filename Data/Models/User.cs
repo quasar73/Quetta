@@ -12,5 +12,7 @@ namespace Data.Models
         public string? LastName { get; set; }
 
         public string? AvatarUrl { get; set; }
+
+        public virtual ICollection<RefreshToken>? RefreshTokens { get; set; }
     }
 }

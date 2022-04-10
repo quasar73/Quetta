@@ -6,6 +6,8 @@ namespace Data
 {
     public class QuettaDbContext : IdentityDbContext<User>
     {
+        public DbSet<RefreshToken>? RefreshTokens { get; set; }
+
         public QuettaDbContext(DbContextOptions<QuettaDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder builder)

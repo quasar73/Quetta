@@ -11,7 +11,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
     ],
 })
 export class SignUpFormComponent {
-    @Input() title!: string;
+    @Input() subtitle!: string;
 
     @Output() completed = new EventEmitter();
 

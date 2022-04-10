@@ -11,11 +11,14 @@ import { getTranslocoModule } from 'src/app/translate/transloco-testing.module';
 import { TuiFieldErrorPipeModule, TuiStepperModule, TuiSelectModule, TuiInputModule } from '@taiga-ui/kit';
 import { RegisterUserDataService } from 'src/app/shared/services/register-user-data/register-user-data.service';
 import { of } from 'rxjs';
+import { lastStepIndex, stepper } from 'src/app/shared/consts/sign-on.const';
+import { Router } from '@angular/router';
 
 describe('SignUpComponent', () => {
     let component: SignUpComponent;
     let fixture: ComponentFixture<SignUpComponent>;
     let mockRegisterUserDataService;
+    let mockRouter: { navigate: any };
 
     beforeEach(async () => {
         mockRegisterUserDataService = jasmine.createSpyObj(['getUserData']);
@@ -27,6 +30,9 @@ describe('SignUpComponent', () => {
                 idToken: 'testidToken',
             })
         );
+        mockRouter = {
+            navigate: jasmine.createSpy('navigate'),
+        };
         await TestBed.configureTestingModule({
             declarations: [SignUpComponent, SignUpFormComponent],
             imports: [
@@ -43,7 +49,10 @@ describe('SignUpComponent', () => {
                 TuiSvgModule,
                 BrowserAnimationsModule,
             ],
-            providers: [{ provide: RegisterUserDataService, useValue: mockRegisterUserDataService }],
+            providers: [
+                { provide: RegisterUserDataService, useValue: mockRegisterUserDataService },
+                { provide: Router, useValue: mockRouter },
+            ],
         }).compileComponents();
     });
 
@@ -80,11 +89,32 @@ describe('SignUpComponent', () => {
         expect(component.getState(0)).toEqual('error');
     });
 
-    it('on button click activeIndex should increase', () => {
+    it('isLastStep should return true when activeIndex and lastStepIndex are equal', () => {
+        component.activeIndex = lastStepIndex;
+
+        expect(component.isLastStep).toBeTruthy();
+    });
+
+    it('languages should return application languages', () => {
+        expect(component.languages).toEqual(['en', 'ru']);
+    });
+
+    it('getStepper should return right value', () => {
+        expect(component.getStepper).toEqual(stepper);
+    });
+
+    it('should increase activeIndex when next button is clicked', () => {
         component.activeIndex = 0;
         const button = fixture.debugElement.nativeElement.querySelector('.next-button');
         button.click();
 
         expect(component.activeIndex).toEqual(1);
+    });
+
+    it('should navigate to sign-in page when come back button is clicked', () => {
+        const button = fixture.debugElement.nativeElement.querySelector('.come-back-button');
+        button.click();
+
+        expect(mockRouter.navigate).toHaveBeenCalledWith(['/sign-in']);
     });
 });

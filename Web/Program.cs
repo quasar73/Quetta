@@ -1,5 +1,6 @@
 using Data;
 using Data.Models;
+using Logic.HostedServices;
 using Logic.Interfaces;
 using Logic.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -20,6 +21,8 @@ builder.Services.AddCors();
 builder.Logging.ClearProviders();
 
 var logger = new LoggerConfiguration()
+    .MinimumLevel.Override("Microsoft.EntityFrameworkCore.Database.Command", Serilog.Events.LogEventLevel.Warning)
+    .MinimumLevel.Override("Microsoft.EntityFrameworkCore", Serilog.Events.LogEventLevel.Warning)
     .WriteTo.Console()
     .CreateLogger();
 
@@ -70,6 +73,8 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITokenGenerator, TokenGenerator>();
+
+builder.Services.AddHostedService<TokenCleanerHostedService>();
 
 builder.Services.AddControllers();
 

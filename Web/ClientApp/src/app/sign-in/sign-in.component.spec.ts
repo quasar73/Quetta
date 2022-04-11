@@ -1,3 +1,4 @@
+import { AuthenticationModule } from './../shared/services/auth/authentication.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TuiSelectModule } from '@taiga-ui/kit';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -30,6 +31,7 @@ describe('SignInComponent', () => {
                 getTranslocoModule(),
                 TuiSelectModule,
                 ReactiveFormsModule,
+                AuthenticationModule,
             ],
             providers: [
                 {

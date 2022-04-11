@@ -1,0 +1,9 @@
+.wrap {
+    display: grid;
+    grid-template-columns: 20% 1fr;
+    height: 100%;
+
+    .test {
+        background-color: var(--tui-base-02);
+    }
+}

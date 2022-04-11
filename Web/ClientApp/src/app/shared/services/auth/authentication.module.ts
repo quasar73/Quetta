@@ -13,7 +13,7 @@ export function factory(authenticationService: AuthenticationService): Authentic
     providers: [
         TokenStorage,
         AuthenticationService,
-        { provide: PROTECTED_FALLBACK_PAGE_URI, useValue: '/sign-in' },
+        { provide: PROTECTED_FALLBACK_PAGE_URI, useValue: '/messenger' },
         { provide: PUBLIC_FALLBACK_PAGE_URI, useValue: '/sign-in' },
         {
             provide: AUTH_SERVICE,

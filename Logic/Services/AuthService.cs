@@ -24,7 +24,7 @@ namespace Logic.Services
             this.dbContext = dbContext;
         }
 
-        public async Task<TokenDto> AuthenticateGoogleUserAsync(GoogleUserDto googleUser)
+        public async Task<TokenDto?> AuthenticateGoogleUserAsync(GoogleUserDto googleUser)
         {
             var clientId = configuration["Authentication:Google:ClientId"];
 
@@ -34,13 +34,8 @@ namespace Logic.Services
             });
 
             var user = await GetExternalLoginUserAsync(GoogleUserDto.PROVIDER, payload.Subject);
-
-            if (user == null)
-            {
-                throw new UnregisteredException();
-            }
-
-            return await GetToken(user);
+            
+            return user == null ? null : await GetToken(user);
         }
 
         public async Task<TokenDto> RegisterGoogleUserAsync(RegisterGoogleUserDto registerGoogleUser)

@@ -14,8 +14,6 @@ using Web.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddCors();
-
 #region Serilog set up
 
 builder.Logging.ClearProviders();
@@ -70,6 +68,8 @@ builder.Services.AddAuthentication(options =>
     });
 
 #endregion
+
+builder.Services.AddCors();
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITokenGenerator, TokenGenerator>();

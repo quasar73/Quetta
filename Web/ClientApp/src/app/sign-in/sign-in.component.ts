@@ -1,7 +1,8 @@
+import { AuthenticationService } from './../shared/services/auth/authentication.service';
 import { FormControl } from '@angular/forms';
 import { RegisterUserDataService } from './../shared/services/register-user-data/register-user-data.service';
 import { Router } from '@angular/router';
-import { AuthService } from './../shared/services/api/auth/auth.service';
+import { AuthApiService } from './../shared/services/api/auth/auth.service';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
 import { animate, style, transition, trigger } from '@angular/animations';
@@ -26,10 +27,11 @@ export class SignInComponent implements OnInit {
 
     constructor(
         private socialAuthService: SocialAuthService,
-        private authService: AuthService,
+        private authApiService: AuthApiService,
         private router: Router,
         private registerUserDataService: RegisterUserDataService,
-        private translocoService: TranslocoService
+        private translocoService: TranslocoService,
+        private authService: AuthenticationService
     ) {}
 
     ngOnInit(): void {
@@ -42,22 +44,19 @@ export class SignInComponent implements OnInit {
 
     signInWithGoogle(): void {
         this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID)?.then(result => {
-            this.authService.authenticateWithGoogle(result.idToken).subscribe(
-                token => {
-                    console.log(token);
-                },
-                err => {
-                    if (err.status === 401) {
-                        this.registerUserDataService.setUserData({
-                            firstName: result.firstName,
-                            lastName: result.lastName,
-                            username: result.email.split('@')[0],
-                            idToken: result.idToken,
-                        });
-                        this.router.navigate(['sign-up']);
-                    }
+            this.authApiService.authenticateWithGoogle(result.idToken).subscribe(token => {
+                if (token) {
+                    this.authService.saveAccessData(token);
+                } else {
+                    this.registerUserDataService.setUserData({
+                        firstName: result.firstName,
+                        lastName: result.lastName,
+                        username: result.email.split('@')[0],
+                        idToken: result.idToken,
+                    });
+                    this.router.navigate(['sign-up']);
                 }
-            );
+            });
         });
     }
 }

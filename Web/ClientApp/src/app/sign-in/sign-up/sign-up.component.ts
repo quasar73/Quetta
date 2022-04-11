@@ -4,7 +4,7 @@ import { RegisterUserDataService } from '../../shared/services/register-user-dat
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { lastStepIndex, stepper, usernameMinLength } from 'src/app/shared/consts/sign-on.const';
-import { AuthService } from 'src/app/shared/services/api/auth/auth.service';
+import { AuthApiService } from 'src/app/shared/services/api/auth/auth.service';
 import { UsernameValidator } from 'src/app/shared/validators/username.validator';
 import { TUI_VALIDATION_ERRORS } from '@taiga-ui/kit';
 import { availableLanguage } from 'src/app/shared/consts/languages.const';
@@ -55,7 +55,7 @@ export class SignUpComponent implements OnInit {
 
     constructor(
         private registerUserDataService: RegisterUserDataService,
-        private authService: AuthService,
+        private authService: AuthApiService,
         private router: Router,
         private translocoService: TranslocoService
     ) {}

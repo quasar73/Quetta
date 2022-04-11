@@ -7,7 +7,7 @@ import { TokenDto } from 'src/app/shared/dto/token.dto';
 @Injectable({
     providedIn: 'root',
 })
-export class AuthService {
+export class AuthApiService {
     constructor(private baseService: BaseService) {}
 
     authenticateWithGoogle(idToken: string): Observable<TokenDto | null> {

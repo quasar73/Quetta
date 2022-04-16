@@ -7,6 +7,8 @@ namespace Data
     public class QuettaDbContext : IdentityDbContext<User>
     {
         public DbSet<RefreshToken> RefreshTokens { get; set; }
+        public DbSet<Chat> Chats { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
         public QuettaDbContext(DbContextOptions<QuettaDbContext> options) : base(options) { }
 

@@ -1,0 +1,10 @@
+{
+    "sidebar": {
+        "header": {
+            "menu": {
+                "settings": "Settings",
+                "logout": "Logout"
+            }
+        }
+    }
+}

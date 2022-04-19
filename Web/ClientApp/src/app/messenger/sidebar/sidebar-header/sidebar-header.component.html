@@ -1,0 +1,13 @@
+<div class="wrap">
+    <tui-hosted-dropdown [content]="dropdown">
+        <tui-avatar class="avatar" [text]="userFullName" size="m" [rounded]="true"></tui-avatar>
+    </tui-hosted-dropdown>
+    <ng-template #dropdown>
+        <tui-data-list>
+            <ng-container *transloco="let t">
+                <button tuiOption>{{ t('messenger.sidebar.header.menu.settings') }}</button>
+                <button tuiOption>{{ t('messenger.sidebar.header.menu.logout') }}</button>
+            </ng-container>
+        </tui-data-list>
+    </ng-template>
+</div>

@@ -4,8 +4,10 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { tap, map, switchMap, catchError } from 'rxjs/operators';
 import { AuthService } from 'ngx-auth';
+import jwt_decode from 'jwt-decode';
 
 import { TokenStorage } from './token-storage.service';
+import { UserInfoModel } from '../../models/user-info.model';
 
 interface AccessData {
     accessToken: string;
@@ -48,7 +50,19 @@ export class AuthenticationService implements AuthService {
         location.reload();
     }
 
-    public saveAccessData({ accessToken, refreshToken }: AccessData) {
+    public saveAccessData({ accessToken, refreshToken }: AccessData): void {
         this.tokenStorage.setAccessToken(accessToken).setRefreshToken(refreshToken);
+    }
+
+    public getUserInfo(): Observable<UserInfoModel> {
+        return this.getAccessToken().pipe(
+            map(token => {
+                const decodedInfo = jwt_decode<any>(token);
+                return {
+                    firstName: decodedInfo.given_name,
+                    lastName: decodedInfo.family_name,
+                };
+            })
+        );
     }
 }

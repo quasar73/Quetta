@@ -1,9 +1,9 @@
 .wrap {
     display: grid;
-    grid-template-columns: 20% 1fr;
+    grid-template-columns: minmax(250px, 20%) 1fr;
     height: 100%;
 
-    .test {
+    .sidebar {
         background-color: var(--tui-base-02);
     }
 }

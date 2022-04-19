@@ -1,6 +1,7 @@
 {
     "sidebar": {
         "header": {
+            "search": "Type here to search...",
             "menu": {
                 "settings": "Settings",
                 "logout": "Logout"

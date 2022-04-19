@@ -1,3 +1,4 @@
+import { FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { UserInfoModel } from 'src/app/shared/models/user-info.model';
 import { AuthenticationService } from 'src/app/shared/services/auth/authentication.service';
@@ -9,6 +10,7 @@ import { AuthenticationService } from 'src/app/shared/services/auth/authenticati
 })
 export class SidebarHeaderComponent implements OnInit {
     userInfo!: UserInfoModel;
+    searchControl = new FormControl();
 
     get userFullName(): string {
         return this.userInfo?.firstName + ' ' + this.userInfo?.lastName;

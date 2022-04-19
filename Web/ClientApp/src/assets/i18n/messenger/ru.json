@@ -1,6 +1,7 @@
 {
     "sidebar": {
         "header": {
+            "search": "Поиск",
             "menu": {
                 "settings": "Настройки",
                 "logout": "Выйти"

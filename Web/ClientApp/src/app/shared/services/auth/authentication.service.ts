@@ -7,7 +7,7 @@ import { AuthService } from 'ngx-auth';
 import jwt_decode from 'jwt-decode';
 
 import { TokenStorage } from './token-storage.service';
-import { UserInfoModel } from '../../models/user-info.model';
+import { UserInfo } from '../../models/user-info.model';
 
 interface AccessData {
     accessToken: string;
@@ -54,7 +54,7 @@ export class AuthenticationService implements AuthService {
         this.tokenStorage.setAccessToken(accessToken).setRefreshToken(refreshToken);
     }
 
-    public getUserInfo(): Observable<UserInfoModel> {
+    public getUserInfo(): Observable<UserInfo> {
         return this.getAccessToken().pipe(
             map(token => {
                 const decodedInfo = jwt_decode<any>(token);

@@ -7,13 +7,22 @@ import { MessengerComponent } from './messenger.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { TuiAvatarModule, TuiDataListWrapperModule, TuiInputModule, TuiSelectModule } from '@taiga-ui/kit';
 import { SidebarHeaderComponent } from './sidebar/sidebar-header/sidebar-header.component';
-import { TuiDataListModule, TuiHostedDropdownModule, TuiSvgModule, TuiTextfieldControllerModule } from '@taiga-ui/core';
+import { TuiDataListModule, TuiHostedDropdownModule, TuiScrollbarModule, TuiSvgModule, TuiTextfieldControllerModule } from '@taiga-ui/core';
 import { TranslocoModule, TRANSLOCO_SCOPE } from '@ngneat/transloco';
 import { SidebarFooterComponent } from './sidebar/sidebar-footer/sidebar-footer.component';
+import { SidebarContentComponent } from './sidebar/sidebar-content/sidebar-content.component';
+import { SidebarItemComponent } from './sidebar/sidebar-content/sidebar-item/sidebar-item.component';
 
 @NgModule({
     providers: [{ provide: TRANSLOCO_SCOPE, useValue: 'messenger' }],
-    declarations: [MessengerComponent, SidebarComponent, SidebarHeaderComponent, SidebarFooterComponent],
+    declarations: [
+        MessengerComponent,
+        SidebarComponent,
+        SidebarHeaderComponent,
+        SidebarFooterComponent,
+        SidebarContentComponent,
+        SidebarItemComponent,
+    ],
     imports: [
         CommonModule,
         MessengerRoutingModule,
@@ -27,6 +36,7 @@ import { SidebarFooterComponent } from './sidebar/sidebar-footer/sidebar-footer.
         TuiDataListWrapperModule,
         TuiTextfieldControllerModule,
         TuiInputModule,
+        TuiScrollbarModule,
     ],
 })
 export class MessengerModule {}

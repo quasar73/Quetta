@@ -31,8 +31,8 @@ namespace Logic.Services
                     new Claim(JwtRegisteredClaimNames.Sub, user.Id),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                     new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
-                    new Claim(ClaimTypes.Surname, user?.FirstName ?? ""),
-                    new Claim(ClaimTypes.GivenName, user?.LastName ?? ""),
+                    new Claim(ClaimTypes.Surname, user?.LastName ?? ""),
+                    new Claim(ClaimTypes.GivenName, user?.FirstName ?? ""),
                     new Claim(ClaimTypes.NameIdentifier, user?.UserName ?? "")
                 }),
                 Expires = expires,

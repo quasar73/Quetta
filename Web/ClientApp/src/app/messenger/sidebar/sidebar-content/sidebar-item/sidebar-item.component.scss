@@ -67,7 +67,7 @@
                 }
 
                 .title-text {
-                    width : calc(100% - 4px);
+                    width : calc(100% - 8px);
                     overflow: hidden;
                     display: inline-block;
                     text-overflow: ellipsis;
@@ -81,7 +81,7 @@
 
             .subtitle {
                 width: 100%;
-                color: var(--tui-text-03);
+                color: var(--tui-text-02);
                 overflow: hidden;
                 display: inline-block;
                 text-overflow: ellipsis;

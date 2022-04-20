@@ -13,24 +13,28 @@ export class SidebarContentComponent implements OnInit {
             title: 'max ship',
             lastMessage: 'This is last message',
             type: 'dialog',
+            lastMessageDate: new Date('2020-01-01'),
         },
         {
             id: '2',
             title: 'cc xcox coc',
             lastMessage: 'This is last message',
             type: 'group',
+            lastMessageDate: new Date('2022-01-01'),
         },
         {
             id: '3',
             title: 'jack kek',
             lastMessage: 'This is last message',
             type: 'channel',
+            lastMessageDate: new Date(),
         },
         {
             id: '4',
             title: 'This is very very very very looooooong text to test how title will be cut',
             lastMessage: 'And this is very very veeryyy looooong message to test how last message will be cut',
             type: 'dialog',
+            lastMessageDate: new Date('2022-04-20'),
         },
     ];
     selectedId!: string | null;

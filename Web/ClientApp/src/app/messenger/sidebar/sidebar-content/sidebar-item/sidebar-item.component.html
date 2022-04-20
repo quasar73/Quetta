@@ -7,9 +7,9 @@
             <div class="title tui-text_body-m">
                 <tui-svg [src]="icon"></tui-svg>
                 <span class="title-text">{{ data?.title }}</span>
-                <span class="date-time tui-text_body-s">18:01</span>
+                <span class="date-time tui-text_body-s">{{ dateTime }}</span>
             </div>
-            <div class="subtitle tui-text_body-s">{{ data?.lastMessage }}</div>
+            <div class="subtitle tui-text_body-s tui-space_top-1">{{ data?.lastMessage }}</div>
         </div>
     </div>
 </div>

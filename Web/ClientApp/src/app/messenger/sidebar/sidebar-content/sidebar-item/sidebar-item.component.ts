@@ -1,5 +1,7 @@
+import { TranslocoService } from '@ngneat/transloco';
 import { ChatItem } from './../../../../shared/models/chat-item.model';
 import { Component, Input, OnInit } from '@angular/core';
+import { dateCalculator } from 'src/app/shared/utils/date-calculator';
 
 @Component({
     selector: 'qtt-sidebar-item',
@@ -27,7 +29,11 @@ export class SidebarItemComponent implements OnInit {
         }
     }
 
-    constructor() {}
+    get dateTime(): string {
+        return dateCalculator(this.data?.lastMessageDate, this.translocoSerivce);
+    }
+
+    constructor(private translocoSerivce: TranslocoService) {}
 
     ngOnInit(): void {}
 }

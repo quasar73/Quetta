@@ -7,11 +7,20 @@ import { MessengerComponent } from './messenger.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { TuiAvatarModule, TuiDataListWrapperModule, TuiInputModule, TuiSelectModule } from '@taiga-ui/kit';
 import { SidebarHeaderComponent } from './sidebar/sidebar-header/sidebar-header.component';
-import { TuiDataListModule, TuiHostedDropdownModule, TuiScrollbarModule, TuiSvgModule, TuiTextfieldControllerModule } from '@taiga-ui/core';
+import {
+    TuiButtonModule,
+    TuiDataListModule,
+    TuiHostedDropdownModule,
+    TuiScrollbarModule,
+    TuiSvgModule,
+    TuiTextfieldControllerModule,
+} from '@taiga-ui/core';
+import { TuiSidebarModule } from '@taiga-ui/addon-mobile';
 import { TranslocoModule, TRANSLOCO_SCOPE } from '@ngneat/transloco';
 import { SidebarFooterComponent } from './sidebar/sidebar-footer/sidebar-footer.component';
 import { SidebarContentComponent } from './sidebar/sidebar-content/sidebar-content.component';
 import { SidebarItemComponent } from './sidebar/sidebar-content/sidebar-item/sidebar-item.component';
+import { TuiActiveZoneModule } from '@taiga-ui/cdk';
 
 @NgModule({
     providers: [{ provide: TRANSLOCO_SCOPE, useValue: 'messenger' }],
@@ -37,6 +46,9 @@ import { SidebarItemComponent } from './sidebar/sidebar-content/sidebar-item/sid
         TuiTextfieldControllerModule,
         TuiInputModule,
         TuiScrollbarModule,
+        TuiButtonModule,
+        TuiActiveZoneModule,
+        TuiSidebarModule,
     ],
 })
 export class MessengerModule {}

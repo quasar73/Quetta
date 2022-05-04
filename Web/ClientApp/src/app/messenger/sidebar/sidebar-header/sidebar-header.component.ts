@@ -11,9 +11,14 @@ import { AuthenticationService } from 'src/app/shared/services/auth/authenticati
 export class SidebarHeaderComponent implements OnInit {
     userInfo!: UserInfo;
     searchControl = new FormControl();
+    isOpened = false;
 
     get userFullName(): string {
         return this.userInfo?.firstName + ' ' + this.userInfo?.lastName;
+    }
+
+    get username(): string {
+        return `@${this.userInfo?.username}`;
     }
 
     constructor(private authService: AuthenticationService) {}
@@ -26,5 +31,9 @@ export class SidebarHeaderComponent implements OnInit {
 
     logout(): void {
         this.authService.logout();
+    }
+
+    toggle(open: boolean) {
+        this.isOpened = open;
     }
 }

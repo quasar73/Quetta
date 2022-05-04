@@ -1,18 +1,28 @@
 <div class="wrap">
-    <tui-hosted-dropdown [content]="dropdown">
-        <tui-avatar class="avatar" [text]="userFullName" size="m" [rounded]="true"></tui-avatar>
-    </tui-hosted-dropdown>
-    <ng-template #dropdown>
-        <tui-data-list>
-            <ng-container *transloco="let t">
-                <tui-opt-group [label]="userFullName">
-                    <button tuiOption>{{ t('messenger.sidebar.header.menu.settings') }}</button>
-                    <button tuiOption (click)="logout()">{{ t('messenger.sidebar.header.menu.logout') }}</button>
-                </tui-opt-group>
-            </ng-container>
-        </tui-data-list>
-    </ng-template>
-
+    <button
+        tuiIconButton
+        type="button"
+        appearance="icon"
+        icon="tuiIconMenuLarge"
+        (click)="toggle(true)"
+        (tuiActiveZoneChange)="toggle($event)"
+    >
+        <div *tuiSidebar="isOpened; direction: 'left'">
+            <div class="user-info">
+                <div class="avatar-wrap">
+                    <tui-avatar [text]="userFullName" [autoColor]="true" [rounded]="true"></tui-avatar>
+                </div>
+                <div class="names">
+                    <div class="fullname tui-text_body-l">
+                        {{ userFullName }}
+                    </div>
+                    <div class="username">
+                        {{ username }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </button>
     <ng-container *transloco="let t">
         <tui-input class="search-input tui-space_left-3" tuiTextfieldSize="s" icon="tuiIconSearchLarge" [formControl]="searchControl">
             {{ t('messenger.sidebar.header.search') }}

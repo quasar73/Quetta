@@ -61,6 +61,7 @@ export class AuthenticationService implements AuthService {
                 return {
                     firstName: decodedInfo.given_name,
                     lastName: decodedInfo.family_name,
+                    username: decodedInfo.nameid,
                 };
             })
         );

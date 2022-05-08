@@ -9,19 +9,7 @@
         },
         "items": {
             "date": {
-                "justNow": "just now",
-                "minute": "minute ago",
-                "minutes": "{{minutes}} minutes ago",
-                "hour": "hour ago",
-                "hours": "{{hours}} hours ago",
-                "day": "day ago",
-                "days": "{{days}} days ago",
-                "week": "week ago",
-                "weeks": "{{weeks}} weeks ago",
-                "month": "month ago",
-                "months": "{{months}} months ago",
-                "year": "year ago",
-                "years": "{{years}} years ago"
+                "justNow": "just now"
             }
         }
     }

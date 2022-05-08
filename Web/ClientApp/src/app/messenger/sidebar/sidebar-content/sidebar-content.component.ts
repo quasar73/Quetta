@@ -20,7 +20,7 @@ export class SidebarContentComponent implements OnInit {
             title: 'cc xcox coc',
             lastMessage: 'This is last message',
             type: 'group',
-            lastMessageDate: new Date('2022-01-01'),
+            lastMessageDate: new Date('2022-05-08 7:57'),
         },
         {
             id: '3',

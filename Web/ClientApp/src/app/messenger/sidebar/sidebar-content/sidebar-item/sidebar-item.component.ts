@@ -1,6 +1,6 @@
 import { TranslocoService } from '@ngneat/transloco';
 import { ChatItem } from './../../../../shared/models/chat-item.model';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { dateCalculator } from 'src/app/shared/utils/date-calculator';
 
 @Component({
@@ -8,7 +8,7 @@ import { dateCalculator } from 'src/app/shared/utils/date-calculator';
     templateUrl: './sidebar-item.component.html',
     styleUrls: ['./sidebar-item.component.scss'],
 })
-export class SidebarItemComponent implements OnInit {
+export class SidebarItemComponent {
     @Input() active = false;
     @Input() data!: ChatItem;
 
@@ -30,10 +30,12 @@ export class SidebarItemComponent implements OnInit {
     }
 
     get dateTime(): string {
-        return dateCalculator(this.data?.lastMessageDate, this.translocoSerivce);
+        if (this.data) {
+            return dateCalculator(this.data?.lastMessageDate, this.translocoSerivce);
+        } else {
+            return 'none';
+        }
     }
 
     constructor(private translocoSerivce: TranslocoService) {}
-
-    ngOnInit(): void {}
 }

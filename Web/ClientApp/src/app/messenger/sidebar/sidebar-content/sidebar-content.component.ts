@@ -1,12 +1,12 @@
 import { ChatItem } from './../../../shared/models/chat-item.model';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
     selector: 'qtt-sidebar-content',
     templateUrl: './sidebar-content.component.html',
     styleUrls: ['./sidebar-content.component.scss'],
 })
-export class SidebarContentComponent implements OnInit {
+export class SidebarContentComponent {
     testData: ChatItem[] = [
         {
             id: '1',
@@ -40,8 +40,6 @@ export class SidebarContentComponent implements OnInit {
     selectedId!: string | null;
 
     constructor() {}
-
-    ngOnInit(): void {}
 
     changeSelection(id: string): void {
         this.selectedId = this.selectedId === id ? null : id;

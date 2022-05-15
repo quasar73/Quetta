@@ -5,6 +5,10 @@
             "menu": {
                 "settings": "Settings",
                 "logout": "Logout"
+            },
+            "actions": {
+                "logout": "Logout",
+                "settings": "Settings"
             }
         },
         "items": {

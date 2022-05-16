@@ -21,6 +21,8 @@ import { SidebarFooterComponent } from './sidebar/sidebar-footer/sidebar-footer.
 import { SidebarContentComponent } from './sidebar/sidebar-content/sidebar-content.component';
 import { SidebarItemComponent } from './sidebar/sidebar-content/sidebar-item/sidebar-item.component';
 import { TuiActiveZoneModule } from '@taiga-ui/cdk';
+import { ChatComponent } from './chat/chat.component';
+import { EmptyChatComponent } from './empty-chat/empty-chat.component';
 
 @NgModule({
     providers: [{ provide: TRANSLOCO_SCOPE, useValue: 'messenger' }],
@@ -31,6 +33,8 @@ import { TuiActiveZoneModule } from '@taiga-ui/cdk';
         SidebarFooterComponent,
         SidebarContentComponent,
         SidebarItemComponent,
+        ChatComponent,
+        EmptyChatComponent,
     ],
     imports: [
         CommonModule,

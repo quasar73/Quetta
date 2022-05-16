@@ -16,5 +16,6 @@
                 "justNow": "just now"
             }
         }
-    }
+    },
+    "emptyChatMessage": "Choose a chat to start messaging"
 }

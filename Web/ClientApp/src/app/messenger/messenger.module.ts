@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { MessengerRoutingModule } from './messenger-routing.module';
 import { MessengerComponent } from './messenger.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
-import { TuiAvatarModule, TuiDataListWrapperModule, TuiInputModule, TuiSelectModule } from '@taiga-ui/kit';
+import { TuiAvatarModule, TuiBadgeModule, TuiDataListWrapperModule, TuiInputModule, TuiSelectModule } from '@taiga-ui/kit';
 import { SidebarHeaderComponent } from './sidebar/sidebar-header/sidebar-header.component';
 import {
     TuiButtonModule,
@@ -23,6 +23,7 @@ import { SidebarItemComponent } from './sidebar/sidebar-content/sidebar-item/sid
 import { TuiActiveZoneModule } from '@taiga-ui/cdk';
 import { ChatComponent } from './chat/chat.component';
 import { EmptyChatComponent } from './empty-chat/empty-chat.component';
+import { ChatHeaderComponent } from './chat/chat-header/chat-header.component';
 
 @NgModule({
     providers: [{ provide: TRANSLOCO_SCOPE, useValue: 'messenger' }],
@@ -35,6 +36,7 @@ import { EmptyChatComponent } from './empty-chat/empty-chat.component';
         SidebarItemComponent,
         ChatComponent,
         EmptyChatComponent,
+        ChatHeaderComponent,
     ],
     imports: [
         CommonModule,
@@ -53,6 +55,7 @@ import { EmptyChatComponent } from './empty-chat/empty-chat.component';
         TuiButtonModule,
         TuiActiveZoneModule,
         TuiSidebarModule,
+        TuiBadgeModule,
     ],
 })
 export class MessengerModule {}

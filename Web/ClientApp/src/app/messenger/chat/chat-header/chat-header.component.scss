@@ -1,0 +1,13 @@
+.wrap {
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 32px 0px 32px;
+    background-color: var(--tui-base-02);
+    border-left: 1px solid var(--tui-base-01);
+
+    .status {
+        color: var(--tui-text-03);
+    }
+}

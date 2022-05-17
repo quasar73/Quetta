@@ -1,7 +1,7 @@
 .wrap {
+    height: 100%;
     display: grid;
     grid-template-columns: minmax(280px, 20%) 1fr;
-    height: 100%;
 
     .sidebar {
         height: 100%;

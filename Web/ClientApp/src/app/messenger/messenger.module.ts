@@ -24,6 +24,8 @@ import { TuiActiveZoneModule } from '@taiga-ui/cdk';
 import { ChatComponent } from './chat/chat.component';
 import { EmptyChatComponent } from './empty-chat/empty-chat.component';
 import { ChatHeaderComponent } from './chat/chat-header/chat-header.component';
+import { ChatContentComponent } from './chat/chat-content/chat-content.component';
+import { ChatInputComponent } from './chat/chat-input/chat-input.component';
 
 @NgModule({
     providers: [{ provide: TRANSLOCO_SCOPE, useValue: 'messenger' }],
@@ -37,6 +39,8 @@ import { ChatHeaderComponent } from './chat/chat-header/chat-header.component';
         ChatComponent,
         EmptyChatComponent,
         ChatHeaderComponent,
+        ChatContentComponent,
+        ChatInputComponent,
     ],
     imports: [
         CommonModule,

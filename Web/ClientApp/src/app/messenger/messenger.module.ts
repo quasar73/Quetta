@@ -5,7 +5,14 @@ import { CommonModule } from '@angular/common';
 import { MessengerRoutingModule } from './messenger-routing.module';
 import { MessengerComponent } from './messenger.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
-import { TuiAvatarModule, TuiBadgeModule, TuiDataListWrapperModule, TuiInputModule, TuiSelectModule } from '@taiga-ui/kit';
+import {
+    TuiAvatarModule,
+    TuiBadgeModule,
+    TuiDataListWrapperModule,
+    TuiInputModule,
+    TuiSelectModule,
+    TuiTextAreaModule,
+} from '@taiga-ui/kit';
 import { SidebarHeaderComponent } from './sidebar/sidebar-header/sidebar-header.component';
 import {
     TuiButtonModule,
@@ -60,6 +67,7 @@ import { ChatInputComponent } from './chat/chat-input/chat-input.component';
         TuiActiveZoneModule,
         TuiSidebarModule,
         TuiBadgeModule,
+        TuiTextAreaModule,
     ],
 })
 export class MessengerModule {}

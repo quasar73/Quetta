@@ -17,5 +17,8 @@
             }
         }
     },
+    "chat": {
+        "placeholder": "Type here to chat..."
+    },
     "emptyChatMessage": "Choose a chat to start messaging"
 }

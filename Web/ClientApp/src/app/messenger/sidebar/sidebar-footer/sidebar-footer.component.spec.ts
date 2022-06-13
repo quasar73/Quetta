@@ -1,3 +1,4 @@
+import { ReactiveFormsModule } from '@angular/forms';
 import { TuiSelectModule } from '@taiga-ui/kit';
 import { getTranslocoModule } from 'src/app/translate/transloco-testing.module';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -11,7 +12,7 @@ describe('SidebarFooterComponent', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             declarations: [SidebarFooterComponent],
-            imports: [getTranslocoModule(), TuiSelectModule],
+            imports: [getTranslocoModule(), TuiSelectModule, ReactiveFormsModule],
         }).compileComponents();
     });
 

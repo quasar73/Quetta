@@ -4,7 +4,7 @@ import { RegisterUserDataService } from './../shared/services/register-user-data
 import { Router } from '@angular/router';
 import { AuthApiService } from './../shared/services/api/auth/auth.service';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
+import { GoogleLoginProvider, SocialAuthService } from '@abacritt/angularx-social-login';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { TranslocoService } from '@ngneat/transloco';
 import { availableLanguage } from '../shared/consts/languages.const';

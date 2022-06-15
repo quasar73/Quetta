@@ -43,9 +43,9 @@
         </tui-hosted-dropdown>
         <ng-template #dropdown>
             <tui-data-list>
-                <button tuiOption (click)="openAddChatDialog()">Add new chat</button>
-                <button tuiOption>Create a group chat</button>
-                <button tuiOption>Create a channel</button>
+                <button tuiOption (click)="openAddChatDialog()">{{ t('messenger.sidebar.header.add.addChat') }}</button>
+                <button tuiOption>{{ t('messenger.sidebar.header.add.createGroup') }}</button>
+                <button tuiOption>{{ t('messenger.sidebar.header.add.createChannel') }}</button>
             </tui-data-list>
         </ng-template>
     </ng-container>

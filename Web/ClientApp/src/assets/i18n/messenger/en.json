@@ -2,13 +2,14 @@
     "sidebar": {
         "header": {
             "search": "Type here to search...",
-            "menu": {
-                "settings": "Settings",
-                "logout": "Logout"
-            },
             "actions": {
                 "logout": "Logout",
                 "settings": "Settings"
+            },
+            "add": {
+                "addChat": "Add new chat",
+                "createGroup": "Create new group chat",
+                "createChannel": "Create new channel"
             }
         },
         "items": {
@@ -20,5 +21,12 @@
     "chat": {
         "placeholder": "Type here to chat..."
     },
-    "emptyChatMessage": "Choose a chat to start messaging"
+    "emptyChatMessage": "Choose a chat to start messaging",
+    "addChatDialog": {
+        "header": "Add chat",
+        "description": "To start new chat with some user you have to invite him to chat. Please type an username.",
+        "invite": "Invite",
+        "cancel": "Cancel",
+        "placeholder": "Type an username"
+    }
 }

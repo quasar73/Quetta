@@ -25,12 +25,16 @@ export class AddChatDialogComponent {
 
     constructor(
         @Inject(POLYMORPHEUS_CONTEXT)
-        private readonly context: TuiDialogContext<number, number>
+        private readonly context: TuiDialogContext<string | null>
     ) {}
 
     invite(): void {
         if (this.usernameControl.valid) {
             this.context.completeWith(this.usernameControl.value);
         }
+    }
+
+    cancel(): void {
+        this.context.completeWith(null);
     }
 }

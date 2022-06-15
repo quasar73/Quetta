@@ -17,13 +17,13 @@ export class SidebarHeaderComponent implements OnInit {
     searchControl = new FormControl();
     isOpened = false;
 
-    private readonly addChatDialog = this.dialogService.open<string>(new PolymorpheusComponent(AddChatDialogComponent, this.injector), {
+    private addChatDialog = this.dialogService.open<string | null>(new PolymorpheusComponent(AddChatDialogComponent, this.injector), {
         dismissible: true,
-        label: 'Add new chat',
+        closeable: false,
     });
 
     get userFullName(): string {
-        return this.userInfo?.firstName + ' ' + this.userInfo?.lastName;
+        return `${this.userInfo?.firstName}  ${this.userInfo?.lastName}`;
     }
 
     get username(): string {
@@ -52,7 +52,7 @@ export class SidebarHeaderComponent implements OnInit {
 
     openAddChatDialog(): void {
         this.addChatDialog.subscribe({
-            next: (username: string) => {
+            next: (username: string | null) => {
                 console.log(username);
             },
         });

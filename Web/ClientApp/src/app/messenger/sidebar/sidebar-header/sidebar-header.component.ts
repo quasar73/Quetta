@@ -1,17 +1,26 @@
+import { AddChatDialogComponent } from './add-chat-dialog/add-chat-dialog.component';
 import { FormControl } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, Injector, OnInit } from '@angular/core';
 import { UserInfo } from 'src/app/shared/models/user-info.model';
 import { AuthenticationService } from 'src/app/shared/services/auth/authentication.service';
+import { TuiDialogService } from '@taiga-ui/core';
+import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
 
 @Component({
     selector: 'qtt-sidebar-header',
     templateUrl: './sidebar-header.component.html',
     styleUrls: ['./sidebar-header.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidebarHeaderComponent implements OnInit {
     userInfo!: UserInfo;
     searchControl = new FormControl();
     isOpened = false;
+
+    private readonly addChatDialog = this.dialogService.open<string>(new PolymorpheusComponent(AddChatDialogComponent, this.injector), {
+        dismissible: true,
+        label: 'Add new chat',
+    });
 
     get userFullName(): string {
         return this.userInfo?.firstName + ' ' + this.userInfo?.lastName;
@@ -21,7 +30,11 @@ export class SidebarHeaderComponent implements OnInit {
         return `@${this.userInfo?.username}`;
     }
 
-    constructor(private authService: AuthenticationService) {}
+    constructor(
+        private authService: AuthenticationService,
+        @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
+        @Inject(Injector) private readonly injector: Injector
+    ) {}
 
     ngOnInit(): void {
         this.authService.getUserInfo().subscribe(info => {
@@ -35,5 +48,13 @@ export class SidebarHeaderComponent implements OnInit {
 
     toggle(open: boolean) {
         this.isOpened = open;
+    }
+
+    openAddChatDialog(): void {
+        this.addChatDialog.subscribe({
+            next: (username: string) => {
+                console.log(username);
+            },
+        });
     }
 }

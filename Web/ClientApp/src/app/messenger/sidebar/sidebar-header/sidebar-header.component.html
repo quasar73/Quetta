@@ -38,5 +38,15 @@
             {{ t('messenger.sidebar.header.search') }}
             <input tuiTextfield type="email" />
         </tui-input>
+        <tui-hosted-dropdown tuiDropdownAlign="left" [content]="dropdown" class="add-btn">
+            <button tuiIconButton type="button" appearance="icon" icon="tuiIconPlusCircleLarge"></button>
+        </tui-hosted-dropdown>
+        <ng-template #dropdown>
+            <tui-data-list>
+                <button tuiOption (click)="openAddChatDialog()">Add new chat</button>
+                <button tuiOption>Create a group chat</button>
+                <button tuiOption>Create a channel</button>
+            </tui-data-list>
+        </ng-template>
     </ng-container>
 </div>

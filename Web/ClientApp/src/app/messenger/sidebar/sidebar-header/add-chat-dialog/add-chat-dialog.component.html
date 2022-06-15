@@ -1,0 +1,21 @@
+<div class="wrap">
+    <div class="tui-space_bottom-3">To start new chat with some user you have to invite him to chat. Please type an username.</div>
+    <tui-input [formControl]="usernameControl">
+        Type an username
+        <input tuiTextfield type="email" />
+    </tui-input>
+    <tui-error [formControl]="usernameControl" [error]="[] | tuiFieldError | async"></tui-error>
+    <div class="buttons tui-space_top-3">
+        <button
+            tuiButton
+            type="button"
+            appearance="primary"
+            class="tui-space_right-2"
+            [disabled]="usernameControl.invalid"
+            (click)="invite()"
+        >
+            Invite
+        </button>
+        <button tuiButton type="button" appearance="secondary">Cancel</button>
+    </div>
+</div>

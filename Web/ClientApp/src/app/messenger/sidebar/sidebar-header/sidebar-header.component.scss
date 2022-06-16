@@ -8,8 +8,18 @@
         flex: 1;
     }
 
-    .add-btn {
-        margin-left: 12px;
+    .add-btn-wrap {
+        margin-left: 20px;
+        margin-right: 16px;
+
+        .add-btn {
+            width: 24px;
+        }
+    }
+
+    .notification-btn {
+        margin-left: 20px;
+        cursor: pointer;
     }
 }
 

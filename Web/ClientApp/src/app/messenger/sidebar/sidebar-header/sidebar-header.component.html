@@ -38,8 +38,11 @@
             {{ t('messenger.sidebar.header.search') }}
             <input tuiTextfield type="email" />
         </tui-input>
-        <tui-hosted-dropdown tuiDropdownAlign="left" [content]="dropdown" class="add-btn">
-            <button tuiIconButton type="button" appearance="icon" icon="tuiIconPlusCircleLarge"></button>
+
+        <tui-marker-icon mode="primary" size="xs" src="tuiIconBellLarge" class="notification-btn" [tuiHint]="t('messenger.sidebar.header.notifications')" (click)="openRequestsListDialog()"></tui-marker-icon>
+
+        <tui-hosted-dropdown tuiDropdownAlign="left" [content]="dropdown" class="add-btn-wrap">
+            <button tuiIconButton type="button" appearance="icon" icon="tuiIconPlusCircleLarge" class="add-btn"></button>
         </tui-hosted-dropdown>
         <ng-template #dropdown>
             <tui-data-list>

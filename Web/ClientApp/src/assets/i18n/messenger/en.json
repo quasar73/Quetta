@@ -10,7 +10,8 @@
                 "addChat": "Add new chat",
                 "createGroup": "Create new group chat",
                 "createChannel": "Create new channel"
-            }
+            },
+            "notifications": "Notifications"
         },
         "items": {
             "date": {

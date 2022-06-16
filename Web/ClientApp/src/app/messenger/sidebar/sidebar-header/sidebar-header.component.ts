@@ -1,3 +1,4 @@
+import { RequestsListDialogComponent } from './requests-list-dialog/requests-list-dialog.component';
 import { AddChatDialogComponent } from './add-chat-dialog/add-chat-dialog.component';
 import { FormControl } from '@angular/forms';
 import { ChangeDetectionStrategy, Component, Inject, Injector, OnInit } from '@angular/core';
@@ -21,6 +22,13 @@ export class SidebarHeaderComponent implements OnInit {
         dismissible: true,
         closeable: false,
     });
+    private requestsListDialog = this.dialogService.open<string | null>(
+        new PolymorpheusComponent(RequestsListDialogComponent, this.injector),
+        {
+            dismissible: true,
+            closeable: false,
+        }
+    );
 
     get userFullName(): string {
         return `${this.userInfo?.firstName}  ${this.userInfo?.lastName}`;
@@ -56,5 +64,9 @@ export class SidebarHeaderComponent implements OnInit {
                 console.log(username);
             },
         });
+    }
+
+    openRequestsListDialog(): void {
+        this.requestsListDialog.subscribe();
     }
 }

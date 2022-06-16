@@ -7,10 +7,12 @@ import { MessengerComponent } from './messenger.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import {
     TuiAvatarModule,
+    TuiBadgedContentModule,
     TuiBadgeModule,
     TuiDataListWrapperModule,
     TuiFieldErrorPipeModule,
     TuiInputModule,
+    TuiMarkerIconModule,
     TuiSelectModule,
     TuiTextAreaModule,
 } from '@taiga-ui/kit';
@@ -19,6 +21,7 @@ import {
     TuiButtonModule,
     TuiDataListModule,
     TuiErrorModule,
+    TuiHintModule,
     TuiHostedDropdownModule,
     TuiScrollbarModule,
     TuiSvgModule,
@@ -36,6 +39,7 @@ import { ChatHeaderComponent } from './chat/chat-header/chat-header.component';
 import { ChatContentComponent } from './chat/chat-content/chat-content.component';
 import { ChatInputComponent } from './chat/chat-input/chat-input.component';
 import { AddChatDialogComponent } from './sidebar/sidebar-header/add-chat-dialog/add-chat-dialog.component';
+import { RequestsListDialogComponent } from './sidebar/sidebar-header/requests-list-dialog/requests-list-dialog.component';
 
 @NgModule({
     providers: [{ provide: TRANSLOCO_SCOPE, useValue: 'messenger' }],
@@ -52,6 +56,7 @@ import { AddChatDialogComponent } from './sidebar/sidebar-header/add-chat-dialog
         ChatContentComponent,
         ChatInputComponent,
         AddChatDialogComponent,
+        RequestsListDialogComponent,
     ],
     imports: [
         CommonModule,
@@ -74,6 +79,9 @@ import { AddChatDialogComponent } from './sidebar/sidebar-header/add-chat-dialog
         TuiTextAreaModule,
         TuiFieldErrorPipeModule,
         TuiErrorModule,
+        TuiBadgedContentModule,
+        TuiMarkerIconModule,
+        TuiHintModule,
     ],
 })
 export class MessengerModule {}

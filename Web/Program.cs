@@ -11,6 +11,8 @@ using Serilog;
 using System.Reflection;
 using System.Text;
 using Web.Middlewares;
+using MediatR;
+using Logic.Handlers.Queries;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -69,17 +71,18 @@ builder.Services.AddAuthentication(options =>
 
 #endregion
 
+builder.Services.AddMediatR(typeof(RefreshTokenHandler).GetTypeInfo().Assembly);
+
 builder.Services.AddCors();
-
-builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<ITokenGenerator, TokenGenerator>();
-
-builder.Services.AddHostedService<TokenCleanerHostedService>();
 
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<ITokenGenerator, TokenGenerator>();
+
+builder.Services.AddHostedService<TokenCleanerHostedService>();
 
 var app = builder.Build();
 

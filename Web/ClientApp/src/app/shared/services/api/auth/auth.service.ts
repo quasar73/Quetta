@@ -1,8 +1,8 @@
 import { Observable } from 'rxjs';
 import { BaseService } from './../base/base.service';
 import { Injectable } from '@angular/core';
-import { RegisterGoogleUserDto } from 'src/app/shared/dto/register-google-user.dto';
-import { TokenDto } from 'src/app/shared/dto/token.dto';
+import { RegisterGoogleUserModel } from 'src/app/shared/api-models/register-google-user.model';
+import { TokenModel } from 'src/app/shared/api-models/token.model';
 
 @Injectable({
     providedIn: 'root',
@@ -10,12 +10,12 @@ import { TokenDto } from 'src/app/shared/dto/token.dto';
 export class AuthApiService {
     constructor(private baseService: BaseService) {}
 
-    authenticateWithGoogle(idToken: string): Observable<TokenDto | null> {
-        return this.baseService.post<TokenDto>('auth/authenticateWithGoogle', { idToken });
+    authenticateWithGoogle(idToken: string): Observable<TokenModel | null> {
+        return this.baseService.post<TokenModel>('auth/authenticateWithGoogle', { idToken });
     }
 
-    registerGoogleUser(dto: RegisterGoogleUserDto): Observable<TokenDto | null> {
-        return this.baseService.post<TokenDto>('auth/registerGoogleUser', dto);
+    registerGoogleUser(dto: RegisterGoogleUserModel): Observable<TokenModel | null> {
+        return this.baseService.post<TokenModel>('auth/registerGoogleUser', dto);
     }
 
     checkOutUsername(username: string): Observable<boolean | null> {

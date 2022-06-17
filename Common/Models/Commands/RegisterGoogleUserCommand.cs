@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using MediatR;
+using System.ComponentModel.DataAnnotations;
 
-namespace Common.DTO
+namespace Common.Models.Commands
 {
-    public class RegisterGoogleUserDto
+    public record class RegisterGoogleUserCommand : IRequest<TokenModel>
     {
         public const string PROVIDER = "google";
 

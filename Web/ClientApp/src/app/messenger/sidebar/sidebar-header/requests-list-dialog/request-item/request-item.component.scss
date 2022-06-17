@@ -1,0 +1,10 @@
+.accept {
+    color: var(--tui-positive);
+    transition: background-color 0.35s ease-in-out;
+
+    &:hover {
+         transition: background-color 0.35s ease-in-out;
+         background-color: var(--tui-positive-hover);
+         color: var(--tui-text-02);
+    }
+ }

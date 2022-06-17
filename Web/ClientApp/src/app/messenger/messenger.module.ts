@@ -7,11 +7,11 @@ import { MessengerComponent } from './messenger.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import {
     TuiAvatarModule,
-    TuiBadgedContentModule,
     TuiBadgeModule,
     TuiDataListWrapperModule,
     TuiFieldErrorPipeModule,
     TuiInputModule,
+    TuiIslandModule,
     TuiMarkerIconModule,
     TuiSelectModule,
     TuiTextAreaModule,
@@ -23,6 +23,7 @@ import {
     TuiErrorModule,
     TuiHintModule,
     TuiHostedDropdownModule,
+    TuiLinkModule,
     TuiScrollbarModule,
     TuiSvgModule,
     TuiTextfieldControllerModule,
@@ -40,6 +41,7 @@ import { ChatContentComponent } from './chat/chat-content/chat-content.component
 import { ChatInputComponent } from './chat/chat-input/chat-input.component';
 import { AddChatDialogComponent } from './sidebar/sidebar-header/add-chat-dialog/add-chat-dialog.component';
 import { RequestsListDialogComponent } from './sidebar/sidebar-header/requests-list-dialog/requests-list-dialog.component';
+import { RequestItemComponent } from './sidebar/sidebar-header/requests-list-dialog/request-item/request-item.component';
 
 @NgModule({
     providers: [{ provide: TRANSLOCO_SCOPE, useValue: 'messenger' }],
@@ -57,6 +59,7 @@ import { RequestsListDialogComponent } from './sidebar/sidebar-header/requests-l
         ChatInputComponent,
         AddChatDialogComponent,
         RequestsListDialogComponent,
+        RequestItemComponent,
     ],
     imports: [
         CommonModule,
@@ -79,9 +82,10 @@ import { RequestsListDialogComponent } from './sidebar/sidebar-header/requests-l
         TuiTextAreaModule,
         TuiFieldErrorPipeModule,
         TuiErrorModule,
-        TuiBadgedContentModule,
         TuiMarkerIconModule,
         TuiHintModule,
+        TuiIslandModule,
+        TuiLinkModule,
     ],
 })
 export class MessengerModule {}

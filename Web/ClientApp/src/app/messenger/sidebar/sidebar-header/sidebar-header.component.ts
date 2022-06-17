@@ -26,7 +26,8 @@ export class SidebarHeaderComponent implements OnInit {
         new PolymorpheusComponent(RequestsListDialogComponent, this.injector),
         {
             dismissible: true,
-            closeable: false,
+            closeable: true,
+            size: 'l',
         }
     );
 

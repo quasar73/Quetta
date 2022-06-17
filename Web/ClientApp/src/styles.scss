@@ -2,4 +2,8 @@ html, body {
     background-color: var(--tui-base-01);
     height: 100%;
     width: 100%;
+
+    .t-overlay.t-overlay_visible {
+        background-color: rgba(0, 0, 0, .4);
+    }
 }

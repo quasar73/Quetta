@@ -1,7 +1,7 @@
+import { NotificationsListDialogComponent } from './notifications-list-dialog/notifications-list-dialog.component';
 import { TranslocoService } from '@ngneat/transloco';
 import { HttpErrorResponse } from '@angular/common/http';
 import { InviteService } from './../../../shared/services/api/invite/invite.service';
-import { RequestsListDialogComponent } from './requests-list-dialog/requests-list-dialog.component';
 import { AddChatDialogComponent } from './add-chat-dialog/add-chat-dialog.component';
 import { FormControl } from '@angular/forms';
 import { ChangeDetectionStrategy, Component, Inject, Injector, OnInit } from '@angular/core';
@@ -26,7 +26,7 @@ export class SidebarHeaderComponent implements OnInit {
         closeable: false,
     });
     private requestsListDialog = this.dialogService.open<string | null>(
-        new PolymorpheusComponent(RequestsListDialogComponent, this.injector),
+        new PolymorpheusComponent(NotificationsListDialogComponent, this.injector),
         {
             dismissible: true,
             closeable: true,

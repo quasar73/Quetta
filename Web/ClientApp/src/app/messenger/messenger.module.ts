@@ -1,3 +1,5 @@
+import { NotificationItemComponent } from './sidebar/sidebar-header/notifications-list-dialog/notification-item/notification-item.component';
+import { NotificationsListDialogComponent } from './sidebar/sidebar-header/notifications-list-dialog/notifications-list-dialog.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -41,8 +43,6 @@ import { ChatHeaderComponent } from './chat/chat-header/chat-header.component';
 import { ChatContentComponent } from './chat/chat-content/chat-content.component';
 import { ChatInputComponent } from './chat/chat-input/chat-input.component';
 import { AddChatDialogComponent } from './sidebar/sidebar-header/add-chat-dialog/add-chat-dialog.component';
-import { RequestsListDialogComponent } from './sidebar/sidebar-header/requests-list-dialog/requests-list-dialog.component';
-import { RequestItemComponent } from './sidebar/sidebar-header/requests-list-dialog/request-item/request-item.component';
 
 @NgModule({
     providers: [{ provide: TRANSLOCO_SCOPE, useValue: 'messenger' }],
@@ -59,8 +59,8 @@ import { RequestItemComponent } from './sidebar/sidebar-header/requests-list-dia
         ChatContentComponent,
         ChatInputComponent,
         AddChatDialogComponent,
-        RequestsListDialogComponent,
-        RequestItemComponent,
+        NotificationsListDialogComponent,
+        NotificationItemComponent,
     ],
     imports: [
         CommonModule,

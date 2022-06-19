@@ -16,7 +16,7 @@ export class SidebarFooterComponent implements OnInit {
         return availableLanguage;
     }
 
-    constructor(private translocoService: TranslocoService) {}
+    constructor(private readonly translocoService: TranslocoService) {}
 
     ngOnInit(): void {
         this.languagesControl.setValue(this.translocoService.getActiveLang());

@@ -1,10 +1,12 @@
+import { HttpErrorResponse } from '@angular/common/http';
+import { InviteService } from './../../../shared/services/api/invite/invite.service';
 import { RequestsListDialogComponent } from './requests-list-dialog/requests-list-dialog.component';
 import { AddChatDialogComponent } from './add-chat-dialog/add-chat-dialog.component';
 import { FormControl } from '@angular/forms';
 import { ChangeDetectionStrategy, Component, Inject, Injector, OnInit } from '@angular/core';
 import { UserInfo } from 'src/app/shared/models/user-info.model';
 import { AuthenticationService } from 'src/app/shared/services/auth/authentication.service';
-import { TuiDialogService } from '@taiga-ui/core';
+import { TuiAlertService, TuiDialogService, TuiNotification } from '@taiga-ui/core';
 import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
 
 @Component({
@@ -40,7 +42,9 @@ export class SidebarHeaderComponent implements OnInit {
     }
 
     constructor(
-        private authService: AuthenticationService,
+        private readonly authService: AuthenticationService,
+        private readonly inviteService: InviteService,
+        private readonly alertService: TuiAlertService,
         @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
         @Inject(Injector) private readonly injector: Injector
     ) {}
@@ -62,7 +66,33 @@ export class SidebarHeaderComponent implements OnInit {
     openAddChatDialog(): void {
         this.addChatDialog.subscribe({
             next: (username: string | null) => {
-                console.log(username);
+                if (username) {
+                    this.inviteService
+                        .sendInvite({
+                            receiverUsername: username,
+                            isGroupChat: false,
+                            chatId: null,
+                        })
+                        .subscribe({
+                            next: () => {
+                                this.alertService
+                                    .open(`User @${username} successfully invited.`, {
+                                        label: 'User invited',
+                                        status: TuiNotification.Success,
+                                    })
+                                    .subscribe();
+                            },
+                            error: (response: HttpErrorResponse): void => {
+                                if (response.status === 404) {
+                                    this.alertService
+                                        .open('User not found.', {
+                                            status: TuiNotification.Warning,
+                                        })
+                                        .subscribe();
+                                }
+                            },
+                        });
+                }
             },
         });
     }

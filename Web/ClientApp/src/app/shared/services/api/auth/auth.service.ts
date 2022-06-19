@@ -8,7 +8,7 @@ import { TokenModel } from 'src/app/shared/api-models/token.model';
     providedIn: 'root',
 })
 export class AuthApiService {
-    constructor(private baseService: BaseService) {}
+    constructor(private readonly baseService: BaseService) {}
 
     authenticateWithGoogle(idToken: string): Observable<TokenModel | null> {
         return this.baseService.post<TokenModel>('auth/authenticateWithGoogle', { idToken });

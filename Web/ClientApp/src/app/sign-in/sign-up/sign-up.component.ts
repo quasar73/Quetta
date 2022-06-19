@@ -54,10 +54,10 @@ export class SignUpComponent implements OnInit {
     }
 
     constructor(
-        private registerUserDataService: RegisterUserDataService,
-        private authService: AuthApiService,
-        private router: Router,
-        private translocoService: TranslocoService
+        private readonly registerUserDataService: RegisterUserDataService,
+        private readonly authService: AuthApiService,
+        private readonly router: Router,
+        private readonly translocoService: TranslocoService
     ) {}
 
     ngOnInit(): void {

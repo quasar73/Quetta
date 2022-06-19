@@ -18,6 +18,7 @@ import {
 } from '@taiga-ui/kit';
 import { SidebarHeaderComponent } from './sidebar/sidebar-header/sidebar-header.component';
 import {
+    TuiAlertModule,
     TuiButtonModule,
     TuiDataListModule,
     TuiErrorModule,
@@ -86,6 +87,7 @@ import { RequestItemComponent } from './sidebar/sidebar-header/requests-list-dia
         TuiHintModule,
         TuiIslandModule,
         TuiLinkModule,
+        TuiAlertModule,
     ],
 })
 export class MessengerModule {}

@@ -30,6 +30,7 @@ namespace Logic.Handlers.Commands
 
             var invite = new Invite
             {
+                Id = Guid.NewGuid().ToString(),
                 IsGroupChat = request.SendInviteRequest.IsGroupChat,
                 Status = InviteStatus.Pending,
                 ChatId = request.SendInviteRequest.ChatId,

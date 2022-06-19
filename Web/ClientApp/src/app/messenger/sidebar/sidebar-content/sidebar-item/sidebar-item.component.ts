@@ -38,5 +38,5 @@ export class SidebarItemComponent {
         }
     }
 
-    constructor(private translocoSerivce: TranslocoService) {}
+    constructor(private readonly translocoSerivce: TranslocoService) {}
 }

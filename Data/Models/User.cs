@@ -14,6 +14,10 @@ namespace Data.Models
 
         public string? AvatarUrl { get; set; }
 
+        public virtual ICollection<Chat>? Chats { get; set; }
+        
+        public virtual ICollection<Chat>? CreatedChats { get; set; }
+
         public virtual ICollection<RefreshToken>? RefreshTokens { get; set; }
 
         public virtual ICollection<Invite>? InvitesIncoming { get; set; }

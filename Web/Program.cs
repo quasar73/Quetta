@@ -36,7 +36,7 @@ var connectionString = builder.Configuration.GetConnectionString("PostgresConnec
 
 builder.Services.AddDbContext<QuettaDbContext>(options =>
 {
-    options.UseNpgsql(connectionString, b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName));
+    options.UseNpgsql(connectionString, b => b.MigrationsAssembly(typeof(QuettaDbContext).GetTypeInfo().Assembly.FullName));
 });
 
 builder.Services.AddIdentity<User, IdentityRole>()

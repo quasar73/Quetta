@@ -3,19 +3,17 @@ using System;
 using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Web.Migrations
+namespace Data.Migrations
 {
     [DbContext(typeof(QuettaDbContext))]
-    [Migration("20220410102205_AddedRefreshTokenEntity")]
-    partial class AddedRefreshTokenEntity
+    partial class QuettaDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -23,6 +21,105 @@ namespace Web.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("ChatUser", b =>
+                {
+                    b.Property<string>("ChatsId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UsersId")
+                        .HasColumnType("text");
+
+                    b.HasKey("ChatsId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("ChatUser");
+                });
+
+            modelBuilder.Entity("Data.Models.Chat", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<string>("CreatorId")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsGroup")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatorId");
+
+                    b.ToTable("Chats");
+                });
+
+            modelBuilder.Entity("Data.Models.Invite", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ChatId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsGroupChat")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("ReceiverId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("SenderId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChatId");
+
+                    b.HasIndex("ReceiverId");
+
+                    b.HasIndex("SenderId");
+
+                    b.ToTable("Invite");
+                });
+
+            modelBuilder.Entity("Data.Models.Message", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ChatId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChatId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Messages");
+                });
 
             modelBuilder.Entity("Data.Models.RefreshToken", b =>
                 {
@@ -219,15 +316,85 @@ namespace Web.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("ChatUser", b =>
+                {
+                    b.HasOne("Data.Models.Chat", null)
+                        .WithMany()
+                        .HasForeignKey("ChatsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Data.Models.Chat", b =>
+                {
+                    b.HasOne("Data.Models.User", "Creator")
+                        .WithMany("CreatedChats")
+                        .HasForeignKey("CreatorId");
+
+                    b.Navigation("Creator");
+                });
+
+            modelBuilder.Entity("Data.Models.Invite", b =>
+                {
+                    b.HasOne("Data.Models.Chat", "Chat")
+                        .WithMany("Invites")
+                        .HasForeignKey("ChatId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Models.User", "Receiver")
+                        .WithMany("InvitesIncoming")
+                        .HasForeignKey("ReceiverId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Models.User", "Sender")
+                        .WithMany("InvitesOutcoming")
+                        .HasForeignKey("SenderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Chat");
+
+                    b.Navigation("Receiver");
+
+                    b.Navigation("Sender");
+                });
+
+            modelBuilder.Entity("Data.Models.Message", b =>
+                {
+                    b.HasOne("Data.Models.Chat", "Chat")
+                        .WithMany("Messages")
+                        .HasForeignKey("ChatId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Chat");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Data.Models.RefreshToken", b =>
                 {
-                    b.HasOne("Data.Models.User", "Users")
+                    b.HasOne("Data.Models.User", "User")
                         .WithMany("RefreshTokens")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Users");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -281,8 +448,21 @@ namespace Web.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Data.Models.Chat", b =>
+                {
+                    b.Navigation("Invites");
+
+                    b.Navigation("Messages");
+                });
+
             modelBuilder.Entity("Data.Models.User", b =>
                 {
+                    b.Navigation("CreatedChats");
+
+                    b.Navigation("InvitesIncoming");
+
+                    b.Navigation("InvitesOutcoming");
+
                     b.Navigation("RefreshTokens");
                 });
 #pragma warning restore 612, 618

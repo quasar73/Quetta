@@ -35,6 +35,14 @@ namespace Data
             builder.Entity<User>()
                 .HasMany(u => u.InvitesOutcoming)
                 .WithOne(i => i.Sender);
+
+            builder.Entity<User>()
+                .HasMany(u => u.Chats)
+                .WithMany(c => c.Users);
+
+            builder.Entity<User>()
+                .HasMany(u => u.CreatedChats)
+                .WithOne(c => c.Creator);
         }
     }
 }

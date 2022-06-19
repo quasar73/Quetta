@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Data.Models
 {
@@ -14,5 +15,9 @@ namespace Data.Models
         public string? AvatarUrl { get; set; }
 
         public virtual ICollection<RefreshToken>? RefreshTokens { get; set; }
+
+        public virtual ICollection<Invite>? InvitesIncoming { get; set; }
+
+        public virtual ICollection<Invite>? InvitesOutcoming { get; set; }
     }
 }

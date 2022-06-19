@@ -19,5 +19,6 @@ namespace Data.Models
 
         public virtual ICollection<User> Users { get; set; }
 
+        public virtual ICollection<Invite> Invites { get; set; }
     }
 }

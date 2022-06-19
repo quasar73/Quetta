@@ -27,6 +27,14 @@ namespace Data
                 .Ignore(u => u.NormalizedEmail)
                 .Ignore(u => u.TwoFactorEnabled)
                 .Ignore(u => u.PasswordHash);
+
+            builder.Entity<User>()
+                .HasMany(u => u.InvitesIncoming)
+                .WithOne(i => i.Receiver);
+
+            builder.Entity<User>()
+                .HasMany(u => u.InvitesOutcoming)
+                .WithOne(i => i.Sender);
         }
     }
 }

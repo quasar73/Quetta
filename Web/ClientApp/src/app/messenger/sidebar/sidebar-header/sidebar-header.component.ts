@@ -1,3 +1,4 @@
+import { TranslocoService } from '@ngneat/transloco';
 import { HttpErrorResponse } from '@angular/common/http';
 import { InviteService } from './../../../shared/services/api/invite/invite.service';
 import { RequestsListDialogComponent } from './requests-list-dialog/requests-list-dialog.component';
@@ -34,7 +35,7 @@ export class SidebarHeaderComponent implements OnInit {
     );
 
     get userFullName(): string {
-        return `${this.userInfo?.firstName}  ${this.userInfo?.lastName}`;
+        return `${this.userInfo?.firstName} ${this.userInfo?.lastName}`;
     }
 
     get username(): string {
@@ -45,6 +46,7 @@ export class SidebarHeaderComponent implements OnInit {
         private readonly authService: AuthenticationService,
         private readonly inviteService: InviteService,
         private readonly alertService: TuiAlertService,
+        private readonly translocoService: TranslocoService,
         @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
         @Inject(Injector) private readonly injector: Injector
     ) {}
@@ -76,8 +78,8 @@ export class SidebarHeaderComponent implements OnInit {
                         .subscribe({
                             next: () => {
                                 this.alertService
-                                    .open(`User @${username} successfully invited.`, {
-                                        label: 'User invited',
+                                    .open(this.translocoService.translate<string>('messenger.invite.alert.success.message', { username }), {
+                                        label: this.translocoService.translate<string>('messenger.invite.alert.success.title'),
                                         status: TuiNotification.Success,
                                     })
                                     .subscribe();
@@ -85,7 +87,7 @@ export class SidebarHeaderComponent implements OnInit {
                             error: (response: HttpErrorResponse): void => {
                                 if (response.status === 404) {
                                     this.alertService
-                                        .open('User not found.', {
+                                        .open(this.translocoService.translate<string>('messenger.invite.alert.notFound'), {
                                             status: TuiNotification.Warning,
                                         })
                                         .subscribe();

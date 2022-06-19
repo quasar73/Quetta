@@ -29,5 +29,14 @@
         "invite": "Invite",
         "cancel": "Cancel",
         "placeholder": "Type an username"
+    },
+    "invite": {
+        "alert": {
+            "notFound": "User not found",
+            "success": {
+                "title": "User invited",
+                "message": "User @{{username}} successfully invited."
+            }
+        }
     }
 }

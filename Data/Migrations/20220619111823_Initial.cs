@@ -212,37 +212,36 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Invite",
+                name: "Invites",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
                     IsGroupChat = table.Column<bool>(type: "boolean", nullable: false),
                     Status = table.Column<int>(type: "integer", nullable: false),
-                    ChatId = table.Column<string>(type: "text", nullable: false),
+                    ChatId = table.Column<string>(type: "text", nullable: true),
                     SenderId = table.Column<string>(type: "text", nullable: false),
                     ReceiverId = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Invite", x => x.Id);
+                    table.PrimaryKey("PK_Invites", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Invite_AspNetUsers_ReceiverId",
+                        name: "FK_Invites_AspNetUsers_ReceiverId",
                         column: x => x.ReceiverId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Invite_AspNetUsers_SenderId",
+                        name: "FK_Invites_AspNetUsers_SenderId",
                         column: x => x.SenderId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Invite_Chats_ChatId",
+                        name: "FK_Invites_Chats_ChatId",
                         column: x => x.ChatId,
                         principalTable: "Chats",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -315,18 +314,18 @@ namespace Data.Migrations
                 column: "UsersId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Invite_ChatId",
-                table: "Invite",
+                name: "IX_Invites_ChatId",
+                table: "Invites",
                 column: "ChatId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Invite_ReceiverId",
-                table: "Invite",
+                name: "IX_Invites_ReceiverId",
+                table: "Invites",
                 column: "ReceiverId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Invite_SenderId",
-                table: "Invite",
+                name: "IX_Invites_SenderId",
+                table: "Invites",
                 column: "SenderId");
 
             migrationBuilder.CreateIndex(
@@ -366,7 +365,7 @@ namespace Data.Migrations
                 name: "ChatUser");
 
             migrationBuilder.DropTable(
-                name: "Invite");
+                name: "Invites");
 
             migrationBuilder.DropTable(
                 name: "Messages");

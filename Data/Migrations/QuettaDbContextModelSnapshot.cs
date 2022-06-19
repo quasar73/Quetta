@@ -64,7 +64,6 @@ namespace Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("ChatId")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<bool>("IsGroupChat")
@@ -89,7 +88,7 @@ namespace Data.Migrations
 
                     b.HasIndex("SenderId");
 
-                    b.ToTable("Invite");
+                    b.ToTable("Invites");
                 });
 
             modelBuilder.Entity("Data.Models.Message", b =>
@@ -344,9 +343,7 @@ namespace Data.Migrations
                 {
                     b.HasOne("Data.Models.Chat", "Chat")
                         .WithMany("Invites")
-                        .HasForeignKey("ChatId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ChatId");
 
                     b.HasOne("Data.Models.User", "Receiver")
                         .WithMany("InvitesIncoming")

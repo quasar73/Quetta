@@ -1,21 +1,46 @@
-﻿using Common.Models.Commands;
+﻿using Common.Enums;
+using Common.Exceptions;
+using Common.Models.Commands;
 using Data;
+using Data.Models;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 
 namespace Logic.Handlers.Commands
 {
     public class SendInviteHandler : IRequestHandler<SendInviteCommand>
     {
         private readonly QuettaDbContext dbContext;
+        private readonly UserManager<User> userManager;
 
-        public SendInviteHandler(QuettaDbContext dbContext)
+        public SendInviteHandler(QuettaDbContext dbContext, UserManager<User> userManager)
         {
             this.dbContext = dbContext;
+            this.userManager = userManager;
         }
 
-        public Task<Unit> Handle(SendInviteCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(SendInviteCommand request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var receiver = await userManager.FindByNameAsync(request.SendInviteRequest.ReceiverUsername);
+
+            if (receiver == null)
+            {
+                throw new EntityNotFoundException("User not found.");
+            }
+
+            var invite = new Invite
+            {
+                IsGroupChat = request.SendInviteRequest.IsGroupChat,
+                Status = InviteStatus.Pending,
+                ChatId = request.SendInviteRequest.ChatId,
+                SenderId = request.SenderId,
+                ReceiverId = receiver.Id,
+            };
+
+            dbContext.Invites.Add(invite);
+            await dbContext.SaveChangesAsync();
+
+            return Unit.Value;
         }
     }
 }

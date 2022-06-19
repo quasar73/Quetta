@@ -15,13 +15,13 @@ namespace Data.Models
         [Required]
         public InviteStatus Status { get; set; }
 
-        public string ChatId { get; set; }
+        public string? ChatId { get; set; }
 
         public string SenderId { get; set; }
 
         public string ReceiverId { get; set; }
 
-        public virtual Chat Chat { get; set; }
+        public virtual Chat? Chat { get; set; }
 
         [ForeignKey("SenderId")]
         public virtual User Sender { get; set; }

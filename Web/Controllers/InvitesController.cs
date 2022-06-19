@@ -1,7 +1,9 @@
 ﻿using Common.Models.Commands;
+using Common.Models.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Web.Controllers
 {
@@ -16,10 +18,18 @@ namespace Web.Controllers
         {
             this.mediator = mediator;
         }
-
-        public async Task<IActionResult> SendInvite([FromBody] SendInviteCommand request)
+        
+        [HttpPost]
+        public async Task<IActionResult> SendInvite([FromBody] SendInviteRequest request)
         {
-            await mediator.Send(request);
+            var senderId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (senderId == null)
+            {
+                return Unauthorized();
+            }
+
+            await mediator.Send(new SendInviteCommand(request, senderId));
 
             return Ok();
         }

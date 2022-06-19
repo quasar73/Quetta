@@ -53,6 +53,10 @@ namespace Web.Middlewares
                     response.StatusCode = (int)HttpStatusCode.NotImplemented;
                     errorResponse.Message = ex.Message;
                     break;
+                case EntityNotFoundException ex:
+                    response.StatusCode = (int)HttpStatusCode.NotFound;
+                    errorResponse.Message = ex.Message;
+                    break;
                 default:
                     response.StatusCode = (int)HttpStatusCode.InternalServerError;
                     errorResponse.Message = "Internal Server errors. Check Logs!";

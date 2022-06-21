@@ -1,4 +1,5 @@
 ﻿using Common.Models.Queries;
+using Common.Models.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,6 +19,8 @@ namespace Web.Controllers
             this.mediator = mediator;
         }
 
+        [ProducesResponseType(typeof(IsAnyNotificationsResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [HttpGet("Any")]
         public async Task<IActionResult> IsAnyNotifications()
         {

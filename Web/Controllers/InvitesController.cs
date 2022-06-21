@@ -20,6 +20,9 @@ namespace Web.Controllers
             this.mediator = mediator;
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpPost]
         public async Task<IActionResult> SendInvite([FromBody] SendInviteRequest request)
         {

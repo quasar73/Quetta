@@ -3,7 +3,9 @@ using Common.Exceptions;
 using Common.Models.Commands;
 using Data;
 using Data.Models;
+using Logic.Hubs;
 using MediatR;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.Identity;
 
 namespace Logic.Handlers.Commands

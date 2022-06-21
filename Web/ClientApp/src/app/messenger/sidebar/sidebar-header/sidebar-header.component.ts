@@ -1,3 +1,4 @@
+import { NotificationWebsocketService } from './../../../shared/services/websocket/notification-websocket/notification-websocket.service';
 import { NotificationsListDialogComponent } from './notifications-list-dialog/notifications-list-dialog.component';
 import { TranslocoService } from '@ngneat/transloco';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -47,6 +48,7 @@ export class SidebarHeaderComponent implements OnInit {
         private readonly inviteService: InviteService,
         private readonly alertService: TuiAlertService,
         private readonly translocoService: TranslocoService,
+        public readonly notificationWebsocketService: NotificationWebsocketService,
         @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
         @Inject(Injector) private readonly injector: Injector
     ) {}
@@ -54,6 +56,15 @@ export class SidebarHeaderComponent implements OnInit {
     ngOnInit(): void {
         this.authService.getUserInfo().subscribe(info => {
             this.userInfo = info;
+        });
+
+        this.notificationWebsocketService.startConnection();
+        this.notificationWebsocketService.addNotificationsListner();
+
+        this.inviteService.isAnyNotifications().subscribe(result => {
+            if (result) {
+                this.notificationWebsocketService.updateNotificationsStatus(result.hasNotifications);
+            }
         });
     }
 

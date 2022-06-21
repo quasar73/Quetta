@@ -30,6 +30,13 @@ namespace Logic.Handlers.Commands
                 throw new EntityNotFoundException("User not found.");
             }
 
+            var isNotificationExist = dbContext.Invites.Any(i => i.ReceiverId == receiver.Id && i.SenderId == request.SenderId && !i.IsGroupChat);
+
+            if (isNotificationExist)
+            {
+                throw new UserAlreadyInvitedException();
+            }
+
             var invite = new Invite
             {
                 Id = Guid.NewGuid().ToString(),

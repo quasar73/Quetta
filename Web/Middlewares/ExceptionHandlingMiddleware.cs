@@ -58,6 +58,10 @@ namespace Web.Middlewares
                     response.StatusCode = (int)HttpStatusCode.NotFound;
                     errorResponse.Message = ex.Message;
                     break;
+                case UserAlreadyInvitedException ex:
+                    response.StatusCode = (int)HttpStatusCode.Conflict;
+                    errorResponse.Message = ex.Message;
+                    break;
                 default:
                     response.StatusCode = (int)HttpStatusCode.InternalServerError;
                     errorResponse.Message = "Internal Server errors. Check Logs!";

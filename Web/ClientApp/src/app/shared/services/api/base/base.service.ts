@@ -51,7 +51,7 @@ export class BaseService {
     }
 
     private extendPipe<T>(httpObservable: Observable<T>): Observable<T> {
-        const ignorableErrors = [401, 404];
+        const ignorableErrors = [401, 404, 409];
         return httpObservable.pipe(
             catchError((err: HttpResponse<T>) => {
                 if (ignorableErrors.includes(err.status)) {

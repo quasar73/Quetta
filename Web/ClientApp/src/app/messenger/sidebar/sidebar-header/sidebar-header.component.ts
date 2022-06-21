@@ -97,6 +97,12 @@ export class SidebarHeaderComponent implements OnInit {
                                             status: TuiNotification.Warning,
                                         })
                                         .subscribe();
+                                } else if (response.status === 409) {
+                                    this.alertService
+                                        .open(this.translocoService.translate<string>('messenger.invite.alert.alreadyInvited'), {
+                                            status: TuiNotification.Warning,
+                                        })
+                                        .subscribe();
                                 }
                             },
                         });

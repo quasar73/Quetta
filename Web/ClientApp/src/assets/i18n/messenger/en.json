@@ -33,6 +33,7 @@
     "invite": {
         "alert": {
             "notFound": "User not found",
+            "alreadyInvited": "This user already invited",
             "success": {
                 "title": "User invited",
                 "message": "User @{{username}} successfully invited."

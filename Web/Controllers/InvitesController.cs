@@ -1,5 +1,4 @@
 ﻿using Common.Models.Commands;
-using Common.Models.Queries;
 using Common.Models.Requests;
 using Logic.Notifications;
 using MediatR;
@@ -30,15 +29,6 @@ namespace Web.Controllers
             await mediator.Publish(new NewNotification(request.ReceiverUsername));
 
             return Ok();
-        }
-
-        [HttpGet("Any")]
-        public async Task<IActionResult> IsAnyNotifications()
-        {
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
-            var hasNotifications = await mediator.Send(new IsAnyNotificationsQuery(userId));
-
-            return Ok(hasNotifications);
         }
     }
 }

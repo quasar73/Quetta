@@ -58,13 +58,8 @@ export class SidebarHeaderComponent implements OnInit {
             this.userInfo = info;
         });
 
-        this.notificationWebsocketService.startConnection();
-        this.notificationWebsocketService.addNotificationsListner();
-
-        this.inviteService.isAnyNotifications().subscribe(result => {
-            if (result) {
-                this.notificationWebsocketService.updateNotificationsStatus(result.hasNotifications);
-            }
+        this.notificationWebsocketService.startConnection().subscribe(() => {
+            this.notificationWebsocketService.addNotificationsListner();
         });
     }
 

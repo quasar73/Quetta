@@ -4,7 +4,6 @@ namespace Data.Models
 {
     public class Message
     {
-        [Key]
         public string Id { get; set; }
 
         public string Text { get; set; }

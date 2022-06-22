@@ -1,13 +1,10 @@
 ﻿using Common.DTO;
 using Common.Exceptions;
+using Data;
 using Data.Models;
 using Logic.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 using static Google.Apis.Auth.GoogleJsonWebSignature;
 
 namespace Logic.Services
@@ -16,14 +13,18 @@ namespace Logic.Services
     {
         private readonly UserManager<User> userManager;
         private readonly IConfiguration configuration;
+        private readonly ITokenGenerator tokenGenerator;
+        private readonly QuettaDbContext dbContext;
 
-        public AuthService(UserManager<User> userManager, IConfiguration configuration)
+        public AuthService(UserManager<User> userManager, IConfiguration configuration, ITokenGenerator tokenGenerator, QuettaDbContext dbContext)
         {
             this.userManager = userManager;
             this.configuration = configuration;
+            this.tokenGenerator = tokenGenerator;
+            this.dbContext = dbContext;
         }
 
-        public async Task<string> AuthenticateGoogleUserAsync(GoogleUserDto googleUser)
+        public async Task<TokenDto?> AuthenticateGoogleUserAsync(GoogleUserDto googleUser)
         {
             var clientId = configuration["Authentication:Google:ClientId"];
 
@@ -33,16 +34,11 @@ namespace Logic.Services
             });
 
             var user = await GetExternalLoginUserAsync(GoogleUserDto.PROVIDER, payload.Subject);
-
-            if (user == null)
-            {
-                throw new UnregisteredException();
-            }
-
-            return GenerateJwtToken(user);
+            
+            return user == null ? null : await GetToken(user);
         }
 
-        public async Task<string> RegisterGoogleUserAsync(RegisterGoogleUserDto registerGoogleUser)
+        public async Task<TokenDto> RegisterGoogleUserAsync(RegisterGoogleUserDto registerGoogleUser)
         {
             var clientId = configuration["Authentication:Google:ClientId"];
 
@@ -64,7 +60,7 @@ namespace Logic.Services
 
             if (result.Succeeded)
             {
-                return GenerateJwtToken(user);
+                return await GetToken(user);
             }
 
             throw new NotImplementedException();
@@ -77,39 +73,55 @@ namespace Logic.Services
             return user != null;
         }
 
+        public async Task<TokenDto> RefreshToken(string refreshToken)
+        {
+            var token = dbContext.RefreshTokens.FirstOrDefault(rt => rt.Token == refreshToken);
+
+            if (token == null)
+            {
+                throw new InvalidTokenException();
+            }
+
+            if (token.Expires < DateTime.UtcNow)
+            {
+                throw new TokenExpiredException();
+            }
+
+            var user = await userManager.FindByIdAsync(token.UserId);
+
+            if (user == null)
+            {
+                throw new InvalidTokenException();
+            }
+
+            dbContext.RefreshTokens.Remove(token);
+            await dbContext.SaveChangesAsync();
+
+            return await GetToken(user);
+        }
+
         private async Task<User?> GetExternalLoginUserAsync(string provider, string key)
         {
             var user = await userManager.FindByLoginAsync(provider, key);
             return user;
         }
 
-        private string GenerateJwtToken(User user)
+        private async Task<TokenDto> GetToken(User user)
         {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(configuration["Authentication:Jwt:Secret"]);
+            var accessToken = tokenGenerator.GenerateAccessToken(user);
+            var refreshToken = tokenGenerator.GenerateRefreshToken(user);
 
-            var expires = DateTime.UtcNow.AddDays(7);
-            var tokenDescriptor = new SecurityTokenDescriptor
+            if (refreshToken != null)
             {
-                Subject = new ClaimsIdentity(new[]
-                {
-                    new Claim(JwtRegisteredClaimNames.Sub, user.Id),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                    new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
-                    new Claim(ClaimTypes.Surname, user?.FirstName ?? ""),
-                    new Claim(ClaimTypes.GivenName, user?.LastName ?? ""),
-                    new Claim(ClaimTypes.NameIdentifier, user?.UserName ?? "")
-                }),
-                Expires = expires,
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
-                Issuer = configuration["Authentication:Jwt:Issuer"],
-                Audience = configuration["Authentication:Jwt:Audience"]
+                dbContext.RefreshTokens.Add(refreshToken);
+                await dbContext.SaveChangesAsync();
+            }
+
+            return new TokenDto
+            {
+                AccessToken = accessToken ?? "",
+                RefreshToken = refreshToken?.Token ?? ""
             };
-
-            var securityToken = tokenHandler.CreateToken(tokenDescriptor);
-            var token = tokenHandler.WriteToken(securityToken);
-
-            return token;
         }
     }
 }

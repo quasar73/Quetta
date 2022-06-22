@@ -1,0 +1,26 @@
+.wrap {
+    height: 100%;
+    padding: 0px 8px 8px 8px;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-rows: max-content 1fr;
+
+    hr {
+        background-color: var(--tui-base-03);
+    }
+
+    .content {
+        padding-top: 8px;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+
+        .languages-wrap {
+            width: 72px;
+        }
+
+        .text {
+            color: var(--tui-text-03);
+        }
+    }
+}

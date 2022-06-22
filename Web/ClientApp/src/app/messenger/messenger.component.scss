@@ -1,0 +1,11 @@
+.wrap {
+    height: 100%;
+    display: grid;
+    grid-template-columns: minmax(280px, 20%) 1fr;
+
+    .sidebar {
+        height: 100%;
+        overflow-y: hidden;
+        background-color: var(--tui-base-02);
+    }
+}

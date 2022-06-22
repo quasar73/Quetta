@@ -1,0 +1,15 @@
+<div class="wrap" [class.active]="active">
+    <div class="item">
+        <div class="avatar-wrap">
+            <tui-avatar [autoColor]="true" [text]="title" size="m" class="tui-space_top-1" [rounded]="true"></tui-avatar>
+        </div>
+        <div class="text-wrap">
+            <div class="title tui-text_body-m">
+                <tui-svg [src]="icon"></tui-svg>
+                <span class="title-text">{{ data?.title }}</span>
+                <span class="date-time tui-text_body-s">{{ dateTime }}</span>
+            </div>
+            <div class="subtitle tui-text_body-s tui-space_top-1">{{ data?.lastMessage }}</div>
+        </div>
+    </div>
+</div>

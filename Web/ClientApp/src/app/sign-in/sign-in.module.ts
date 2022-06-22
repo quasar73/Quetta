@@ -1,13 +1,20 @@
 import { environment } from './../../environments/environment';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TuiButtonModule, TuiErrorModule, TuiSvgModule, TuiTextfieldControllerModule } from '@taiga-ui/core';
-import { TuiAvatarModule, TuiFieldErrorPipeModule, TuiInputModule, TuiStepperModule } from '@taiga-ui/kit';
+import { TuiButtonModule, TuiDataListModule, TuiErrorModule, TuiSvgModule, TuiTextfieldControllerModule } from '@taiga-ui/core';
+import {
+    TuiAvatarModule,
+    TuiDataListWrapperModule,
+    TuiFieldErrorPipeModule,
+    TuiInputModule,
+    TuiSelectModule,
+    TuiStepperModule,
+} from '@taiga-ui/kit';
 
 import { SignInRoutingModule } from './sign-in-routing.module';
 import { SignInComponent } from './sign-in.component';
 import { TranslocoModule, TRANSLOCO_SCOPE } from '@ngneat/transloco';
-import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from 'angularx-social-login';
+import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from '@abacritt/angularx-social-login';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { SignUpFormComponent } from './sign-up/sign-up-form/sign-up-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -44,6 +51,9 @@ import { ReactiveFormsModule } from '@angular/forms';
         TuiSvgModule,
         TuiFieldErrorPipeModule,
         TuiErrorModule,
+        TuiSelectModule,
+        TuiDataListModule,
+        TuiDataListWrapperModule,
     ],
 })
 export class SignInModule {}

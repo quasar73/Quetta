@@ -1,0 +1,24 @@
+{
+    "sidebar": {
+        "header": {
+            "search": "Поиск",
+            "menu": {
+                "settings": "Настройки",
+                "logout": "Выйти"
+            },
+            "actions": {
+                "logout": "Выйти",
+                "settings": "Настройки"
+            }
+        },
+        "items": {
+            "date": {
+                "justNow": "только что"
+            }
+        }
+    },
+    "chat": {
+        "placeholder": "Введите сообщение..."
+    },
+    "emptyChatMessage": "Выберите чат чтобы начать общение"
+}

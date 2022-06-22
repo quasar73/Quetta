@@ -1,44 +1,62 @@
+import { AuthenticationService } from './../shared/services/auth/authentication.service';
+import { FormControl } from '@angular/forms';
 import { RegisterUserDataService } from './../shared/services/register-user-data/register-user-data.service';
 import { Router } from '@angular/router';
-import { AuthService } from './../shared/services/api/auth/auth.service';
-import { Component } from '@angular/core';
-import { GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
+import { AuthApiService } from './../shared/services/api/auth/auth.service';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { GoogleLoginProvider, SocialAuthService } from '@abacritt/angularx-social-login';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { TranslocoService } from '@ngneat/transloco';
+import { availableLanguage } from '../shared/consts/languages.const';
 
 @Component({
     selector: 'qtt-sign-in',
     templateUrl: './sign-in.component.html',
     styleUrls: ['./sign-in.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     animations: [
         trigger('signInPageTrigger', [transition(':enter', [style({ opacity: 0 }), animate('0.8s ease-in', style({ opacity: 1 }))])]),
     ],
 })
-export class SignInComponent {
+export class SignInComponent implements OnInit {
+    languagesControl = new FormControl('en');
+
+    get languages(): string[] {
+        return availableLanguage;
+    }
+
     constructor(
         private socialAuthService: SocialAuthService,
-        private authService: AuthService,
+        private authApiService: AuthApiService,
         private router: Router,
-        private registerUserDataService: RegisterUserDataService
+        private registerUserDataService: RegisterUserDataService,
+        private translocoService: TranslocoService,
+        private authService: AuthenticationService
     ) {}
 
+    ngOnInit(): void {
+        this.languagesControl.setValue(this.translocoService.getActiveLang());
+
+        this.languagesControl.valueChanges.subscribe(language => {
+            this.translocoService.setActiveLang(language);
+        });
+    }
+
     signInWithGoogle(): void {
-        this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(result => {
-            this.authService.authenticateWithGoogle(result.idToken).subscribe(
-                token => {
-                    console.log(token);
-                },
-                err => {
-                    if (err.status === 401) {
-                        this.registerUserDataService.setUserData({
-                            firstName: result.firstName,
-                            lastName: result.lastName,
-                            username: result.email.split('@')[0],
-                            idToken: result.idToken,
-                        });
-                        this.router.navigate(['sign-up']);
-                    }
+        this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID)?.then(result => {
+            this.authApiService.authenticateWithGoogle(result.idToken).subscribe(token => {
+                if (token) {
+                    this.authService.saveAccessData(token);
+                } else {
+                    this.registerUserDataService.setUserData({
+                        firstName: result.firstName,
+                        lastName: result.lastName,
+                        username: result.email.split('@')[0],
+                        idToken: result.idToken,
+                    });
+                    this.router.navigate(['sign-up']);
                 }
-            );
+            });
         });
     }
 }

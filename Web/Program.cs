@@ -1,5 +1,6 @@
 using Data;
 using Data.Models;
+using Logic.HostedServices;
 using Logic.Interfaces;
 using Logic.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -13,13 +14,13 @@ using Web.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddCors();
-
 #region Serilog set up
 
 builder.Logging.ClearProviders();
 
 var logger = new LoggerConfiguration()
+    .MinimumLevel.Override("Microsoft.EntityFrameworkCore.Database.Command", Serilog.Events.LogEventLevel.Warning)
+    .MinimumLevel.Override("Microsoft.EntityFrameworkCore", Serilog.Events.LogEventLevel.Warning)
     .WriteTo.Console()
     .CreateLogger();
 
@@ -68,7 +69,12 @@ builder.Services.AddAuthentication(options =>
 
 #endregion
 
+builder.Services.AddCors();
+
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<ITokenGenerator, TokenGenerator>();
+
+builder.Services.AddHostedService<TokenCleanerHostedService>();
 
 builder.Services.AddControllers();
 
@@ -86,7 +92,6 @@ if (app.Environment.IsDevelopment())
 app.UseCors(it => it.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
 app.UseHttpsRedirection();
-
 
 app.UseAuthentication();
 app.UseAuthorization();

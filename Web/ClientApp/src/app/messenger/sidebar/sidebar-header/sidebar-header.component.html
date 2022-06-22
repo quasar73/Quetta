@@ -1,0 +1,42 @@
+<div class="wrap">
+    <button
+        tuiIconButton
+        type="button"
+        appearance="icon"
+        icon="tuiIconMenuLarge"
+        (click)="toggle(true)"
+        (tuiActiveZoneChange)="toggle($event)"
+    >
+        <div *tuiSidebar="isOpened; direction: 'left'">
+            <div class="user-info">
+                <div class="avatar-wrap">
+                    <tui-avatar [text]="userFullName" [autoColor]="true" [rounded]="true"></tui-avatar>
+                </div>
+                <div class="names">
+                    <div class="fullname tui-text_body-l">
+                        {{ userFullName }}
+                    </div>
+                    <div class="username">
+                        {{ username }}
+                    </div>
+                </div>
+            </div>
+            <div class="actions">
+                <ng-container *transloco="let t">
+                    <button tuiButton appearance="secondary" type="button" icon="tuiIconSettingsLarge" class="tui-space_top-4">
+                        {{ t('messenger.sidebar.header.actions.settings') }}
+                    </button>
+                    <button tuiButton appearance="secondary" type="button" icon="tuiIconLogoutLarge" class="tui-space_top-2">
+                        {{ t('messenger.sidebar.header.actions.logout') }}
+                    </button>
+                </ng-container>
+            </div>
+        </div>
+    </button>
+    <ng-container *transloco="let t">
+        <tui-input class="search-input tui-space_left-3" tuiTextfieldSize="s" icon="tuiIconSearchLarge" [formControl]="searchControl">
+            {{ t('messenger.sidebar.header.search') }}
+            <input tuiTextfield type="email" />
+        </tui-input>
+    </ng-container>
+</div>

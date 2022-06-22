@@ -1,0 +1,24 @@
+{
+    "sidebar": {
+        "header": {
+            "search": "Type here to search...",
+            "menu": {
+                "settings": "Settings",
+                "logout": "Logout"
+            },
+            "actions": {
+                "logout": "Logout",
+                "settings": "Settings"
+            }
+        },
+        "items": {
+            "date": {
+                "justNow": "just now"
+            }
+        }
+    },
+    "chat": {
+        "placeholder": "Type here to chat..."
+    },
+    "emptyChatMessage": "Choose a chat to start messaging"
+}

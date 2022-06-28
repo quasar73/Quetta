@@ -1,10 +1,8 @@
 name: Angular Testing CI
 
 on:
-    push:
-        branches: [master, dev]
     pull_request:
-        branches: [master, dev]
+        branches: [master]
 
 jobs:
     test-and-lint:

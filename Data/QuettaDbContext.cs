@@ -18,9 +18,11 @@ namespace Data
         {
             base.OnModelCreating(builder);
 
-            builder.ApplyConfiguration(new UserConfiguration());
             builder.ApplyConfiguration(new RefreshTokenConfiguration());
             builder.ApplyConfiguration(new MessageConfiguration());
+            builder.ApplyConfiguration(new InviteConfiguration());
+            builder.ApplyConfiguration(new UserConfiguration());
+            builder.ApplyConfiguration(new ChatConfiguration());
         }
     }
 }

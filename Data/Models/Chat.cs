@@ -4,7 +4,6 @@ namespace Data.Models
 {
     public class Chat
     {
-        [Key]
         public string Id { get; set; }
 
         public string? Title { get; set; }

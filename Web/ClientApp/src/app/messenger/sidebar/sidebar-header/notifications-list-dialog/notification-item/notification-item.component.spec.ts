@@ -1,5 +1,6 @@
 import { NotificationItemComponent } from './notification-item.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TuiIslandModule } from '@taiga-ui/kit';
 
 describe('NotificationItemComponent', () => {
     let component: NotificationItemComponent;
@@ -8,6 +9,7 @@ describe('NotificationItemComponent', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             declarations: [NotificationItemComponent],
+            imports: [TuiIslandModule],
         }).compileComponents();
     });
 

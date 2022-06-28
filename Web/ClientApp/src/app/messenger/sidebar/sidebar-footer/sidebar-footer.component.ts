@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { TranslocoService } from '@ngneat/transloco';
 import { availableLanguage } from 'src/app/shared/consts/languages.const';
@@ -7,6 +7,7 @@ import { availableLanguage } from 'src/app/shared/consts/languages.const';
     selector: 'qtt-sidebar-footer',
     templateUrl: './sidebar-footer.component.html',
     styleUrls: ['./sidebar-footer.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidebarFooterComponent implements OnInit {
     languagesControl = new FormControl('en');
@@ -15,7 +16,7 @@ export class SidebarFooterComponent implements OnInit {
         return availableLanguage;
     }
 
-    constructor(private translocoService: TranslocoService) {}
+    constructor(private readonly translocoService: TranslocoService) {}
 
     ngOnInit(): void {
         this.languagesControl.setValue(this.translocoService.getActiveLang());

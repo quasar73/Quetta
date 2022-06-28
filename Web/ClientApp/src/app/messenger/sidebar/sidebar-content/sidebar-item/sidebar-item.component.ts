@@ -1,12 +1,13 @@
 import { TranslocoService } from '@ngneat/transloco';
 import { ChatItem } from './../../../../shared/models/chat-item.model';
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { dateCalculator } from 'src/app/shared/utils/date-calculator';
 
 @Component({
     selector: 'qtt-sidebar-item',
     templateUrl: './sidebar-item.component.html',
     styleUrls: ['./sidebar-item.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidebarItemComponent {
     @Input() active = false;
@@ -37,5 +38,5 @@ export class SidebarItemComponent {
         }
     }
 
-    constructor(private translocoSerivce: TranslocoService) {}
+    constructor(private readonly translocoSerivce: TranslocoService) {}
 }

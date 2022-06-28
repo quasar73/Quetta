@@ -1,10 +1,11 @@
 import { ChatItem } from './../../../shared/models/chat-item.model';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
     selector: 'qtt-sidebar-content',
     templateUrl: './sidebar-content.component.html',
     styleUrls: ['./sidebar-content.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidebarContentComponent {
     testData: ChatItem[] = [

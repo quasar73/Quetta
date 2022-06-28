@@ -11,6 +11,9 @@ using Serilog;
 using System.Reflection;
 using System.Text;
 using Web.Middlewares;
+using MediatR;
+using Logic.Handlers.Queries;
+using Logic.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,7 +37,7 @@ var connectionString = builder.Configuration.GetConnectionString("PostgresConnec
 
 builder.Services.AddDbContext<QuettaDbContext>(options =>
 {
-    options.UseNpgsql(connectionString, b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName));
+    options.UseNpgsql(connectionString, b => b.MigrationsAssembly(typeof(QuettaDbContext).GetTypeInfo().Assembly.FullName));
 });
 
 builder.Services.AddIdentity<User, IdentityRole>()
@@ -60,6 +63,20 @@ builder.Services.AddAuthentication(options =>
             ValidateIssuer = false,
             ValidateAudience = false
         };
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                var accessToken = context.Request.Query["access_token"];
+
+                var path = context.HttpContext.Request.Path;
+                if (!string.IsNullOrEmpty(accessToken) && (path.StartsWithSegments("/notification")))
+                {
+                    context.Token = accessToken;
+                }
+                return Task.CompletedTask;
+            }
+        };
     })
     .AddGoogle(options =>
     {
@@ -69,17 +86,29 @@ builder.Services.AddAuthentication(options =>
 
 #endregion
 
+builder.Services.AddMediatR(typeof(RefreshTokenHandler).GetTypeInfo().Assembly);
+
+builder.Services.AddSignalR();
+
 builder.Services.AddCors();
-
-builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<ITokenGenerator, TokenGenerator>();
-
-builder.Services.AddHostedService<TokenCleanerHostedService>();
 
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<ITokenGenerator, TokenGenerator>();
+
+builder.Services.AddHostedService<TokenCleanerHostedService>();
+
+builder.Services.AddCors(options => options.AddPolicy("CorsPolicy",
+        builder =>
+        {
+            builder.AllowAnyHeader()
+                   .AllowAnyMethod()
+                   .SetIsOriginAllowed((host) => true)
+                   .AllowCredentials();
+        }));
 
 var app = builder.Build();
 
@@ -89,16 +118,23 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors(it => it.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+app.UseCors("CorsPolicy");
 
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
+app.UseRouting();
 app.UseAuthorization();
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.MapControllers();
+
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapHub<NotificationHub>("/notification");
+});
 
 using (var scope = app.Services.CreateScope())
 {

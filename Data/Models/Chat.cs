@@ -4,7 +4,6 @@ namespace Data.Models
 {
     public class Chat
     {
-        [Key]
         public string Id { get; set; }
 
         public string? Title { get; set; }
@@ -19,5 +18,6 @@ namespace Data.Models
 
         public virtual ICollection<User> Users { get; set; }
 
+        public virtual ICollection<Invite> Invites { get; set; }
     }
 }

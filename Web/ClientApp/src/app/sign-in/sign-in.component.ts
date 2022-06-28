@@ -26,12 +26,12 @@ export class SignInComponent implements OnInit {
     }
 
     constructor(
-        private socialAuthService: SocialAuthService,
-        private authApiService: AuthApiService,
-        private router: Router,
-        private registerUserDataService: RegisterUserDataService,
-        private translocoService: TranslocoService,
-        private authService: AuthenticationService
+        private readonly socialAuthService: SocialAuthService,
+        private readonly authApiService: AuthApiService,
+        private readonly router: Router,
+        private readonly registerUserDataService: RegisterUserDataService,
+        private readonly translocoService: TranslocoService,
+        private readonly authService: AuthenticationService
     ) {}
 
     ngOnInit(): void {

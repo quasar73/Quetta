@@ -1,5 +1,7 @@
-﻿using Common.DTO;
-using Logic.Interfaces;
+﻿using Common.Models;
+using Common.Models.Commands;
+using Common.Models.Queries;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,30 +12,30 @@ namespace Web.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly IAuthService authService;
+        private readonly IMediator mediator;
 
-        public AuthController(IAuthService authService)
+        public AuthController(IMediator mediator)
         {
-            this.authService = authService;
+            this.mediator = mediator;
         }
-
-        [ProducesResponseType(typeof(TokenDto), StatusCodes.Status200OK)]
+        
+        [ProducesResponseType(typeof(TokenModel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [HttpPost("AuthenticateWithGoogle")]
-        public async Task<IActionResult> AuthenticateWithGoogle([FromBody] GoogleUserDto googleUser)
+        public async Task<IActionResult> AuthenticateWithGoogle([FromBody] AuthenticateGoogleUserCommand request)
         {
-            var token = await authService.AuthenticateGoogleUserAsync(googleUser);
+            var token = await mediator.Send(request);
 
             return Ok(token);
         }
 
-        [ProducesResponseType(typeof(TokenDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(TokenModel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPost("RegisterGoogleUser")]
-        public async Task<IActionResult> RegisterGoogleUser([FromBody] RegisterGoogleUserDto registerGoogleUser)
+        public async Task<IActionResult> RegisterGoogleUser([FromBody] RegisterGoogleUserCommand request)
         {
-            var token = await authService.RegisterGoogleUserAsync(registerGoogleUser);
+            var token = await mediator.Send(request);
 
             return Ok(token);
         }
@@ -43,18 +45,18 @@ namespace Web.Controllers
         [HttpGet("CheckOutUsername")]
         public async Task<IActionResult> CheckOutUsername([FromQuery] string username)
         {
-            var result = await authService.CheckOutUsername(username);
+            var result = await mediator.Send(new CheckOutUsernameQuery(username));
 
             return Ok(result);
         }
 
-        [ProducesResponseType(typeof(TokenDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(TokenModel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [HttpGet("Refresh")]
         public async Task<IActionResult> RefreshToken([FromQuery] string refreshToken)
         {
-            var result = await authService.RefreshToken(refreshToken);
+            var result = await mediator.Send(new RefreshTokenQuery(refreshToken));
 
             return Ok(result);
         }

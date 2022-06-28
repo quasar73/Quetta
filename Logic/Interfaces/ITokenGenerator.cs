@@ -1,4 +1,5 @@
-﻿using Data.Models;
+﻿using Common.Models;
+using Data.Models;
 
 namespace Logic.Interfaces
 {
@@ -6,5 +7,6 @@ namespace Logic.Interfaces
     {
         public string GenerateAccessToken(User user);
         public RefreshToken GenerateRefreshToken(User user);
+        public Task<TokenModel> GetToken(User user); 
     }
 }

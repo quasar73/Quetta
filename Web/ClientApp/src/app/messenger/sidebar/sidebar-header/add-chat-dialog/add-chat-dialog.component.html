@@ -1,0 +1,26 @@
+<div class="wrap">
+    <ng-container *transloco="let t">
+        <div class="tui-text_h4 tui-space_bottom-3">
+            {{ t('messenger.addChatDialog.header') }}
+        </div>
+        <div class="tui-space_bottom-3">{{ t('messenger.addChatDialog.description') }}</div>
+        <tui-input [formControl]="usernameControl">
+            {{ t('messenger.addChatDialog.placeholder') }}
+            <input tuiTextfield type="email" />
+        </tui-input>
+        <tui-error [formControl]="usernameControl" [error]="[] | tuiFieldError | async"></tui-error>
+        <div class="buttons tui-space_top-3">
+            <button
+                tuiButton
+                type="button"
+                appearance="primary"
+                class="tui-space_right-2"
+                [disabled]="usernameControl.invalid"
+                (click)="invite()"
+            >
+                {{ t('messenger.addChatDialog.invite') }}
+            </button>
+            <button tuiButton type="button" appearance="secondary" (click)="cancel()">{{ t('messenger.addChatDialog.cancel') }}</button>
+        </div>
+    </ng-container>
+</div>

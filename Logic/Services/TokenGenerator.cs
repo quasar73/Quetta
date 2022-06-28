@@ -1,4 +1,6 @@
-﻿using Data.Models;
+﻿using Common.Models;
+using Data;
+using Data.Models;
 using Logic.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -12,10 +14,12 @@ namespace Logic.Services
     public class TokenGenerator : ITokenGenerator
     {
         private readonly IConfiguration configuration;
+        private readonly QuettaDbContext dbContext;
 
-        public TokenGenerator(IConfiguration configuration)
+        public TokenGenerator(IConfiguration configuration, QuettaDbContext dbContext)
         {
             this.configuration = configuration;
+            this.dbContext = dbContext;
         }
 
         public string GenerateAccessToken(User user)
@@ -64,6 +68,24 @@ namespace Logic.Services
             };
 
             return refreshToken;
+        }
+
+        public async Task<TokenModel> GetToken(User user)
+        {
+            var accessToken = GenerateAccessToken(user);
+            var refreshToken = GenerateRefreshToken(user);
+
+            if (refreshToken != null)
+            {
+                dbContext.RefreshTokens.Add(refreshToken);
+                await dbContext.SaveChangesAsync();
+            }
+
+            return new TokenModel
+            {
+                AccessToken = accessToken ?? "",
+                RefreshToken = refreshToken?.Token ?? ""
+            };
         }
     }
 }

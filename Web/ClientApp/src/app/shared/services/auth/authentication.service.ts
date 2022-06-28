@@ -16,7 +16,7 @@ interface AccessData {
 
 @Injectable()
 export class AuthenticationService implements AuthService {
-    constructor(private http: HttpClient, private tokenStorage: TokenStorage) {}
+    constructor(private readonly http: HttpClient, private readonly tokenStorage: TokenStorage) {}
 
     public isAuthorized(): Observable<boolean> {
         return this.tokenStorage.getAccessToken().pipe(map(token => !!token));

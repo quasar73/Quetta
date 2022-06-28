@@ -7,6 +7,20 @@
     .search-input {
         flex: 1;
     }
+
+    .add-btn-wrap {
+        margin-left: 20px;
+        margin-right: 16px;
+
+        .add-btn {
+            width: 24px;
+        }
+    }
+
+    .notification-btn {
+        margin-left: 20px;
+        cursor: pointer;
+    }
 }
 
 .user-info {

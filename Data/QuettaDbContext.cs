@@ -1,4 +1,5 @@
-﻿using Data.Models;
+﻿using Data.Configurations;
+using Data.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,6 +10,7 @@ namespace Data
         public DbSet<RefreshToken> RefreshTokens { get; set; }
         public DbSet<Chat> Chats { get; set; }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<Invite> Invites { get; set; }
 
         public QuettaDbContext(DbContextOptions<QuettaDbContext> options) : base(options) { }
 
@@ -16,17 +18,11 @@ namespace Data
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<User>()
-                .Ignore(u => u.AccessFailedCount)
-                .Ignore(u => u.LockoutEnabled)
-                .Ignore(u => u.LockoutEnd)
-                .Ignore(u => u.PhoneNumber)
-                .Ignore(u => u.PhoneNumberConfirmed)
-                .Ignore(u => u.EmailConfirmed)
-                .Ignore(u => u.Email)
-                .Ignore(u => u.NormalizedEmail)
-                .Ignore(u => u.TwoFactorEnabled)
-                .Ignore(u => u.PasswordHash);
+            builder.ApplyConfiguration(new RefreshTokenConfiguration());
+            builder.ApplyConfiguration(new MessageConfiguration());
+            builder.ApplyConfiguration(new InviteConfiguration());
+            builder.ApplyConfiguration(new UserConfiguration());
+            builder.ApplyConfiguration(new ChatConfiguration());
         }
     }
 }

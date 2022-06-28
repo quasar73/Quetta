@@ -38,5 +38,25 @@
             {{ t('messenger.sidebar.header.search') }}
             <input tuiTextfield type="email" />
         </tui-input>
+
+        <tui-marker-icon
+            [mode]="(notificationWebsocketService.getNotificationsObserver() | async) ? 'primary' : 'link'"
+            size="xs"
+            src="tuiIconBellLarge"
+            class="notification-btn"
+            [tuiHint]="t('messenger.sidebar.header.notifications')"
+            (click)="openRequestsListDialog()"
+        ></tui-marker-icon>
+
+        <tui-hosted-dropdown tuiDropdownAlign="left" [content]="dropdown" class="add-btn-wrap">
+            <button tuiIconButton type="button" appearance="icon" icon="tuiIconPlusCircleLarge" class="add-btn"></button>
+        </tui-hosted-dropdown>
+        <ng-template #dropdown>
+            <tui-data-list>
+                <button tuiOption (click)="openAddChatDialog()">{{ t('messenger.sidebar.header.add.addChat') }}</button>
+                <button tuiOption>{{ t('messenger.sidebar.header.add.createGroup') }}</button>
+                <button tuiOption>{{ t('messenger.sidebar.header.add.createChannel') }}</button>
+            </tui-data-list>
+        </ng-template>
     </ng-container>
 </div>

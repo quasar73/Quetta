@@ -1,3 +1,5 @@
+import { NotificationItemComponent } from './sidebar/sidebar-header/notifications-list-dialog/notification-item/notification-item.component';
+import { NotificationsListDialogComponent } from './sidebar/sidebar-header/notifications-list-dialog/notifications-list-dialog.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -9,15 +11,22 @@ import {
     TuiAvatarModule,
     TuiBadgeModule,
     TuiDataListWrapperModule,
+    TuiFieldErrorPipeModule,
     TuiInputModule,
+    TuiIslandModule,
+    TuiMarkerIconModule,
     TuiSelectModule,
     TuiTextAreaModule,
 } from '@taiga-ui/kit';
 import { SidebarHeaderComponent } from './sidebar/sidebar-header/sidebar-header.component';
 import {
+    TuiAlertModule,
     TuiButtonModule,
     TuiDataListModule,
+    TuiErrorModule,
+    TuiHintModule,
     TuiHostedDropdownModule,
+    TuiLinkModule,
     TuiScrollbarModule,
     TuiSvgModule,
     TuiTextfieldControllerModule,
@@ -33,6 +42,7 @@ import { EmptyChatComponent } from './empty-chat/empty-chat.component';
 import { ChatHeaderComponent } from './chat/chat-header/chat-header.component';
 import { ChatContentComponent } from './chat/chat-content/chat-content.component';
 import { ChatInputComponent } from './chat/chat-input/chat-input.component';
+import { AddChatDialogComponent } from './sidebar/sidebar-header/add-chat-dialog/add-chat-dialog.component';
 
 @NgModule({
     providers: [{ provide: TRANSLOCO_SCOPE, useValue: 'messenger' }],
@@ -48,6 +58,9 @@ import { ChatInputComponent } from './chat/chat-input/chat-input.component';
         ChatHeaderComponent,
         ChatContentComponent,
         ChatInputComponent,
+        AddChatDialogComponent,
+        NotificationsListDialogComponent,
+        NotificationItemComponent,
     ],
     imports: [
         CommonModule,
@@ -68,6 +81,13 @@ import { ChatInputComponent } from './chat/chat-input/chat-input.component';
         TuiSidebarModule,
         TuiBadgeModule,
         TuiTextAreaModule,
+        TuiFieldErrorPipeModule,
+        TuiErrorModule,
+        TuiMarkerIconModule,
+        TuiHintModule,
+        TuiIslandModule,
+        TuiLinkModule,
+        TuiAlertModule,
     ],
 })
 export class MessengerModule {}

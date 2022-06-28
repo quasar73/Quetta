@@ -26,6 +26,7 @@ namespace Web.Middlewares
                 await HandleExceptionAsync(httpContext, ex);
             }
         }
+
         private async Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
             context.Response.ContentType = "application/json";
@@ -51,6 +52,14 @@ namespace Web.Middlewares
                     break;
                 case NotImplementedException ex:
                     response.StatusCode = (int)HttpStatusCode.NotImplemented;
+                    errorResponse.Message = ex.Message;
+                    break;
+                case EntityNotFoundException ex:
+                    response.StatusCode = (int)HttpStatusCode.NotFound;
+                    errorResponse.Message = ex.Message;
+                    break;
+                case UserAlreadyInvitedException ex:
+                    response.StatusCode = (int)HttpStatusCode.Conflict;
                     errorResponse.Message = ex.Message;
                     break;
                 default:

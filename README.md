@@ -10,3 +10,7 @@
 </p>
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=quasar73_Quetta&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=quasar73_Quetta)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=quasar73_Quetta&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=quasar73_Quetta)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=quasar73_Quetta&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=quasar73_Quetta)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=quasar73_Quetta&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=quasar73_Quetta)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=quasar73_Quetta&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=quasar73_Quetta)

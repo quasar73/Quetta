@@ -14,6 +14,8 @@ using Web.Middlewares;
 using MediatR;
 using Logic.Handlers.Queries;
 using Logic.Hubs;
+using FluentValidation.AspNetCore;
+using Common.Validators.Commands;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -92,7 +94,9 @@ builder.Services.AddSignalR();
 
 builder.Services.AddCors();
 
-builder.Services.AddControllers();
+builder.Services
+    .AddControllers()
+    .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AuthenticateGoogleUserValidator>());
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

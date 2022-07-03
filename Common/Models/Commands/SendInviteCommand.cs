@@ -9,6 +9,8 @@ namespace Common.Models.Commands
 
         public string SenderId { get; set; }
 
+        public SendInviteCommand() { }
+
         public SendInviteCommand(SendInviteRequest SendInviteRequest, string SenderId)
         {
             this.SendInviteRequest = SendInviteRequest;

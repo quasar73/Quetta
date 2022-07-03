@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using System.ComponentModel.DataAnnotations;
 
 namespace Common.Models.Commands
 {
@@ -7,16 +6,12 @@ namespace Common.Models.Commands
     {
         public const string PROVIDER = "google";
 
-        [Required]
-        public string? IdToken { get; set; }
+        public string IdToken { get; set; }
 
-        [Required]
-        public string? Username { get; set; }
+        public string Username { get; set; }
 
-        [Required]
-        public string? FirstName { get; set; }
+        public string FirstName { get; set; }
 
-        [Required]
-        public string? LastName { get; set; }
+        public string LastName { get; set; }
     }
 }

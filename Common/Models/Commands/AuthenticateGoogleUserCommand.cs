@@ -7,7 +7,6 @@ namespace Common.Models.Commands
     {
         public const string PROVIDER = "google";
 
-        [Required]
-        public string? IdToken { get; set; }
+        public string IdToken { get; set; }
     }
 }

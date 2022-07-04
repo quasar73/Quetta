@@ -45,8 +45,9 @@ namespace Validators.Tests.Tests.Commands
 
         [Theory]
         [InlineData("")]
-        [InlineData(" ")]
+        [InlineData("  ")]
         [InlineData(null)]
+        [InlineData("sh")]
         [InlineData("veryverylongusernameover20chars")]
         public void GivenAnInvalidUserNameValue_ShouldHaveValidationError(string username)
         {

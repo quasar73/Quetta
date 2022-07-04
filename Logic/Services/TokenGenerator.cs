@@ -83,8 +83,8 @@ namespace Logic.Services
 
             return new TokenModel
             {
-                AccessToken = accessToken ?? "",
-                RefreshToken = refreshToken?.Token ?? ""
+                AccessToken = accessToken ?? "access_token",
+                RefreshToken = refreshToken?.Token ?? "refresh_token"
             };
         }
     }

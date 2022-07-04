@@ -10,7 +10,7 @@ namespace Common.Validators.Commands
             RuleFor(model => model.IdToken).NotEmpty();
             RuleFor(model => model.FirstName).NotEmpty().MaximumLength(20);
             RuleFor(model => model.LastName).NotEmpty().MaximumLength(20);
-            RuleFor(model => model.Username).NotEmpty().MaximumLength(20);
+            RuleFor(model => model.Username).NotEmpty().Length(3, 20);
         }
     }
 }

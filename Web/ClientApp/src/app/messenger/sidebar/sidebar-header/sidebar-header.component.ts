@@ -31,7 +31,7 @@ export class SidebarHeaderComponent implements OnInit {
         {
             dismissible: true,
             closeable: true,
-            size: 'l',
+            size: 'm',
         }
     );
 

@@ -11,7 +11,14 @@
                 "createGroup": "Create new group chat",
                 "createChannel": "Create new channel"
             },
-            "invites": "Invites"
+            "invites": {
+                "tooltip": "Invites",
+                "title": "New invite",
+                "personalChat": "invited you to personal chat",
+                "groupChat": "invited you to group chat",
+                "accept": "Accept",
+                "decline": "Decline"
+            }
         },
         "items": {
             "date": {

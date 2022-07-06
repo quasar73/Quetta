@@ -1,10 +1,23 @@
 <tui-island>
-    <div class="tui-island__content">
-        <h3 class="tui-island__title">New request</h3>
-        <div class="tui-island__figure">
-            <a tuiLink mode="negative">Decline</a>
+    <ng-container *transloco="let t">
+        <div class="tui-island__content">
+            <h3 class="tui-island__title">{{ t('messenger.sidebar.header.invites.title') }}</h3>
+            <div class="tui-island__figure">
+                <a tuiLink mode="negative">{{ t('messenger.sidebar.header.invites.decline') }}</a>
+            </div>
         </div>
-    </div>
-    <div class="tui-island__content">@someuser invited you to personal chat</div>
-    <button tuiButton type="button" appearance="custom" size="m" class="tui-island__footer-button accept">Accept</button>
+        <div class="tui-island__content">
+            <span>
+                <strong>@{{ invite?.senderUsername }}</strong>
+                {{
+                    invite?.isGroupChat
+                        ? t('messenger.sidebar.header.invites.groupChat')
+                        : t('messenger.sidebar.header.invites.personalChat')
+                }}
+            </span>
+        </div>
+        <button tuiButton type="button" appearance="custom" size="m" class="tui-island__footer-button accept">
+            {{ t('messenger.sidebar.header.invites.accept') }}
+        </button>
+    </ng-container>
 </tui-island>

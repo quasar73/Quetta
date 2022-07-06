@@ -4,11 +4,11 @@ using MediatR;
 
 namespace Common.Models.Queries
 {
-    public class GetNotificationsQuery : IRequest<NotificationResponse>
+    public class GetInvitesQuery : IRequest<List<InviteResponse>>
     {
         public string UserId { get; set; }
 
-        public GetNotificationsQuery(string userId)
+        public GetInvitesQuery(string userId)
         {
             UserId = userId;
         }

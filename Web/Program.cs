@@ -16,6 +16,7 @@ using Logic.Handlers.Queries;
 using Logic.Hubs;
 using FluentValidation.AspNetCore;
 using Common.Validators.Commands;
+using Data.Mapping;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -89,6 +90,8 @@ builder.Services.AddAuthentication(options =>
 #endregion
 
 builder.Services.AddMediatR(typeof(RefreshTokenHandler).GetTypeInfo().Assembly);
+
+builder.Services.AddAutoMapper(typeof(InviteProfile).Assembly);
 
 builder.Services.AddSignalR();
 

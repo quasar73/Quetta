@@ -1,7 +1,6 @@
 <div class="overlay"></div>
 <tui-scrollbar class="wrap">
-    <div class="content">
-        <qtt-invite-item></qtt-invite-item>
-        <qtt-invite-item></qtt-invite-item>
+    <div class="invites-list">
+        <qtt-invite-item *ngFor="let invite of invites" [invite]="invite"></qtt-invite-item>
     </div>
 </tui-scrollbar>

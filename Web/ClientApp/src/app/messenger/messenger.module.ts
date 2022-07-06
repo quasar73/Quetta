@@ -1,5 +1,5 @@
-import { NotificationItemComponent } from './sidebar/sidebar-header/notifications-list-dialog/notification-item/notification-item.component';
-import { NotificationsListDialogComponent } from './sidebar/sidebar-header/notifications-list-dialog/notifications-list-dialog.component';
+import { InviteItemComponent } from './sidebar/sidebar-header/invites-list-dialog/invite-item/invite-item.component';
+import { InvitesListDialogComponent } from './sidebar/sidebar-header/invites-list-dialog/invites-list-dialog.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -59,8 +59,8 @@ import { AddChatDialogComponent } from './sidebar/sidebar-header/add-chat-dialog
         ChatContentComponent,
         ChatInputComponent,
         AddChatDialogComponent,
-        NotificationsListDialogComponent,
-        NotificationItemComponent,
+        InvitesListDialogComponent,
+        InviteItemComponent,
     ],
     imports: [
         CommonModule,

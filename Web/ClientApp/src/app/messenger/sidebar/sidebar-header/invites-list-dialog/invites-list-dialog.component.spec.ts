@@ -1,21 +1,21 @@
 import { TuiScrollbarModule } from '@taiga-ui/core';
-import { NotificationsListDialogComponent } from './notifications-list-dialog.component';
+import { InvitesListDialogComponent } from './invites-list-dialog.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
 
-describe('NotificationsListDialogComponent', () => {
-    let component: NotificationsListDialogComponent;
-    let fixture: ComponentFixture<NotificationsListDialogComponent>;
+describe('InvitesListDialogComponent', () => {
+    let component: InvitesListDialogComponent;
+    let fixture: ComponentFixture<InvitesListDialogComponent>;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [NotificationsListDialogComponent, MockNotificationItemComponent],
+            declarations: [InvitesListDialogComponent, MockInvitesListDialogComponent],
             imports: [TuiScrollbarModule],
         }).compileComponents();
     });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(NotificationsListDialogComponent);
+        fixture = TestBed.createComponent(InvitesListDialogComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });
@@ -26,7 +26,7 @@ describe('NotificationsListDialogComponent', () => {
 });
 
 @Component({
-    selector: 'qtt-notification-item',
+    selector: 'qtt-invites-item',
     template: '',
 })
-class MockNotificationItemComponent {}
+class MockInvitesListDialogComponent {}

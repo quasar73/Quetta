@@ -11,7 +11,7 @@
                 "createGroup": "Create new group chat",
                 "createChannel": "Create new channel"
             },
-            "notifications": "Notifications"
+            "invites": "Invites"
         },
         "items": {
             "date": {

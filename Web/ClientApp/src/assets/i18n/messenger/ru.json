@@ -11,7 +11,7 @@
                 "createGroup": "Создать групповой чат",
                 "createChannel": "Создать новый канал"
             },
-            "notifications": "Уведомления"
+            "invites": "Приглашения"
         },
         "items": {
             "date": {

@@ -1,5 +1,5 @@
 import { NotificationWebsocketService } from './../../../shared/services/websocket/notification-websocket/notification-websocket.service';
-import { NotificationsListDialogComponent } from './notifications-list-dialog/notifications-list-dialog.component';
+import { InvitesListDialogComponent } from './invites-list-dialog/invites-list-dialog.component';
 import { TranslocoService } from '@ngneat/transloco';
 import { HttpErrorResponse } from '@angular/common/http';
 import { InviteService } from './../../../shared/services/api/invite/invite.service';
@@ -27,7 +27,7 @@ export class SidebarHeaderComponent implements OnInit {
         closeable: false,
     });
     private requestsListDialog = this.dialogService.open<string | null>(
-        new PolymorpheusComponent(NotificationsListDialogComponent, this.injector),
+        new PolymorpheusComponent(InvitesListDialogComponent, this.injector),
         {
             dismissible: true,
             closeable: true,

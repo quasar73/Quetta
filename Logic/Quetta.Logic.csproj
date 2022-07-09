@@ -12,8 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Common\Common.csproj" />
-    <ProjectReference Include="..\Data\Data.csproj" />
+    <ProjectReference Include="..\Common\Quetta.Common.csproj" />
+    <ProjectReference Include="..\Data\Quetta.Data.csproj" />
   </ItemGroup>
 
 </Project>

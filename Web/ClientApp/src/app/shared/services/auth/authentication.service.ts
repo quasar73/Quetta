@@ -1,6 +1,6 @@
-import { environment } from './../../../../environments/environment';
+import { BaseService } from './../api/base/base.service';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { tap, map, switchMap, catchError } from 'rxjs/operators';
 import { AuthService } from 'ngx-auth';
@@ -16,7 +16,7 @@ interface AccessData {
 
 @Injectable()
 export class AuthenticationService implements AuthService {
-    constructor(private readonly http: HttpClient, private readonly tokenStorage: TokenStorage) {}
+    constructor(private readonly http: BaseService, private readonly tokenStorage: TokenStorage) {}
 
     public isAuthorized(): Observable<boolean> {
         return this.tokenStorage.getAccessToken().pipe(map(token => !!token));
@@ -26,10 +26,10 @@ export class AuthenticationService implements AuthService {
         return this.tokenStorage.getAccessToken();
     }
 
-    public refreshToken(): Observable<AccessData> {
+    public refreshToken(): Observable<AccessData | null> {
         return this.tokenStorage.getRefreshToken().pipe(
-            switchMap((refreshToken: string) => this.http.post<AccessData>(`${environment.apiUrl}auth/refresh`, { refreshToken })),
-            tap((tokens: AccessData) => this.saveAccessData(tokens)),
+            switchMap((refreshToken: string) => this.http.post<AccessData>('auth/refresh', { refreshToken })),
+            tap((tokens: AccessData | null) => this.saveAccessData(tokens)),
             catchError(err => {
                 this.logout();
                 return throwError(() => new Error(err));
@@ -50,8 +50,8 @@ export class AuthenticationService implements AuthService {
         location.reload();
     }
 
-    public saveAccessData({ accessToken, refreshToken }: AccessData): void {
-        this.tokenStorage.setAccessToken(accessToken).setRefreshToken(refreshToken);
+    public saveAccessData(data: AccessData | null): void {
+        this.tokenStorage.setAccessToken(data?.accessToken ?? '').setRefreshToken(data?.refreshToken ?? '');
     }
 
     public getUserInfo(): Observable<UserInfo> {

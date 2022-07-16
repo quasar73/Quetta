@@ -2,7 +2,7 @@
 using Common.Validators.Queries;
 using FluentValidation.TestHelper;
 
-namespace Validators.Tests.Tests.Queries
+namespace Quetta.Validators.Tests.Tests.Queries
 {
     public class IsAnyNotificationValidatorTests
     {

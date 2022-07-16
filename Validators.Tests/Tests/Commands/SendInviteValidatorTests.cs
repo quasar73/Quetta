@@ -3,7 +3,7 @@ using Common.Models.Requests;
 using Common.Validators.Commands;
 using FluentValidation.TestHelper;
 
-namespace Validators.Tests.Tests.Commands
+namespace Quetta.Validators.Tests.Tests.Commands
 {
     public class SendInviteValidatorTests
     {

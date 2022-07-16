@@ -2,7 +2,7 @@
 using FluentValidation.TestHelper;
 using Common.Models.Commands;
 
-namespace Validators.Tests.Tests.Commands
+namespace Quetta.Validators.Tests.Tests.Commands
 {
     public class AuthenticateGoogleUserValidatorTests
     {

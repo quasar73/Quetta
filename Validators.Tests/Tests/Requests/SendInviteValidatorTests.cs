@@ -2,7 +2,7 @@
 using Common.Validators.Requests;
 using FluentValidation.TestHelper;
 
-namespace Validators.Tests.Tests.Requests
+namespace Quetta.Validators.Tests.Tests.Requests
 {
     public class SendInviteValidatorTests
     {

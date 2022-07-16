@@ -2,7 +2,7 @@
 using Common.Validators;
 using FluentValidation.TestHelper;
 
-namespace Validators.Tests.Tests
+namespace Quetta.Validators.Tests.Tests
 {
     public class TokenModelValidatorTests
     {

@@ -23,10 +23,12 @@ import {
     TuiAlertModule,
     TuiButtonModule,
     TuiDataListModule,
+    TuiDialogModule,
     TuiErrorModule,
     TuiHintModule,
     TuiHostedDropdownModule,
     TuiLinkModule,
+    TuiRootModule,
     TuiScrollbarModule,
     TuiSvgModule,
     TuiTextfieldControllerModule,
@@ -90,6 +92,10 @@ import { SkeletonDirective } from '../shared/directives/skeleton.directive';
         TuiIslandModule,
         TuiLinkModule,
         TuiAlertModule,
+        TuiRootModule,
+        TuiDialogModule,
     ],
+    exports: [InvitesListDialogComponent],
+    entryComponents: [InvitesListDialogComponent],
 })
 export class MessengerModule {}

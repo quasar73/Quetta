@@ -1,13 +1,23 @@
-<div class="overlay"></div>
 <tui-scrollbar class="wrap">
-    <div class="invites-list">
-        <div class="skeleton" *ngIf="invites?.length === 0">
-            <div class="tui-skeleton"></div>
-            <div class="tui-skeleton"></div>
-            <div class="tui-skeleton"></div>
-            <div class="tui-skeleton"></div>
-            <div class="tui-skeleton"></div>
+    <ng-container *ngIf="invites$ | async as invites">
+        <div class="invites-list">
+            <!-- <div class="skeleton" *ngIf="invites?.length === 0">
+                <div class="tui-skeleton"></div>
+                <div class="tui-skeleton"></div>
+                <div class="tui-skeleton"></div>
+                <div class="tui-skeleton"></div>
+                <div class="tui-skeleton"></div>
+            </div> -->
+            <div class="empty-list-message" *ngIf="invites?.length === 0">
+                <span *transloco="let t">{{ t('messenger.sidebar.header.invites.noInvites') }}</span>
+            </div>
+            <qtt-invite-item
+                *ngFor="let invite of invites"
+                [hidden]="isRemoved(invite.inviteId)"
+                (inviteAccepted)="onInviteAccepted(invite.inviteId)"
+                (inviteDeclined)="onInviteDeclined(invite.inviteId)"
+                [invite]="invite"
+            ></qtt-invite-item>
         </div>
-        <qtt-invite-item *ngFor="let invite of invites" (inviteAccepted)="onInviteAccepted(invite.inviteId)" [invite]="invite"></qtt-invite-item>
-    </div>
+    </ng-container>
 </tui-scrollbar>

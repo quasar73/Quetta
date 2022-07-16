@@ -17,7 +17,8 @@
                 "personalChat": "invited you to personal chat",
                 "groupChat": "invited you to group chat",
                 "accept": "Accept",
-                "decline": "Decline"
+                "decline": "Decline",
+                "noInvites": "You have no invites yet."
             }
         },
         "items": {

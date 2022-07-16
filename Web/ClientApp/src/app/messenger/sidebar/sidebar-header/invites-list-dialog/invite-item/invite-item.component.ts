@@ -11,6 +11,7 @@ export class InviteItemComponent {
     @Input() invite!: InviteModel;
 
     @Output() inviteAccepted = new EventEmitter();
+    @Output() inviteDeclined = new EventEmitter();
 
     constructor() {}
 }

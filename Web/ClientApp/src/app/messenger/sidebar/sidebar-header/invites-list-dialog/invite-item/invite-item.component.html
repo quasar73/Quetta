@@ -3,7 +3,7 @@
         <div class="tui-island__content">
             <h3 class="tui-island__title">{{ t('messenger.sidebar.header.invites.title') }}</h3>
             <div class="tui-island__figure">
-                <a tuiLink mode="negative">{{ t('messenger.sidebar.header.invites.decline') }}</a>
+                <a tuiLink mode="negative" (click)="inviteDeclined.emit()">{{ t('messenger.sidebar.header.invites.decline') }}</a>
             </div>
         </div>
         <div class="tui-island__content">

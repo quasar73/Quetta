@@ -1,6 +1,6 @@
 ﻿namespace Quetta.Common.Models.Requests
 {
-    public class AcceptInviteRequest
+    public class RespondInviteRequest
     {
         public string InviteId { get; set; }
     }

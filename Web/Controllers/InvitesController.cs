@@ -46,11 +46,28 @@ namespace Web.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpPost("Accept")]
-        public async Task<IActionResult> AcceptInvite([FromBody] AcceptInviteRequest request)
+        public async Task<IActionResult> AcceptInvite([FromBody] RespondInviteRequest request)
         {
             var receiverId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+            var receiverUserName = (await userManager.FindByIdAsync(receiverId)).UserName;
 
             await mediator.Send(new AcceptInviteCommand(request.InviteId, receiverId));
+            await mediator.Publish(new NewNotification(receiverUserName));
+
+            return Ok();
+        }
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HttpPost("Decline")]
+        public async Task<IActionResult> DeclineInvite([FromBody] RespondInviteRequest request)
+        {
+            var receiverId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+            var receiverUserName = (await userManager.FindByIdAsync(receiverId)).UserName;
+
+            await mediator.Send(new DeclineInviteCommand(request.InviteId, receiverId));
+            await mediator.Publish(new NewNotification(receiverUserName));
 
             return Ok();
         }

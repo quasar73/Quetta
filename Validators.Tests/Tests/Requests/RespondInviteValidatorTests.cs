@@ -4,9 +4,9 @@ using Quetta.Common.Validators.Requests;
 
 namespace Quetta.Validators.Tests.Tests.Requests
 {
-    public class AcceptInviteValidatorTests
+    public class RespondInviteValidatorTests
     {
-        private readonly AcceptInviteValidator validator = new AcceptInviteValidator();
+        private readonly RespondInviteValidator validator = new RespondInviteValidator();
 
         [Theory]
         [InlineData("")]
@@ -14,7 +14,7 @@ namespace Quetta.Validators.Tests.Tests.Requests
         [InlineData(null)]
         public void GivenAnInvalidInviteIdValue_ShouldHaveValidationError(string id)
         {
-            var model = new AcceptInviteRequest() { InviteId = id };
+            var model = new RespondInviteRequest() { InviteId = id };
             var result = validator.TestValidate(model);
             result.ShouldHaveValidationErrorFor(model => model.InviteId);
         }
@@ -22,7 +22,7 @@ namespace Quetta.Validators.Tests.Tests.Requests
         [Fact]
         public void GivenValidValues_ShouldNotHaveValidationError()
         {
-            var model = new AcceptInviteRequest() { InviteId = "someinviteid" };
+            var model = new RespondInviteRequest() { InviteId = "someinviteid" };
             var result = validator.TestValidate(model);
             result.ShouldNotHaveAnyValidationErrors();
         }

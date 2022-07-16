@@ -2,18 +2,18 @@
 
 namespace Quetta.Common.Models.Commands
 {
-    public class AcceptInviteCommand : IRequest
+    public class DeclineInviteCommand : IRequest
     {
         public string InviteId { get; set; }
 
         public string ReceiverId { get; set; }
 
-        public AcceptInviteCommand(string inviteId, string receiverId)
+        public DeclineInviteCommand(string inviteId, string receiverId)
         {
             InviteId = inviteId;
             ReceiverId = receiverId;
         }
 
-        public AcceptInviteCommand() { }
+        public DeclineInviteCommand() { }
     }
 }

@@ -23,7 +23,7 @@ namespace Quetta.Logic.Handlers.Commands
         {
             var invite = dbContext.Invites.FirstOrDefault(i => i.Id == request.InviteId);
 
-            if (invite == null)
+            if (invite == null || invite.ReceiverId != request.ReceiverId)
             {
                 throw new EntityNotFoundException();
             }

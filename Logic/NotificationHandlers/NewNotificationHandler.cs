@@ -1,10 +1,12 @@
-﻿using Data;
+﻿using Common.Enums;
+using Data;
 using Data.Models;
 using Logic.Hubs;
 using Logic.Notifications;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Logic.NotificationHandlers
 {
@@ -12,17 +14,23 @@ namespace Logic.NotificationHandlers
     {
         private readonly UserManager<User> userManager;
         private readonly IHubContext<NotificationHub> hubContext;
+        private readonly QuettaDbContext dbContext;
 
-        public NewNotificationHandler(UserManager<User> userManager, IHubContext<NotificationHub> hubContext)
+        public NewNotificationHandler(UserManager<User> userManager, IHubContext<NotificationHub> hubContext, QuettaDbContext dbContext)
         {
             this.hubContext = hubContext;
             this.userManager = userManager;
+            this.dbContext = dbContext;
         }
 
         public async Task Handle(NewNotification notification, CancellationToken cancellationToken)
         {
             var user = await userManager.FindByNameAsync(notification.ReceiverUsername);
-            await hubContext.Clients.Group(user.Id).SendAsync("Notify", true);
+            var hasNotifications = dbContext.Invites
+                                    .Include(i => i.Receiver)
+                                    .Any(i => i.Receiver.UserName == notification.ReceiverUsername && i.Status == InviteStatus.Pending);
+
+            await hubContext.Clients.Group(user.Id).SendAsync("Notify", hasNotifications);
         }
     }
 }

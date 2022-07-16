@@ -18,6 +18,10 @@ export class InviteService {
         return this.base.post<void>('invites/accept', { inviteId });
     }
 
+    declineInvite(inviteId: string): Observable<void | null> {
+        return this.base.post<void>('invites/decline', { inviteId });
+    }
+
     getInvites(): Observable<InviteModel[] | null> {
         return this.base.get<InviteModel[]>('invites');
     }

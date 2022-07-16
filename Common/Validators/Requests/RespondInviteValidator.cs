@@ -3,9 +3,9 @@ using Quetta.Common.Models.Requests;
 
 namespace Quetta.Common.Validators.Requests
 {
-    public class AcceptInviteValidator : AbstractValidator<AcceptInviteRequest>
+    public class RespondInviteValidator : AbstractValidator<RespondInviteRequest>
     {
-        public AcceptInviteValidator()
+        public RespondInviteValidator()
         {
             RuleFor(model => model.InviteId).NotEmpty();
         }

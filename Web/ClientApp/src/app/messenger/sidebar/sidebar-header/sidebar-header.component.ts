@@ -111,7 +111,14 @@ export class SidebarHeaderComponent implements OnInit {
         });
     }
 
-    openRequestsListDialog(): void {
-        this.invitesListDialog.subscribe();
+    openInvitesListDialog(): void {
+        // this.invitesListDialog.subscribe();
+        this.dialogService
+            .open<void>(new PolymorpheusComponent(InvitesListDialogComponent, this.injector), {
+                dismissible: true,
+                closeable: true,
+                size: 'm',
+            })
+            .subscribe();
     }
 }

@@ -10,6 +10,8 @@ namespace Data.Models
 
         public InviteStatus Status { get; set; }
 
+        public DateTime DateTime { get; set; } 
+
         public string? ChatId { get; set; }
 
         public virtual Chat? Chat { get; set; }

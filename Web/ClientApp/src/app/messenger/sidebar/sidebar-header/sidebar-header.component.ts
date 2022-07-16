@@ -26,7 +26,7 @@ export class SidebarHeaderComponent implements OnInit {
         dismissible: true,
         closeable: false,
     });
-    private requestsListDialog = this.dialogService.open<string | null>(
+    private invitesListDialog = this.dialogService.open<string | null>(
         new PolymorpheusComponent(InvitesListDialogComponent, this.injector),
         {
             dismissible: true,
@@ -112,6 +112,6 @@ export class SidebarHeaderComponent implements OnInit {
     }
 
     openRequestsListDialog(): void {
-        this.requestsListDialog.subscribe();
+        this.invitesListDialog.subscribe();
     }
 }

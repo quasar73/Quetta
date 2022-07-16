@@ -12,6 +12,7 @@ namespace Data.Configurations
             builder.Property(i => i.SenderId).IsRequired();
             builder.Property(i => i.ReceiverId).IsRequired();
             builder.Property(i => i.Status).IsRequired();
+            builder.Property(i => i.DateTime).IsRequired().HasDefaultValueSql("now()");
         }
     }
 }

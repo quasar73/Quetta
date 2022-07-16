@@ -15,6 +15,7 @@
                         : t('messenger.sidebar.header.invites.personalChat')
                 }}
             </span>
+            <span class="tui-island__paragraph tui-island__paragraph_link">{{ invite?.dateTime | date:'dd.MM.yyyy' }}</span>
         </div>
         <button tuiButton type="button" appearance="custom" size="m" class="tui-island__footer-button accept">
             {{ t('messenger.sidebar.header.invites.accept') }}

@@ -23,6 +23,7 @@ namespace Logic.Handlers.Queries
             var invites = dbContext.Invites
                 .Include(i => i.Sender)
                 .Where(i => i.ReceiverId == request.UserId)
+                .OrderBy(i => i.DateTime)
                 .ToList();
             var mappedInvites = mapper.Map<List<InviteResponse>>(invites);
 

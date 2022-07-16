@@ -3,4 +3,5 @@ export interface InviteModel {
     inviteId: string;
     chatId: string | null;
     isGroupChat: boolean;
+    dateTime: Date;
 }

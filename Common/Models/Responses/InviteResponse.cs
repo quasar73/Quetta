@@ -6,6 +6,8 @@
 
         public string InviteId { get; set; }
 
+        public DateTime DateTime { get; set; }
+
         public string? ChatId { get; set; }
         
         public bool IsGroupChat { get; set; }

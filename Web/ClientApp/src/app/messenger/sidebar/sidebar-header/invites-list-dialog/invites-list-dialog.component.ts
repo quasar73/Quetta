@@ -16,6 +16,7 @@ export class InvitesListDialogComponent implements OnInit {
     ngOnInit(): void {
         this.inviteService.getInvites().subscribe(invites => {
             this.invites.push(...(invites ?? []));
+            console.log(invites);
             this.cdr.detectChanges();
         });
     }

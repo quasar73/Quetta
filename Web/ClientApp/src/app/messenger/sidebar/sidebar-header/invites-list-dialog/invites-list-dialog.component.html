@@ -8,6 +8,6 @@
             <div class="tui-skeleton"></div>
             <div class="tui-skeleton"></div>
         </div>
-        <qtt-invite-item *ngFor="let invite of invites" [invite]="invite"></qtt-invite-item>
+        <qtt-invite-item *ngFor="let invite of invites" (inviteAccepted)="onInviteAccepted(invite.inviteId)" [invite]="invite"></qtt-invite-item>
     </div>
 </tui-scrollbar>

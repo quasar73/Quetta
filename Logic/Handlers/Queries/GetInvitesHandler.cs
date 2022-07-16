@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Common.Enums;
 using Common.Models.Queries;
 using Common.Models.Responses;
 using Data;
@@ -22,7 +23,7 @@ namespace Logic.Handlers.Queries
         {
             var invites = dbContext.Invites
                 .Include(i => i.Sender)
-                .Where(i => i.ReceiverId == request.UserId)
+                .Where(i => i.ReceiverId == request.UserId && i.Status == InviteStatus.Pending)
                 .OrderBy(i => i.DateTime)
                 .ToList();
             var mappedInvites = mapper.Map<List<InviteResponse>>(invites);

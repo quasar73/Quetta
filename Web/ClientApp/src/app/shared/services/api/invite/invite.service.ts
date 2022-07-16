@@ -11,7 +11,11 @@ export class InviteService {
     constructor(private base: BaseService) {}
 
     sendInvite(model: SendInviteModel): Observable<void | null> {
-        return this.base.post('invites', model);
+        return this.base.post<void>('invites', model);
+    }
+
+    acceptInvite(inviteId: string): Observable<void | null> {
+        return this.base.post<void>('invites/accept', { inviteId });
     }
 
     getInvites(): Observable<InviteModel[] | null> {

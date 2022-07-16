@@ -7,5 +7,11 @@ namespace Quetta.Common.Models.Commands
         public string InviteId { get; set; }
 
         public string ReceiverId { get; set; }
+
+        public AcceptInviteCommand(string inviteId, string receiverId)
+        {
+            InviteId = inviteId;
+            ReceiverId = receiverId;
+        }
     }
 }

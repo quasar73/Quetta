@@ -8,6 +8,8 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Quetta.Common.Models.Commands;
+using Quetta.Common.Models.Requests;
 using System.Security.Claims;
 
 namespace Web.Controllers
@@ -36,6 +38,19 @@ namespace Web.Controllers
 
             await mediator.Send(new SendInviteCommand(request, senderId));
             await mediator.Publish(new NewNotification(request.ReceiverUsername));
+
+            return Ok();
+        }
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HttpPost("Accept")]
+        public async Task<IActionResult> AcceptInvite([FromBody] AcceptInviteRequest request)
+        {
+            var receiverId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+
+            await mediator.Send(new AcceptInviteCommand(request.InviteId, receiverId));
 
             return Ok();
         }

@@ -1,4 +1,5 @@
-﻿using Common.Models.Queries;
+﻿using Common.Enums;
+using Common.Models.Queries;
 using Common.Models.Responses;
 using Data;
 using MediatR;
@@ -16,7 +17,7 @@ namespace Logic.Handlers.Queries
 
         public async Task<IsAnyNotificationsResponse> Handle(IsAnyNotificationsQuery request, CancellationToken cancellationToken)
         {
-            var hasNotifications = dbContext.Invites.Any(i => i.ReceiverId == request.UserId);
+            var hasNotifications = dbContext.Invites.Any(i => i.ReceiverId == request.UserId && i.Status == InviteStatus.Pending);
 
             return new IsAnyNotificationsResponse
             {

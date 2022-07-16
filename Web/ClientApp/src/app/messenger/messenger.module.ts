@@ -95,7 +95,6 @@ import { SkeletonDirective } from '../shared/directives/skeleton.directive';
         TuiRootModule,
         TuiDialogModule,
     ],
-    exports: [InvitesListDialogComponent],
-    entryComponents: [InvitesListDialogComponent],
+    exports: [InvitesListDialogComponent]
 })
 export class MessengerModule {}

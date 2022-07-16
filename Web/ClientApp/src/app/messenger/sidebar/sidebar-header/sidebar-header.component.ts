@@ -4,7 +4,7 @@ import { TranslocoService } from '@ngneat/transloco';
 import { HttpErrorResponse } from '@angular/common/http';
 import { InviteService } from './../../../shared/services/api/invite/invite.service';
 import { AddChatDialogComponent } from './add-chat-dialog/add-chat-dialog.component';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { ChangeDetectionStrategy, Component, Inject, Injector, OnInit } from '@angular/core';
 import { UserInfo } from 'src/app/shared/models/user-info.model';
 import { AuthenticationService } from 'src/app/shared/services/auth/authentication.service';
@@ -19,7 +19,7 @@ import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
 })
 export class SidebarHeaderComponent implements OnInit {
     userInfo!: UserInfo;
-    searchControl = new FormControl();
+    searchControl = new UntypedFormControl();
     isOpened = false;
 
     private addChatDialog = this.dialogService.open<string | null>(new PolymorpheusComponent(AddChatDialogComponent, this.injector), {

@@ -2,7 +2,7 @@ import { TranslocoService } from '@ngneat/transloco';
 import { Router } from '@angular/router';
 import { RegisterUserDataService } from '../../shared/services/register-user-data/register-user-data.service';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { lastStepIndex, stepper, usernameMinLength } from 'src/app/shared/consts/sign-on.const';
 import { AuthApiService } from 'src/app/shared/services/api/auth/auth.service';
 import { UsernameValidator } from 'src/app/shared/validators/username.validator';
@@ -26,13 +26,13 @@ import { availableLanguage } from 'src/app/shared/consts/languages.const';
     ],
 })
 export class SignUpComponent implements OnInit {
-    signUpForm = new FormGroup({
-        username: new FormControl('', [Validators.required, Validators.minLength(usernameMinLength)]),
-        firstName: new FormControl('', Validators.required),
-        lastName: new FormControl('', Validators.required),
-        idToken: new FormControl('', Validators.required),
+    signUpForm = new UntypedFormGroup({
+        username: new UntypedFormControl('', [Validators.required, Validators.minLength(usernameMinLength)]),
+        firstName: new UntypedFormControl('', Validators.required),
+        lastName: new UntypedFormControl('', Validators.required),
+        idToken: new UntypedFormControl('', Validators.required),
     });
-    languagesControl = new FormControl('en');
+    languagesControl = new UntypedFormControl('en');
 
     activeIndex!: number;
     isFormPending!: boolean;

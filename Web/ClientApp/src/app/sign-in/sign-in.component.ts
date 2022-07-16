@@ -1,5 +1,5 @@
 import { AuthenticationService } from './../shared/services/auth/authentication.service';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { RegisterUserDataService } from './../shared/services/register-user-data/register-user-data.service';
 import { Router } from '@angular/router';
 import { AuthApiService } from './../shared/services/api/auth/auth.service';
@@ -19,7 +19,7 @@ import { availableLanguage } from '../shared/consts/languages.const';
     ],
 })
 export class SignInComponent implements OnInit {
-    languagesControl = new FormControl('en');
+    languagesControl = new UntypedFormControl('en');
 
     get languages(): string[] {
         return availableLanguage;

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import { TuiDialogContext } from '@taiga-ui/core';
 import { TUI_VALIDATION_ERRORS } from '@taiga-ui/kit';
 import { POLYMORPHEUS_CONTEXT } from '@tinkoff/ng-polymorpheus';
@@ -21,7 +21,7 @@ import { usernameMinLength } from 'src/app/shared/consts/sign-on.const';
     ],
 })
 export class AddChatDialogComponent {
-    usernameControl = new FormControl('', [Validators.required, Validators.minLength(3)]);
+    usernameControl = new UntypedFormControl('', [Validators.required, Validators.minLength(3)]);
 
     constructor(
         @Inject(POLYMORPHEUS_CONTEXT)

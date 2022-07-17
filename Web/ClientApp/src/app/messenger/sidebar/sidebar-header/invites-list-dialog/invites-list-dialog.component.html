@@ -1,14 +1,7 @@
 <tui-scrollbar class="wrap">
     <ng-container *ngIf="invites$ | async as invites">
         <div class="invites-list">
-            <!-- <div class="skeleton" *ngIf="invites?.length === 0">
-                <div class="tui-skeleton"></div>
-                <div class="tui-skeleton"></div>
-                <div class="tui-skeleton"></div>
-                <div class="tui-skeleton"></div>
-                <div class="tui-skeleton"></div>
-            </div> -->
-            <div class="empty-list-message" *ngIf="invites?.length === 0">
+            <div class="empty-list-message" *ngIf="isListEmpty(invites)">
                 <span *transloco="let t">{{ t('messenger.sidebar.header.invites.noInvites') }}</span>
             </div>
             <qtt-invite-item

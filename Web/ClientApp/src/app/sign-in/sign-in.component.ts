@@ -4,7 +4,7 @@ import { RegisterUserDataService } from './../shared/services/register-user-data
 import { Router } from '@angular/router';
 import { AuthApiService } from './../shared/services/api/auth/auth.service';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { GoogleLoginProvider, SocialAuthService } from '@abacritt/angularx-social-login';
+import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { TranslocoService } from '@ngneat/transloco';
 import { availableLanguage } from '../shared/consts/languages.const';
@@ -40,10 +40,8 @@ export class SignInComponent implements OnInit {
         this.languagesControl.valueChanges.subscribe(language => {
             this.translocoService.setActiveLang(language);
         });
-    }
 
-    signInWithGoogle(): void {
-        this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID)?.then(result => {
+        this.socialAuthService.authState.subscribe(result => {
             this.authApiService.authenticateWithGoogle(result.idToken).subscribe(token => {
                 if (token) {
                     this.authService.saveAccessData(token);

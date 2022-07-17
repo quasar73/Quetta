@@ -23,7 +23,6 @@ import {
     TuiAlertModule,
     TuiButtonModule,
     TuiDataListModule,
-    TuiDialogModule,
     TuiErrorModule,
     TuiHintModule,
     TuiHostedDropdownModule,
@@ -62,13 +61,14 @@ import { SkeletonDirective } from '../shared/directives/skeleton.directive';
         ChatContentComponent,
         ChatInputComponent,
         AddChatDialogComponent,
+        SkeletonDirective,
         InvitesListDialogComponent,
         InviteItemComponent,
-        SkeletonDirective,
     ],
     imports: [
         CommonModule,
         MessengerRoutingModule,
+        TuiRootModule,
         TranslocoModule,
         ReactiveFormsModule,
         TuiAvatarModule,
@@ -92,9 +92,6 @@ import { SkeletonDirective } from '../shared/directives/skeleton.directive';
         TuiIslandModule,
         TuiLinkModule,
         TuiAlertModule,
-        TuiRootModule,
-        TuiDialogModule,
     ],
-    exports: [InvitesListDialogComponent]
 })
 export class MessengerModule {}

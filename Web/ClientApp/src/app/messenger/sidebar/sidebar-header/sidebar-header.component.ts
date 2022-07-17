@@ -5,7 +5,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { InviteService } from './../../../shared/services/api/invite/invite.service';
 import { AddChatDialogComponent } from './add-chat-dialog/add-chat-dialog.component';
 import { UntypedFormControl } from '@angular/forms';
-import { ChangeDetectionStrategy, Component, Inject, Injector, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import { UserInfo } from 'src/app/shared/models/user-info.model';
 import { AuthenticationService } from 'src/app/shared/services/auth/authentication.service';
 import { TuiAlertService, TuiDialogService, TuiNotification } from '@taiga-ui/core';
@@ -22,18 +22,15 @@ export class SidebarHeaderComponent implements OnInit {
     searchControl = new UntypedFormControl();
     isOpened = false;
 
-    private addChatDialog = this.dialogService.open<string | null>(new PolymorpheusComponent(AddChatDialogComponent, this.injector), {
+    private addChatDialog = this.dialogService.open<string | null>(new PolymorpheusComponent(AddChatDialogComponent), {
         dismissible: true,
         closeable: false,
     });
-    private invitesListDialog = this.dialogService.open<string | null>(
-        new PolymorpheusComponent(InvitesListDialogComponent, this.injector),
-        {
-            dismissible: true,
-            closeable: true,
-            size: 'm',
-        }
-    );
+    private invitesListDialog = this.dialogService.open<void>(new PolymorpheusComponent(InvitesListDialogComponent), {
+        dismissible: true,
+        closeable: true,
+        size: 'm',
+    });
 
     get userFullName(): string {
         return `${this.userInfo?.firstName} ${this.userInfo?.lastName}`;
@@ -49,8 +46,7 @@ export class SidebarHeaderComponent implements OnInit {
         private readonly alertService: TuiAlertService,
         private readonly translocoService: TranslocoService,
         public readonly notificationWebsocketService: NotificationWebsocketService,
-        @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
-        @Inject(Injector) private readonly injector: Injector
+        @Inject(TuiDialogService) private readonly dialogService: TuiDialogService
     ) {}
 
     ngOnInit(): void {
@@ -112,13 +108,6 @@ export class SidebarHeaderComponent implements OnInit {
     }
 
     openInvitesListDialog(): void {
-        // this.invitesListDialog.subscribe();
-        this.dialogService
-            .open<void>(new PolymorpheusComponent(InvitesListDialogComponent, this.injector), {
-                dismissible: true,
-                closeable: true,
-                size: 'm',
-            })
-            .subscribe();
+        this.invitesListDialog.subscribe();
     }
 }

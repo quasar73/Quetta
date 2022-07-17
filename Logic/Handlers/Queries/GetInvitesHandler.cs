@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Logic.Handlers.Queries
 {
-    public class GetInvitesHandler : IRequestHandler<GetInvitesQuery, List<InviteResponse>>
+    public class GetInvitesHandler : IRequestHandler<GetInvitesQuery, ICollection<InviteResponse>>
     {
         private readonly QuettaDbContext dbContext;
         private readonly IMapper mapper;
@@ -19,7 +19,7 @@ namespace Logic.Handlers.Queries
             this.mapper = mapper;
         }
 
-        public async Task<List<InviteResponse>> Handle(GetInvitesQuery request, CancellationToken cancellationToken)
+        public async Task<ICollection<InviteResponse>> Handle(GetInvitesQuery request, CancellationToken cancellationToken)
         {
             var invites = dbContext.Invites
                 .Include(i => i.Sender)

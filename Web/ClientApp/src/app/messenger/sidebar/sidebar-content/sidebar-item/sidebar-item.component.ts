@@ -1,7 +1,8 @@
+import { ChatItemModel } from './../../../../shared/api-models/chat-item.model';
 import { TranslocoService } from '@ngneat/transloco';
-import { ChatItem } from './../../../../shared/models/chat-item.model';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { dateCalculator } from 'src/app/shared/utils/date-calculator';
+import { ChatType } from 'src/app/shared/enums/chat-type.enum';
 
 @Component({
     selector: 'qtt-sidebar-item',
@@ -11,19 +12,19 @@ import { dateCalculator } from 'src/app/shared/utils/date-calculator';
 })
 export class SidebarItemComponent {
     @Input() active = false;
-    @Input() data!: ChatItem;
+    @Input() data!: ChatItemModel;
 
     get title(): string {
         return this.data?.title ?? '??';
     }
 
     get icon(): string {
-        switch (this.data?.type) {
-            case 'dialog':
+        switch (this.data?.chatType) {
+            case ChatType.PersonalChat:
                 return 'tuiIconUser';
-            case 'group':
+            case ChatType.GroupChat:
                 return 'tuiIconUsers';
-            case 'channel':
+            case ChatType.Channel:
                 return 'tuiIconComment';
             default:
                 return 'tuiIconUser';
@@ -31,11 +32,12 @@ export class SidebarItemComponent {
     }
 
     get dateTime(): string {
-        if (this.data) {
-            return dateCalculator(this.data?.lastMessageDate, this.translocoSerivce);
-        } else {
-            return 'none';
-        }
+        // if (this.data) {
+        //     return dateCalculator(this.data?.lastMessageDate, this.translocoSerivce);
+        // } else {
+        //     return 'none';
+        // }
+        return '';
     }
 
     constructor(private readonly translocoSerivce: TranslocoService) {}

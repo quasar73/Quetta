@@ -1,8 +1,8 @@
 <div class="wrap">
     <qtt-sidebar-item
-        *ngFor="let item of testData"
-        [data]="item"
-        [active]="isActive(item.id)"
-        (click)="changeSelection(item.id)"
+        *ngFor="let chat of chats$ | async"
+        [data]="chat"
+        [active]="isActive(chat.id)"
+        (click)="changeSelection(chat.id)"
     ></qtt-sidebar-item>
 </div>

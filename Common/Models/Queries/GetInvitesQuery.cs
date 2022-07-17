@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Common.Models.Queries
 {
-    public class GetInvitesQuery : IRequest<List<InviteResponse>>
+    public class GetInvitesQuery : IRequest<ICollection<InviteResponse>>
     {
         public string UserId { get; set; }
 

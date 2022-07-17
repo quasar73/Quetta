@@ -25,6 +25,11 @@
             "date": {
                 "justNow": "just now"
             }
+        },
+        "content": {
+            "chatItem": {
+                "noMessages": "There are no messages here"
+            }
         }
     },
     "chat": {

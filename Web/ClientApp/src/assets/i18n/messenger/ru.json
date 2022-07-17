@@ -21,7 +21,10 @@
                 "noInvites": "У вас пока нет приглашений."
             }
         },
-        "items": {
+        "content": {
+            "chatItem": {
+                "noMessages": "Тут еще нет сообщений"
+            },
             "date": {
                 "justNow": "только что"
             }

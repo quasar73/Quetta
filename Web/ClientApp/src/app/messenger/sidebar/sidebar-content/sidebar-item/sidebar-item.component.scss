@@ -25,8 +25,7 @@
         background-color: var(--tui-primary);
         transition: 0.2s;
 
-
-        .item .text-wrap tui-svg {
+        .item .text-wrap tui-svg, .item .text-wrap .subtitle .no-messages {
             color: var(--tui-text-03);
         }
     }
@@ -86,6 +85,11 @@
                 display: inline-block;
                 text-overflow: ellipsis;
                 white-space: nowrap;
+
+                .no-messages {
+                    font-style: italic;
+                    color: var(--tui-primary-hover);
+                }
             }
 
             tui-svg {

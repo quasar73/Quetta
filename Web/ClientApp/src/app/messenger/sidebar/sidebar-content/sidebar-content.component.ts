@@ -1,5 +1,7 @@
-import { ChatItem } from './../../../shared/models/chat-item.model';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChatItemModel } from './../../../shared/api-models/chat-item.model';
+import { Observable } from 'rxjs';
+import { ChatService } from './../../../shared/services/api/chat/chat.service';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 @Component({
     selector: 'qtt-sidebar-content',
@@ -7,40 +9,15 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     styleUrls: ['./sidebar-content.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SidebarContentComponent {
-    testData: ChatItem[] = [
-        {
-            id: '1',
-            title: 'max ship',
-            lastMessage: 'This is last message',
-            type: 'dialog',
-            lastMessageDate: new Date('2020-01-01'),
-        },
-        {
-            id: '2',
-            title: 'cc xcox coc',
-            lastMessage: 'This is last message',
-            type: 'group',
-            lastMessageDate: new Date('2022-05-08 7:57'),
-        },
-        {
-            id: '3',
-            title: 'jack kek',
-            lastMessage: 'This is last message',
-            type: 'channel',
-            lastMessageDate: new Date(),
-        },
-        {
-            id: '4',
-            title: 'This is very very very very looooooong text to test how title will be cut',
-            lastMessage: 'And this is very very veeryyy looooong message to test how last message will be cut',
-            type: 'dialog',
-            lastMessageDate: new Date('2022-04-20'),
-        },
-    ];
+export class SidebarContentComponent implements OnInit {
     selectedId!: string | null;
+    chats$!: Observable<ChatItemModel[] | null>;
 
-    constructor() {}
+    constructor(private readonly chatService: ChatService) {}
+
+    ngOnInit(): void {
+        this.chats$ = this.chatService.getChats();
+    }
 
     changeSelection(id: string): void {
         this.selectedId = this.selectedId === id ? null : id;

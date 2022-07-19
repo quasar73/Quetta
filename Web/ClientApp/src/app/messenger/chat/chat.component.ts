@@ -1,4 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { SelectedChatService } from './../../shared/services/selected-chat/selected-chat.service';
+import { ActivatedRoute } from '@angular/router';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 @Component({
     selector: 'qtt-chat',
@@ -6,6 +8,10 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     styleUrls: ['./chat.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChatComponent {
-    constructor() {}
+export class ChatComponent implements OnInit {
+    constructor(private readonly activatedRoute: ActivatedRoute, private readonly selectedChatService: SelectedChatService) {}
+
+    ngOnInit(): void {
+        this.selectedChatService.setId(this.activatedRoute.snapshot.paramMap.get('id'));
+    }
 }

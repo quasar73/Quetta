@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { SelectedChatService } from 'src/app/shared/services/selected-chat/selected-chat.service';
 
 @Component({
     selector: 'qtt-empty-chat',
@@ -6,6 +7,10 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     styleUrls: ['./empty-chat.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EmptyChatComponent {
-    constructor() {}
+export class EmptyChatComponent implements OnInit {
+    constructor(private readonly selectedChatService: SelectedChatService) {}
+
+    ngOnInit(): void {
+        this.selectedChatService.setId(null);
+    }
 }

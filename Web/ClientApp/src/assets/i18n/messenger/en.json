@@ -21,14 +21,12 @@
                 "noInvites": "You have no invites yet."
             }
         },
-        "items": {
-            "date": {
-                "justNow": "just now"
-            }
-        },
         "content": {
             "chatItem": {
                 "noMessages": "There are no messages here"
+            },
+            "date": {
+                "justNow": "just now"
             }
         }
     },

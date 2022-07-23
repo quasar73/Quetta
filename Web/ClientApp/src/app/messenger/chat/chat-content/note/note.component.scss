@@ -1,0 +1,25 @@
+.wrap {
+    .note {
+        width: fit-content;
+        max-width: 30%;
+        min-width: 10%;
+        padding: 16px;
+        background-color: var(--tui-base-02);
+        border-radius: var(--tui-radius-m);
+
+        .info {
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+
+            .is-received {
+                color: var(--tui-primary);
+            }
+
+            .time {
+                color: var(--tui-text-03);
+            }
+        }
+    }
+}

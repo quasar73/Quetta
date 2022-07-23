@@ -1,3 +1,20 @@
 <div class="wrap">
-    <span class="tui-text_body-l">There are no messages here. Type anything!</span>
+    <!-- <div class="no-messages-wrap">
+        <span class="tui-text_body-l">There are no messages here. Type anything!</span>
+    </div> -->
+    <div class="notes-wrap">
+        <tui-scrollbar class="notes-scroll" [scrollTop]="notesList.scrollHeight">
+            <div class="notes-list" #notesList>
+                <qtt-note class="tui-space_top-2"></qtt-note>
+                <qtt-note class="tui-space_top-2"></qtt-note>
+                <qtt-note class="tui-space_top-2"></qtt-note>
+                <qtt-note class="tui-space_top-2"></qtt-note>
+                <qtt-note class="tui-space_top-2"></qtt-note>
+                <qtt-note class="tui-space_top-2"></qtt-note>
+                <qtt-note class="tui-space_top-2"></qtt-note>
+                <qtt-note class="tui-space_top-2"></qtt-note>
+                <qtt-note class="tui-space_top-2"></qtt-note>
+            </div>
+        </tui-scrollbar>
+    </div>
 </div>

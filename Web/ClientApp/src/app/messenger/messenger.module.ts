@@ -45,6 +45,7 @@ import { ChatContentComponent } from './chat/chat-content/chat-content.component
 import { ChatInputComponent } from './chat/chat-input/chat-input.component';
 import { AddChatDialogComponent } from './sidebar/sidebar-header/add-chat-dialog/add-chat-dialog.component';
 import { SkeletonDirective } from '../shared/directives/skeleton.directive';
+import { NoteComponent } from './chat/chat-content/note/note.component';
 
 @NgModule({
     providers: [{ provide: TRANSLOCO_SCOPE, useValue: 'messenger' }],
@@ -64,6 +65,7 @@ import { SkeletonDirective } from '../shared/directives/skeleton.directive';
         SkeletonDirective,
         InvitesListDialogComponent,
         InviteItemComponent,
+        NoteComponent,
     ],
     imports: [
         CommonModule,

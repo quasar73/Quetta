@@ -31,7 +31,7 @@
         }
     },
     "chat": {
-        "placeholder": "Type here to chat..."
+        "placeholder": "Message"
     },
     "emptyChatMessage": "Choose a chat to start messaging",
     "addChatDialog": {

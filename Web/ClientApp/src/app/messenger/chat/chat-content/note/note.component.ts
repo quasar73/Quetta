@@ -1,15 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'qtt-note',
-  templateUrl: './note.component.html',
-  styleUrls: ['./note.component.scss']
+    selector: 'qtt-note',
+    templateUrl: './note.component.html',
+    styleUrls: ['./note.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NoteComponent implements OnInit {
+    constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+    ngOnInit(): void {}
 }

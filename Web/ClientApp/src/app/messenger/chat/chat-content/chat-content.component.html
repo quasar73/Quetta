@@ -1,10 +1,15 @@
-<div class="wrap">
+<div class="wrap" #wrap>
     <!-- <div class="no-messages-wrap">
         <span class="tui-text_body-l">There are no messages here. Type anything!</span>
     </div> -->
     <div class="notes-wrap">
-        <tui-scrollbar class="notes-scroll" [scrollTop]="notesList.scrollHeight">
+        <tui-scrollbar class="notes-scroll" [scrollTop]="notesList.scrollHeight" (scroll)="onScroll()">
             <div class="notes-list" #notesList>
+                <div #bottomAnchor></div>
+
+                <qtt-note class="tui-space_top-2"></qtt-note>
+                <qtt-note class="tui-space_top-2"></qtt-note>
+                <qtt-note class="tui-space_top-2"></qtt-note>
                 <qtt-note class="tui-space_top-2"></qtt-note>
                 <qtt-note class="tui-space_top-2"></qtt-note>
                 <qtt-note class="tui-space_top-2"></qtt-note>
@@ -17,4 +22,14 @@
             </div>
         </tui-scrollbar>
     </div>
+
+    <tui-marker-icon
+        class="scroll-down-btn"
+        *ngIf="scrollDownButtonVisible"
+        mode="link"
+        src="tuiIconChevronDownLarge"
+        size="s"
+        [@scrollDownButtonTrigger]
+        (click)="scrollDown(bottomAnchor)"
+    ></tui-marker-icon>
 </div>

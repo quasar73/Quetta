@@ -1,7 +1,7 @@
 ﻿using Quetta.Common.Exceptions;
 using Quetta.Common.Models;
 using Quetta.Common.Models.Queries;
-using Data;
+using Quetta.Data;
 using Quetta.Data.Models;
 using Quetta.Logic.Interfaces;
 using MediatR;

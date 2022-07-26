@@ -3,7 +3,7 @@ using Quetta.Data.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Data
+namespace Quetta.Data
 {
     public class QuettaDbContext : IdentityDbContext<User>
     {

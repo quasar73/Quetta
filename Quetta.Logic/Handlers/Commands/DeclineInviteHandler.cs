@@ -1,6 +1,6 @@
 ﻿using Quetta.Common.Enums;
 using Quetta.Common.Exceptions;
-using Data;
+using Quetta.Data;
 using MediatR;
 using Quetta.Common.Models.Commands;
 

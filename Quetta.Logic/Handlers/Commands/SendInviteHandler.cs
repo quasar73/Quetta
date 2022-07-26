@@ -1,7 +1,7 @@
 ﻿using Quetta.Common.Enums;
 using Quetta.Common.Exceptions;
 using Quetta.Common.Models.Commands;
-using Data;
+using Quetta.Data;
 using Quetta.Data.Models;
 using Quetta.Logic.Hubs;
 using MediatR;

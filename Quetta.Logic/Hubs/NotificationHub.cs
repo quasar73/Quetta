@@ -1,5 +1,5 @@
 ﻿using Quetta.Common.Enums;
-using Data;
+using Quetta.Data;
 using Microsoft.AspNetCore.SignalR;
 
 namespace Quetta.Logic.Hubs

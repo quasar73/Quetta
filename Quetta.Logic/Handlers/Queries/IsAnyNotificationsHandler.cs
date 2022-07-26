@@ -1,7 +1,7 @@
 ﻿using Quetta.Common.Enums;
 using Quetta.Common.Models.Queries;
 using Quetta.Common.Models.Responses;
-using Data;
+using Quetta.Data;
 using MediatR;
 
 namespace Quetta.Logic.Handlers.Queries

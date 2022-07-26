@@ -1,4 +1,3 @@
-using Data;
 using Quetta.Data.Models;
 using Quetta.Logic.HostedServices;
 using Quetta.Logic.Interfaces;
@@ -17,6 +16,7 @@ using Quetta.Logic.Hubs;
 using FluentValidation.AspNetCore;
 using Quetta.Common.Validators.Commands;
 using Quetta.Data.Mapping;
+using Quetta.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

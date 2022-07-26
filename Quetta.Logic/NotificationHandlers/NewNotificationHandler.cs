@@ -1,5 +1,5 @@
 ﻿using Quetta.Common.Enums;
-using Data;
+using Quetta.Data;
 using Quetta.Data.Models;
 using Quetta.Logic.Hubs;
 using Quetta.Logic.Notifications;

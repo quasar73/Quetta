@@ -27,6 +27,17 @@ namespace Quetta.Validators.Tests.Commands
         }
 
         [Theory]
+        [InlineData("")]
+        [InlineData(" ")]
+        [InlineData(null)]
+        public void GivenAnInvalidChatIdValue_ShouldHaveValidationError(string id)
+        {
+            var model = new SendMessageCommand() { ChatId = id };
+            var result = validator.TestValidate(model);
+            result.ShouldHaveValidationErrorFor(model => model.ChatId);
+        }
+
+        [Theory]
         [MemberData(nameof(TextData))]
         public void GivenAnInvalidTextValue_ShouldHaveValidationError(string text)
         {
@@ -41,7 +52,8 @@ namespace Quetta.Validators.Tests.Commands
             var model = new SendMessageCommand()
             {
                 SenderId = "somesenderid",
-                Text = "some valid text"
+                ChatId = "somechatid",
+                Text = "some valid text",
             };
             var result = validator.TestValidate(model);
             result.ShouldNotHaveAnyValidationErrors();

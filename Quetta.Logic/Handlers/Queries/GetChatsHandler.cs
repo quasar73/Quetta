@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Data;
+using Quetta.Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Quetta.Common.Models.Queries;

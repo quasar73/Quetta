@@ -8,6 +8,7 @@ namespace Quetta.Common.Validators.Commands
         public SendMessageValidator()
         {
             RuleFor(model => model.SenderId).NotEmpty();
+            RuleFor(model => model.ChatId).NotEmpty();
             RuleFor(model => model.Text).NotEmpty().Length(1, 2000);
         }
     }

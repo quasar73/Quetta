@@ -1,5 +1,5 @@
 ﻿using Quetta.Common.Models;
-using Data;
+using Quetta.Data;
 using Quetta.Data.Models;
 using Quetta.Logic.Interfaces;
 using Microsoft.Extensions.Configuration;

@@ -1,6 +1,6 @@
 ﻿using Quetta.Common.Enums;
 using Quetta.Common.Exceptions;
-using Data;
+using Quetta.Data;
 using Quetta.Data.Models;
 using MediatR;
 using Microsoft.AspNetCore.Identity;

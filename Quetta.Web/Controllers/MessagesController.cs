@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Quetta.Common.Models.Requests;
 using Quetta.Common.Models.Commands;
 using System.Security.Claims;
+using Quetta.Common.Models.Queries;
 
 namespace Quetta.Web.Controllers
 {
@@ -33,6 +34,13 @@ namespace Quetta.Web.Controllers
             await mediator.Send(command);
 
             return Ok();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetMessages([FromQuery] string chatId)
+        {
+            var messages = await mediator.Send(new GetMessagesQuery(chatId));
+            return Ok(messages);
         }
     }
 }

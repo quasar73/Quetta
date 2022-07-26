@@ -12,7 +12,7 @@ namespace Quetta.Validators.Tests.Queries
         [InlineData(null)]
         [InlineData("  ")]
         [InlineData("")]
-        public void GivenAnInvalidRefreshTokenValue_ShouldNotHaveValidationError(string refreshToken)
+        public void GivenAnInvalidRefreshTokenValue_ShouldHaveValidationError(string refreshToken)
         {
             var model = new RefreshTokenQuery(refreshToken);
             var result = validator.TestValidate(model);

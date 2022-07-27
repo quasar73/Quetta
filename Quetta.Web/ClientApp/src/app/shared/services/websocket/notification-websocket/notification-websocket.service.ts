@@ -1,5 +1,5 @@
 import { tap, map } from 'rxjs/operators';
-import { NotificationService } from './../../api/notification/notification.service';
+import { NotificationApiService } from './../../api/notification/notification.service';
 import { TuiAlertService, TuiNotification } from '@taiga-ui/core';
 import { BehaviorSubject, combineLatestWith, Observable } from 'rxjs';
 import { environment } from './../../../../../environments/environment';
@@ -17,7 +17,7 @@ export class NotificationWebsocketService {
     constructor(
         private readonly tokenStorage: TokenStorage,
         private readonly alertService: TuiAlertService,
-        private readonly notificationService: NotificationService
+        private readonly notificationService: NotificationApiService
     ) {}
 
     startConnection(): Observable<void> {

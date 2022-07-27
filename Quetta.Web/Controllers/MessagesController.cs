@@ -28,7 +28,8 @@ namespace Quetta.Web.Controllers
             {
                 SenderId = senderId,
                 Text = reqeust.Text,
-                Date = reqeust.Date
+                Date = DateTime.UtcNow,
+                ChatId = reqeust.ChatId,
             };
 
             await mediator.Send(command);

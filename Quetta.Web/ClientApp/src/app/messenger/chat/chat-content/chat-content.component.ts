@@ -1,5 +1,6 @@
+import { MessageModel } from './../../../shared/api-models/message.model';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { ChangeDetectionStrategy, Component, ElementRef, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { TuiScrollbarComponent } from '@taiga-ui/core';
 
 const SCROLL_DOWN_BTN_SHOWS = 256;
@@ -26,6 +27,8 @@ export class ChatContentComponent {
     @ViewChild('notesList') private readonly notesList?: ElementRef<HTMLElement>;
     @ViewChild('wrap') private readonly wrap?: ElementRef<HTMLElement>;
     @ViewChild(TuiScrollbarComponent, { read: ElementRef }) private readonly scrollBar?: ElementRef<HTMLElement>;
+
+    @Input() messages!: MessageModel[] | null;
 
     scrollDownButtonVisible = false;
 

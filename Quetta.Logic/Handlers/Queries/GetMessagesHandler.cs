@@ -20,7 +20,7 @@ namespace Quetta.Logic.Handlers.Queries
 
         public async Task<ICollection<MessageResponse>> Handle(GetMessagesQuery request, CancellationToken cancellationToken)
         {
-            var messages = dbContext.Messages.Include(m => m.User).AsNoTracking().Where(m => m.ChatId == request.ChatId).ToList();
+            var messages = dbContext.Messages.Include(m => m.User).AsNoTracking().Where(m => m.ChatId == request.ChatId).OrderByDescending(m => m.Date).ToList();
             var mappedMessages = mapper.Map<List<MessageResponse>>(messages);
 
             return mappedMessages;

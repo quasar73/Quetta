@@ -6,19 +6,7 @@
         <tui-scrollbar class="notes-scroll" [scrollTop]="notesList.scrollHeight" (scroll)="onScroll()">
             <div class="notes-list" #notesList>
                 <div #bottomAnchor></div>
-
-                <qtt-note class="tui-space_top-2"></qtt-note>
-                <qtt-note class="tui-space_top-2"></qtt-note>
-                <qtt-note class="tui-space_top-2"></qtt-note>
-                <qtt-note class="tui-space_top-2"></qtt-note>
-                <qtt-note class="tui-space_top-2"></qtt-note>
-                <qtt-note class="tui-space_top-2"></qtt-note>
-                <qtt-note class="tui-space_top-2"></qtt-note>
-                <qtt-note class="tui-space_top-2"></qtt-note>
-                <qtt-note class="tui-space_top-2"></qtt-note>
-                <qtt-note class="tui-space_top-2"></qtt-note>
-                <qtt-note class="tui-space_top-2"></qtt-note>
-                <qtt-note class="tui-space_top-2"></qtt-note>
+                <qtt-note *ngFor="let message of messages" class="tui-space_top-2" [message]="message"></qtt-note>
             </div>
         </tui-scrollbar>
     </div>

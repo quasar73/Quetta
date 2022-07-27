@@ -1,9 +1,9 @@
 <div class="wrap">
-    <div class="note">
-        <div class="text tui-text_body-m">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam repellendus numquam recusandae repudiandae? Animi doloribus nostrum, laboriosam optio sed repudiandae atque deserunt, totam recusandae in impedit inventore maiores exercitationem. Velit?</div>
+    <div class="note" [class.own-message]="isUserOwner() | async">
+        <div class="text tui-text_body-m">{{ message.text }}</div>
         <div class="info">
-            <div class="time tui-space_right-1">20:25</div>
-            <tui-svg ngClass="is-received" src="tuiIconEyeOpen" class="icon"></tui-svg>
+            <div class="time tui-space_right-1">{{ message.date | date: 'H:mm' }}</div>
+            <tui-svg [src]="getStatus()" class="icon"></tui-svg>
         </div>
     </div>
 </div>

@@ -6,7 +6,7 @@ import { BaseService } from '../base/base.service';
 @Injectable({
     providedIn: 'root',
 })
-export class NotificationService {
+export class NotificationApiService {
     constructor(private base: BaseService) {}
 
     isAnyNotifications(): Observable<IsAnyNotifications | null> {

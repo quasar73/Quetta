@@ -1,5 +1,5 @@
 <div class="wrap">
     <qtt-chat-header></qtt-chat-header>
-    <qtt-chat-content class="chat-content"></qtt-chat-content>
-    <qtt-chat-input class="chat-input"></qtt-chat-input>
+    <qtt-chat-content class="chat-content" [messages]="messages"></qtt-chat-content>
+    <qtt-chat-input class="chat-input" [chatId]="chatId" (messageSent)="onMessageSent($event)"></qtt-chat-input>
 </div>

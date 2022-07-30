@@ -11,8 +11,8 @@ import { TokenStorage } from '../../auth/token-storage.service';
     providedIn: 'root',
 })
 export class NotificationWebsocketService {
+    private readonly notifications$ = new BehaviorSubject<boolean>(false);
     private hubConnection!: HubConnection;
-    private notifications$ = new BehaviorSubject<boolean>(false);
 
     constructor(
         private readonly tokenStorage: TokenStorage,

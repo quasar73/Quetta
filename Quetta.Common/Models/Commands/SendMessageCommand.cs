@@ -2,7 +2,7 @@
 
 namespace Quetta.Common.Models.Commands
 {
-    public class SendMessageCommand : IRequest<Unit>
+    public class SendMessageCommand : IRequest<string>
     {
         public string Text { get; set; }
 

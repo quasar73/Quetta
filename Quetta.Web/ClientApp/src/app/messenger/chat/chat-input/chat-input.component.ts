@@ -1,10 +1,11 @@
-import { MessageModel } from 'src/app/shared/api-models/message.model';
 import { SendMessageModel } from './../../../shared/api-models/send-message.model';
 import { MessageApiService } from './../../../shared/services/api/message/message.service';
 import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { ChangeDetectionStrategy, Component, Input, Output, EventEmitter } from '@angular/core';
 import { AuthenticationService } from 'src/app/shared/services/auth/authentication.service';
 import { MessageStatus } from 'src/app/shared/enums/message-status.enum';
+import { Guid } from 'guid-typescript';
+import { ClientMessageModel } from 'src/app/shared/models/client-message.model';
 
 @Component({
     selector: 'qtt-chat-input',
@@ -13,7 +14,8 @@ import { MessageStatus } from 'src/app/shared/enums/message-status.enum';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChatInputComponent {
-    @Output() messageSent = new EventEmitter<MessageModel>();
+    @Output() messageSent = new EventEmitter<ClientMessageModel>();
+    @Output() messageAdded = new EventEmitter<string>();
 
     @Input() chatId!: string | null;
 
@@ -29,18 +31,21 @@ export class ChatInputComponent {
                 text: this.messageForm.get('text')?.value,
                 chatId: this.chatId,
             } as SendMessageModel;
+            const code = Guid.create().toString();
 
             this.authService.getUserInfo().subscribe(info => {
                 this.messageSent.emit({
                     username: info.username,
                     text: this.messageForm.get('text')?.value,
-                    date: new Date().toLocaleString(),
+                    date: new Date().toString(),
                     status: MessageStatus.Pending,
+                    code,
                 });
             });
 
             this.messageApiService.sendMessage(message).subscribe(() => {
                 this.messageForm.reset();
+                this.messageAdded.emit(code);
             });
         }
     }

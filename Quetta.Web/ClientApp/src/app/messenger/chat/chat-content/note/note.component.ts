@@ -27,7 +27,9 @@ export class NoteComponent {
     getStatus(): string {
         switch (this.message.status) {
             case MessageStatus.Pending:
-                return 'tuiIconMoreHorLarge';
+                return 'tuiIconTime';
+            case MessageStatus.Unreaded:
+                return 'tuiIconCheck';
             default:
                 return 'tuiIconEyeOpen';
         }

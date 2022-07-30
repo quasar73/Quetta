@@ -3,9 +3,7 @@ using Quetta.Common.Exceptions;
 using Quetta.Common.Models.Commands;
 using Quetta.Data;
 using Quetta.Data.Models;
-using Quetta.Logic.Hubs;
 using MediatR;
-using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.Identity;
 
 namespace Quetta.Logic.Handlers.Commands

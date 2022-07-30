@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Quetta.Logic.Notifications
+namespace Quetta.Common.Models.Notifications
 {
     public class NewNotification : INotification 
     {

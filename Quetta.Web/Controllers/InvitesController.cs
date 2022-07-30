@@ -3,7 +3,7 @@ using Quetta.Common.Models.Queries;
 using Quetta.Common.Models.Requests;
 using Quetta.Common.Models.Responses;
 using Quetta.Data.Models;
-using Quetta.Logic.Notifications;
+using Quetta.Common.Models.Notifications;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

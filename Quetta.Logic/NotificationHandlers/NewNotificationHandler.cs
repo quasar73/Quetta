@@ -2,7 +2,7 @@
 using Quetta.Data;
 using Quetta.Data.Models;
 using Quetta.Logic.Hubs;
-using Quetta.Logic.Notifications;
+using Quetta.Common.Models.Notifications;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;

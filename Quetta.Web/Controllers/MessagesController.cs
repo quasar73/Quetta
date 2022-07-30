@@ -5,6 +5,7 @@ using Quetta.Common.Models.Requests;
 using Quetta.Common.Models.Commands;
 using System.Security.Claims;
 using Quetta.Common.Models.Queries;
+using Quetta.Common.Models.Notifications;
 
 namespace Quetta.Web.Controllers
 {
@@ -32,7 +33,12 @@ namespace Quetta.Web.Controllers
                 ChatId = reqeust.ChatId,
             };
 
-            await mediator.Send(command);
+            var messageId = await mediator.Send(command);
+            await mediator.Publish(new Message
+            {
+                ChatId = reqeust.ChatId,
+                MessageId = messageId,
+            });
 
             return Ok();
         }

@@ -5,7 +5,7 @@ using Quetta.Data.Models;
 
 namespace Quetta.Logic.Handlers.Commands
 {
-    public class SendMessageHandler : IRequestHandler<SendMessageCommand, Unit>
+    public class SendMessageHandler : IRequestHandler<SendMessageCommand, string>
     {
         private readonly QuettaDbContext dbContext;
 
@@ -14,7 +14,7 @@ namespace Quetta.Logic.Handlers.Commands
             this.dbContext = dbContext;
         }
 
-        public async Task<Unit> Handle(SendMessageCommand request, CancellationToken cancellationToken)
+        public async Task<string> Handle(SendMessageCommand request, CancellationToken cancellationToken)
         {
             var message = new Message
             {
@@ -28,7 +28,7 @@ namespace Quetta.Logic.Handlers.Commands
             dbContext.Messages.Add(message);
             await dbContext.SaveChangesAsync();
 
-            return Unit.Value;
+            return message.Id;
         }
     }
 }

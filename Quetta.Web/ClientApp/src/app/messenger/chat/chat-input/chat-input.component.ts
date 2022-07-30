@@ -1,6 +1,6 @@
 import { SendMessageModel } from './../../../shared/api-models/send-message.model';
 import { MessageApiService } from './../../../shared/services/api/message/message.service';
-import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { ChangeDetectionStrategy, Component, Input, Output, EventEmitter } from '@angular/core';
 import { AuthenticationService } from 'src/app/shared/services/auth/authentication.service';
 import { MessageStatus } from 'src/app/shared/enums/message-status.enum';
@@ -20,7 +20,7 @@ export class ChatInputComponent {
     @Input() chatId!: string | null;
 
     messageForm = new UntypedFormGroup({
-        text: new UntypedFormControl(''),
+        text: new UntypedFormControl('', [Validators.required, Validators.maxLength(2000)]),
     });
 
     constructor(private readonly messageApiService: MessageApiService, private readonly authService: AuthenticationService) {}

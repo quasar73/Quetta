@@ -10,12 +10,8 @@
             background-color: var(--tui-primary-active);
 
             .info {
-                .is-received {
-                    color: var(--tui-text-01);
-                }
-
-                .time {
-                    color: var(--tui-text-02);
+                .status, .time {
+                    color: var(--tui-text-03);
                 }
             }
         }
@@ -25,8 +21,11 @@
             display: flex;
             justify-content: flex-end;
             align-items: center;
+            float: right;
+            margin-top: -12px;
+            margin-right: -12px;
 
-            .is-received {
+            .status {
                 color: var(--tui-primary);
             }
 

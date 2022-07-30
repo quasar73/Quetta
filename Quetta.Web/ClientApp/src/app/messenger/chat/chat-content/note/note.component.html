@@ -1,9 +1,9 @@
 <div class="wrap">
     <div class="note" [class.own-message]="isUserOwner() | async">
-        <div class="text tui-text_body-m">{{ message.text }}</div>
-        <div class="info">
-            <div class="time tui-space_right-1">{{ message.date | date: 'H:mm' }}</div>
-            <tui-svg [src]="getStatus()" class="icon"></tui-svg>
-        </div>
+        <span class="tui-text_body-m">{{ message.text }}</span>
+        <span class="info tui-space_left-3 tui-text_body-xs">
+            <div class="time">{{ message.date | date: 'H:mm' }}</div>
+            <tui-svg [src]="getStatus()" class="status"></tui-svg>
+        </span>
     </div>
 </div>

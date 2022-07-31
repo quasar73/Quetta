@@ -11,6 +11,7 @@ import {
     TuiAvatarModule,
     TuiBadgeModule,
     TuiDataListWrapperModule,
+    TuiDropdownContextModule,
     TuiFieldErrorPipeModule,
     TuiInputModule,
     TuiIslandModule,
@@ -46,6 +47,7 @@ import { ChatInputComponent } from './chat/chat-input/chat-input.component';
 import { AddChatDialogComponent } from './sidebar/sidebar-header/add-chat-dialog/add-chat-dialog.component';
 import { SkeletonDirective } from '../shared/directives/skeleton.directive';
 import { NoteComponent } from './chat/chat-content/note/note.component';
+import { ClipboardModule } from 'ngx-clipboard';
 
 @NgModule({
     providers: [{ provide: TRANSLOCO_SCOPE, useValue: 'messenger' }],
@@ -94,6 +96,8 @@ import { NoteComponent } from './chat/chat-content/note/note.component';
         TuiIslandModule,
         TuiLinkModule,
         TuiAlertModule,
+        TuiDropdownContextModule,
+        ClipboardModule,
     ],
 })
 export class MessengerModule {}

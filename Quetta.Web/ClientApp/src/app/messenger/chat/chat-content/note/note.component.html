@@ -1,4 +1,4 @@
-<div class="wrap">
+<div class="wrap" [tuiDropdownContext]="noteContext">
     <div class="note" [class.own-message]="isUserOwner() | async">
         <span class="tui-text_body-m">{{ message.text }}</span>
         <span class="info tui-space_left-3 tui-text_body-xs">
@@ -7,3 +7,24 @@
         </span>
     </div>
 </div>
+
+<ng-template #noteContext let-close="close" let-activeZone="activeZone">
+    <tui-data-list role="menu" tuiDataListDropdownManager class="context-menu" [tuiActiveZoneParent]="activeZone">
+        <button class="context-menu-item" tuiOption (click)="copyText()">
+            <tui-svg class="context-menu-item-icon" src="tuiIconCheckCircleLarge"></tui-svg>
+            <span>Select</span>
+        </button>
+        <button class="context-menu-item" tuiOption (click)="copyText()">
+            <tui-svg class="context-menu-item-icon" src="tuiIconCopyLarge"></tui-svg>
+            <span>Copy</span>
+        </button>
+        <button class="context-menu-item" tuiOption (click)="copyText()">
+            <tui-svg class="context-menu-item-icon" src="tuiIconEditLarge"></tui-svg>
+            <span>Edit</span>
+        </button>
+        <button class="context-menu-item" tuiOption (click)="copyText()">
+            <tui-svg class="context-menu-item-icon" src="tuiIconTrashLarge"></tui-svg>
+            <span>Delete</span>
+        </button>
+    </tui-data-list>
+</ng-template>

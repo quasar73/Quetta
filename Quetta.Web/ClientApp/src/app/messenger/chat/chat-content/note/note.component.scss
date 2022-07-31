@@ -35,3 +35,16 @@
         }
     }
 }
+
+.context-menu {
+    .context-menu-item {
+        justify-content: flex-start;
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 8px;
+
+        .context-menu-item-icon {
+            color: var(--tui-primary);
+        }
+    }
+}

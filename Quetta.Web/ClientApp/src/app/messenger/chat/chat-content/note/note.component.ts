@@ -1,6 +1,6 @@
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { MessageModel } from 'src/app/shared/api-models/message.model';
 import { AuthenticationService } from 'src/app/shared/services/auth/authentication.service';
 import { MessageStatus } from 'src/app/shared/enums/message-status.enum';
@@ -12,6 +12,8 @@ import { MessageStatus } from 'src/app/shared/enums/message-status.enum';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NoteComponent {
+    @Output() messageCopy = new EventEmitter<string>();
+
     @Input() message!: MessageModel;
 
     constructor(private readonly authService: AuthenticationService) {}
@@ -33,5 +35,9 @@ export class NoteComponent {
             default:
                 return 'tuiIconEyeOpen';
         }
+    }
+
+    copyText(): void {
+        this.messageCopy.emit(this.message.text);
     }
 }

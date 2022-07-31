@@ -1,7 +1,8 @@
+import { ClipboardService } from 'ngx-clipboard';
 import { MessageModel } from './../../../shared/api-models/message.model';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild } from '@angular/core';
-import { TuiScrollbarComponent } from '@taiga-ui/core';
+import { TuiScrollbarComponent, TuiAlertService, TuiNotification } from '@taiga-ui/core';
 
 const SCROLL_DOWN_BTN_SHOWS = 256;
 
@@ -33,7 +34,7 @@ export class ChatContentComponent {
 
     scrollDownButtonVisible = false;
 
-    constructor() {}
+    constructor(private readonly clipboardService: ClipboardService, private readonly alertService: TuiAlertService) {}
 
     onScroll(): void {
         if (this.scrollBar && this.notesList && this.wrap) {
@@ -47,5 +48,14 @@ export class ChatContentComponent {
 
     scrollDown(): void {
         this.bottomAnchor?.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+    }
+
+    onMessageCopy(text: string): void {
+        this.clipboardService.copy(text);
+        this.alertService
+            .open('Text successfully copied!', {
+                status: TuiNotification.Info,
+            })
+            .subscribe();
     }
 }

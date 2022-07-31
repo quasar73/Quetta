@@ -4,7 +4,12 @@
             <tui-scrollbar class="notes-scroll" [scrollTop]="notesList.scrollHeight" (scroll)="onScroll()">
                 <div class="notes-list" #notesList>
                     <div #bottomAnchor></div>
-                    <qtt-note *ngFor="let message of messages" class="tui-space_top-2" [message]="message"></qtt-note>
+                    <qtt-note
+                        *ngFor="let message of messages"
+                        class="tui-space_top-2"
+                        [message]="message"
+                        (messageCopy)="onMessageCopy($event)"
+                    ></qtt-note>
                 </div>
             </tui-scrollbar>
         </div>

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { ChatItemModel } from './../../../shared/api-models/chat-item.model';
 import { Observable } from 'rxjs';
 import { ChatService } from './../../../shared/services/api/chat/chat.service';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ChangeDetectorRef } from '@angular/core';
 
 @Component({
     selector: 'qtt-sidebar-content',
@@ -18,7 +18,8 @@ export class SidebarContentComponent implements OnInit {
     constructor(
         private readonly chatService: ChatService,
         private readonly router: Router,
-        private readonly selectedChatService: SelectedChatService
+        private readonly selectedChatService: SelectedChatService,
+        private readonly cdr: ChangeDetectorRef
     ) {}
 
     ngOnInit(): void {
@@ -26,6 +27,7 @@ export class SidebarContentComponent implements OnInit {
 
         this.selectedChatService.getSelectedChat().subscribe(id => {
             this.selectedId = id;
+            this.cdr.markForCheck();
         });
     }
 

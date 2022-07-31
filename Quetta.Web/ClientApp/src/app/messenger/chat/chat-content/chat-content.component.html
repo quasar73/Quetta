@@ -1,15 +1,20 @@
 <div class="wrap" #wrap>
-    <!-- <div class="no-messages-wrap">
-        <span class="tui-text_body-l">There are no messages here. Type anything!</span>
-    </div> -->
-    <div class="notes-wrap">
-        <tui-scrollbar class="notes-scroll" [scrollTop]="notesList.scrollHeight" (scroll)="onScroll()">
-            <div class="notes-list" #notesList>
-                <div #bottomAnchor></div>
-                <qtt-note *ngFor="let message of messages" class="tui-space_top-2" [message]="message"></qtt-note>
-            </div>
-        </tui-scrollbar>
-    </div>
+    <ng-container *ngIf="messages?.length; else emptyChatMessage">
+        <div class="notes-wrap">
+            <tui-scrollbar class="notes-scroll" [scrollTop]="notesList.scrollHeight" (scroll)="onScroll()">
+                <div class="notes-list" #notesList>
+                    <div #bottomAnchor></div>
+                    <qtt-note *ngFor="let message of messages" class="tui-space_top-2" [message]="message"></qtt-note>
+                </div>
+            </tui-scrollbar>
+        </div>
+    </ng-container>
+
+    <ng-template #emptyChatMessage>
+        <div class="no-messages-wrap">
+            <span class="tui-text_body-l">There are no messages here. Type anything!</span>
+        </div>
+    </ng-template>
 
     <tui-marker-icon
         class="scroll-down-btn"

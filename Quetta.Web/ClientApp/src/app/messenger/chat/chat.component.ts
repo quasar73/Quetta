@@ -1,10 +1,10 @@
+import { MessageModel } from 'src/app/shared/api-models/message.model';
 import { combineLatestWith } from 'rxjs';
 import { AuthenticationService } from 'src/app/shared/services/auth/authentication.service';
 import { MessageWebsocketService } from './../../shared/services/websocket/message-websocket/message-websocket.service';
 import { SelectedChatService } from './../../shared/services/selected-chat/selected-chat.service';
 import { ActivatedRoute } from '@angular/router';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { MessageApiService } from 'src/app/shared/services/api/message/message.service';
 import { ClientMessageModel } from 'src/app/shared/models/client-message.model';
 import { MessageStatus } from 'src/app/shared/enums/message-status.enum';
 
@@ -21,7 +21,6 @@ export class ChatComponent implements OnInit {
     constructor(
         private readonly activatedRoute: ActivatedRoute,
         private readonly selectedChatService: SelectedChatService,
-        private readonly messagesApiService: MessageApiService,
         private readonly messageWebsocketService: MessageWebsocketService,
         private readonly authService: AuthenticationService,
         private readonly cdr: ChangeDetectorRef
@@ -30,10 +29,11 @@ export class ChatComponent implements OnInit {
     ngOnInit(): void {
         this.chatId = this.activatedRoute.snapshot.paramMap.get('id');
         this.selectedChatService.setId(this.chatId);
+
         if (this.chatId) {
-            this.messagesApiService.getMessages(this.chatId).subscribe(messages => {
+            this.activatedRoute.data.subscribe(({ messages }) => {
                 this.messages = [
-                    ...(messages?.map(m => {
+                    ...(messages?.map((m: MessageModel) => {
                         return { ...m, code: undefined };
                     }) ?? []),
                 ];

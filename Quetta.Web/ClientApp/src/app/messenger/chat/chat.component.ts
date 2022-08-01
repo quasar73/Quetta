@@ -34,7 +34,7 @@ export class ChatComponent implements OnInit {
             this.activatedRoute.data.subscribe(({ messages }) => {
                 this.messages = [
                     ...(messages?.map((m: MessageModel) => {
-                        return { ...m, code: undefined };
+                        return { ...m, code: undefined, isSelected: false };
                     }) ?? []),
                 ];
                 this.cdr.markForCheck();
@@ -50,7 +50,7 @@ export class ChatComponent implements OnInit {
                 .pipe(combineLatestWith(this.authService.getUserInfo()))
                 .subscribe(([message, info]) => {
                     if (message.username !== info.username) {
-                        this.onMessageSent({ ...message, code: undefined });
+                        this.onMessageSent({ ...message, code: undefined, isSelected: false });
                     }
                 });
         }

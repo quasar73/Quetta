@@ -39,6 +39,7 @@ export class ChatInputComponent {
                     text: this.messageForm.get('text')?.value,
                     date: new Date().toString(),
                     status: MessageStatus.Pending,
+                    isSelected: false,
                     code,
                 });
             });

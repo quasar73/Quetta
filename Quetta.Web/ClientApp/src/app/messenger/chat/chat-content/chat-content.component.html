@@ -6,9 +6,10 @@
                     <div #bottomAnchor></div>
                     <qtt-note
                         *ngFor="let message of messages"
-                        class="tui-space_top-2"
                         [message]="message"
+                        [isSelectionMode]="isSelectionMode"
                         (messageCopy)="onMessageCopy($event)"
+                        (messageSelected)="onMessageSelected($event, message)"
                     ></qtt-note>
                 </div>
             </tui-scrollbar>

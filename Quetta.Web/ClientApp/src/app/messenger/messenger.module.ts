@@ -10,6 +10,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import {
     TuiAvatarModule,
     TuiBadgeModule,
+    TuiCheckboxModule,
     TuiDataListWrapperModule,
     TuiDropdownContextModule,
     TuiFieldErrorPipeModule,
@@ -98,6 +99,7 @@ import { ClipboardModule } from 'ngx-clipboard';
         TuiAlertModule,
         TuiDropdownContextModule,
         ClipboardModule,
+        TuiCheckboxModule,
     ],
 })
 export class MessengerModule {}

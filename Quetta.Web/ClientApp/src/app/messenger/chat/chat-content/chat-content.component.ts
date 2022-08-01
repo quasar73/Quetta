@@ -1,7 +1,7 @@
+import { ClientMessageModel } from 'src/app/shared/models/client-message.model';
 import { ClipboardService } from 'ngx-clipboard';
-import { MessageModel } from './../../../shared/api-models/message.model';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { TuiScrollbarComponent, TuiAlertService, TuiNotification } from '@taiga-ui/core';
 
 const SCROLL_DOWN_BTN_SHOWS = 256;
@@ -30,11 +30,16 @@ export class ChatContentComponent {
     @ViewChild('bottomAnchor') private readonly bottomAnchor?: ElementRef<HTMLElement>;
     @ViewChild(TuiScrollbarComponent, { read: ElementRef }) private readonly scrollBar?: ElementRef<HTMLElement>;
 
-    @Input() messages!: MessageModel[] | null;
+    @Input() messages!: ClientMessageModel[] | null;
 
     scrollDownButtonVisible = false;
+    isSelectionMode = false;
 
-    constructor(private readonly clipboardService: ClipboardService, private readonly alertService: TuiAlertService) {}
+    constructor(
+        private readonly clipboardService: ClipboardService,
+        private readonly alertService: TuiAlertService,
+        private readonly cdr: ChangeDetectorRef
+    ) {}
 
     onScroll(): void {
         if (this.scrollBar && this.notesList && this.wrap) {
@@ -57,5 +62,18 @@ export class ChatContentComponent {
                 status: TuiNotification.Info,
             })
             .subscribe();
+    }
+
+    onMessageSelected(isSelected: boolean, message: ClientMessageModel): void {
+        if (this.messages) {
+            const index = this.messages.indexOf(message);
+
+            if (index > -1 && this.messages) {
+                this.messages[index] = { ...this.messages[index], isSelected: isSelected };
+                this.messages = [...this.messages];
+                this.isSelectionMode = this.messages.some(m => m.isSelected);
+                this.cdr.markForCheck();
+            }
+        }
     }
 }

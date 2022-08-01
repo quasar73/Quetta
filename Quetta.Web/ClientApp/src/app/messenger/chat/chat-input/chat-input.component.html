@@ -4,7 +4,14 @@
             <tui-text-area formControlName="text" class="input" [expandable]="true" [rows]="8">
                 {{ t('messenger.chat.placeholder') }}
             </tui-text-area>
-            <button class="tui-space_left-1" tuiIconButton type="button" icon="tuiIconCommentLarge" (click)="sendMessage()"></button>
+            <button
+                class="tui-space_left-1"
+                tuiIconButton
+                type="button"
+                icon="tuiIconCommentLarge"
+                [disabled]="messageForm.invalid"
+                (click)="sendMessage()"
+            ></button>
         </form>
     </ng-container>
 </div>

@@ -1,7 +1,10 @@
-<div class="wrap" [tuiDropdownContext]="noteContext">
+<div class="wrap" [tuiDropdownContext]="noteContext" [class.selected]="message.isSelected">
+    <div class="tui-space_right-4" [@selection]="isSelectionMode ? 'expanded' : 'collapsed'">
+        <tui-checkbox size="l" [formControl]="selectControl"></tui-checkbox>
+    </div>
     <div class="note" [class.own-message]="isUserOwner() | async">
         <span class="tui-text_body-m">{{ message.text }}</span>
-        <span class="info tui-space_left-3 tui-text_body-xs">
+        <span class="info tui-text_body-xs">
             <div class="time">{{ message.date | date: 'H:mm' }}</div>
             <tui-svg [src]="getStatus()" class="status"></tui-svg>
         </span>
@@ -10,7 +13,7 @@
 
 <ng-template #noteContext let-close="close" let-activeZone="activeZone">
     <tui-data-list role="menu" tuiDataListDropdownManager class="context-menu" [tuiActiveZoneParent]="activeZone">
-        <button class="context-menu-item" tuiOption (click)="copyText()">
+        <button class="context-menu-item" tuiOption (click)="select()">
             <tui-svg class="context-menu-item-icon" src="tuiIconCheckCircleLarge"></tui-svg>
             <span>Select</span>
         </button>

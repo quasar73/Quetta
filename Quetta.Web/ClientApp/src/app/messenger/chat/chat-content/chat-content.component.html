@@ -7,7 +7,7 @@
                     <qtt-note
                         *ngFor="let message of messages"
                         [message]="message"
-                        [isSelectionMode]="isSelectionMode"
+                        [isSelectingMode]="isSelectingMode"
                         (messageCopy)="onMessageCopy($event)"
                         (messageSelected)="onMessageSelected($event, message)"
                     ></qtt-note>

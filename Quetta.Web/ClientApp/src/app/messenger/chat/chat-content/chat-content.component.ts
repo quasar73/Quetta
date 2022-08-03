@@ -33,7 +33,7 @@ export class ChatContentComponent {
     @Input() messages!: ClientMessageModel[] | null;
 
     scrollDownButtonVisible = false;
-    isSelectionMode = false;
+    isSelectingMode = false;
 
     constructor(
         private readonly clipboardService: ClipboardService,
@@ -71,7 +71,7 @@ export class ChatContentComponent {
             if (index > -1 && this.messages) {
                 this.messages[index] = { ...this.messages[index], isSelected: isSelected };
                 this.messages = [...this.messages];
-                this.isSelectionMode = this.messages.some(m => m.isSelected);
+                this.isSelectingMode = this.messages.some(m => m.isSelected);
                 this.cdr.markForCheck();
             }
         }

@@ -25,7 +25,7 @@ export class NoteComponent implements OnInit, OnChanges {
     @Output() messageSelected = new EventEmitter<boolean>();
 
     @Input() message!: ClientMessageModel;
-    @Input() isSelectionMode!: boolean;
+    @Input() isSelectingMode!: boolean;
 
     readonly selectControl = new FormControl<boolean>(false);
 

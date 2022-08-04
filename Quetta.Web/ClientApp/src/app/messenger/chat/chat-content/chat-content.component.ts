@@ -49,6 +49,7 @@ export class ChatContentComponent implements OnInit {
         this.actions.pipe(ofActionDispatched(SelectedMessages.Clear)).subscribe(() => {
             this.clearSelecting();
         });
+        this.store.dispatch(new SelectedMessages.Clear());
     }
 
     onScroll(): void {

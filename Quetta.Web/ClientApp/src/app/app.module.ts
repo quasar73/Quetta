@@ -18,6 +18,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { TranslocoRootModule } from './translate/transloco-root.module';
 import { TuiInputModule } from '@taiga-ui/kit';
 import { AuthenticationModule } from './shared/services/auth/authentication.module';
+import { NgxsModule } from '@ngxs/store';
+import { SelectedMessagesState } from './state-manager/states/selected-messages.state';
+import { environment } from 'src/environments/environment';
 @NgModule({
     declarations: [AppComponent],
     imports: [
@@ -34,6 +37,9 @@ import { AuthenticationModule } from './shared/services/auth/authentication.modu
         TranslocoRootModule,
         AuthenticationModule,
         TuiAlertModule,
+        NgxsModule.forRoot([SelectedMessagesState], {
+            developmentMode: !environment.production,
+        }),
     ],
     providers: [{ provide: TUI_SANITIZER, useClass: NgDompurifySanitizer }],
     bootstrap: [AppComponent],

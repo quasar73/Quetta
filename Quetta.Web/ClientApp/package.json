@@ -25,6 +25,7 @@
         "@microsoft/signalr": "^6.0.6",
         "@ngneat/transloco": "^4.0.0",
         "@ngneat/transloco-persist-lang": "^4.0.0",
+        "@ngxs/store": "^3.7.4",
         "@taiga-ui/addon-mobile": "^2.53.0",
         "@taiga-ui/cdk": "^2.53.0",
         "@taiga-ui/core": "^2.53.0",

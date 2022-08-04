@@ -1,8 +1,10 @@
 import { ClientMessageModel } from 'src/app/shared/models/client-message.model';
 import { ClipboardService } from 'ngx-clipboard';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild, ChangeDetectorRef, OnInit } from '@angular/core';
 import { TuiScrollbarComponent, TuiAlertService, TuiNotification } from '@taiga-ui/core';
+import { Actions, ofActionDispatched, Store } from '@ngxs/store';
+import { SelectedMessages } from 'src/app/state-manager/actions/selected-messages.actions';
 
 const SCROLL_DOWN_BTN_SHOWS = 256;
 
@@ -24,7 +26,7 @@ const SCROLL_DOWN_BTN_SHOWS = 256;
         ]),
     ],
 })
-export class ChatContentComponent {
+export class ChatContentComponent implements OnInit {
     @ViewChild('notesList') private readonly notesList?: ElementRef<HTMLElement>;
     @ViewChild('wrap') private readonly wrap?: ElementRef<HTMLElement>;
     @ViewChild('bottomAnchor') private readonly bottomAnchor?: ElementRef<HTMLElement>;
@@ -38,8 +40,16 @@ export class ChatContentComponent {
     constructor(
         private readonly clipboardService: ClipboardService,
         private readonly alertService: TuiAlertService,
-        private readonly cdr: ChangeDetectorRef
+        private readonly cdr: ChangeDetectorRef,
+        private readonly store: Store,
+        private readonly actions: Actions
     ) {}
+
+    ngOnInit(): void {
+        this.actions.pipe(ofActionDispatched(SelectedMessages.Clear)).subscribe(() => {
+            this.clearSelecting();
+        });
+    }
 
     onScroll(): void {
         if (this.scrollBar && this.notesList && this.wrap) {
@@ -72,8 +82,18 @@ export class ChatContentComponent {
                 this.messages[index] = { ...this.messages[index], isSelected: isSelected };
                 this.messages = [...this.messages];
                 this.isSelectingMode = this.messages.some(m => m.isSelected);
+                isSelected
+                    ? this.store.dispatch(new SelectedMessages.Select(message.text))
+                    : this.store.dispatch(new SelectedMessages.Remove(message.text));
                 this.cdr.markForCheck();
             }
         }
+    }
+
+    private clearSelecting(): void {
+        this.isSelectingMode = false;
+        this.messages?.forEach(m => (m.isSelected = false));
+        this.messages = [...(this.messages ?? [])];
+        this.cdr.markForCheck();
     }
 }

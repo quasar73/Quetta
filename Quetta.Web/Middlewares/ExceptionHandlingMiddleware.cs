@@ -50,6 +50,10 @@ namespace Quetta.Web.Middlewares
                     response.StatusCode = (int)HttpStatusCode.Forbidden;
                     errorResponse.Message = ex.Message;
                     break;
+                case AccessDeniedException ex:
+                    response.StatusCode = (int)HttpStatusCode.Forbidden;
+                    errorResponse.Message = ex.Message;
+                    break;
                 case NotImplementedException ex:
                     response.StatusCode = (int)HttpStatusCode.NotImplemented;
                     errorResponse.Message = ex.Message;

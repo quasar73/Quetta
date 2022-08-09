@@ -1,3 +1,4 @@
+import { ChatInfoModel } from 'src/app/shared/api-models/chat-info.model';
 import { MessageModel } from 'src/app/shared/api-models/message.model';
 import { combineLatestWith } from 'rxjs';
 import { AuthenticationService } from 'src/app/shared/services/auth/authentication.service';
@@ -16,6 +17,7 @@ import { MessageStatus } from 'src/app/shared/enums/message-status.enum';
 })
 export class ChatComponent implements OnInit {
     messages!: ClientMessageModel[];
+    chatInfo!: ChatInfoModel | null;
     chatId!: string | null;
 
     constructor(
@@ -31,12 +33,13 @@ export class ChatComponent implements OnInit {
         this.selectedChatService.setId(this.chatId);
 
         if (this.chatId) {
-            this.activatedRoute.data.subscribe(({ messages }) => {
+            this.activatedRoute.data.subscribe(({ messages, chatInfo }) => {
                 this.messages = [
                     ...(messages?.map((m: MessageModel) => {
                         return { ...m, code: undefined, isSelected: false };
                     }) ?? []),
                 ];
+                this.chatInfo = chatInfo;
                 this.cdr.markForCheck();
             });
 

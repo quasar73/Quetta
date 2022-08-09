@@ -11,7 +11,7 @@ export class MessagesResolver implements Resolve<MessageModel[] | null> {
     resolve(
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
-    ): MessageModel[] | Observable<MessageModel[] | null> | Promise<MessageModel[] | null> | MessageModel[] {
+    ): MessageModel[] | Observable<MessageModel[] | null> | Promise<MessageModel[] | null> {
         const chatId = route.paramMap.get('id');
 
         if (chatId) {

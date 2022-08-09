@@ -7,11 +7,16 @@
         background-color: var(--tui-secondary);
     }
 
+    .selector {
+        margin-left: 4px;
+    }
+
     .note {
         width: fit-content;
         height: fit-content;
         max-width: 30%;
         padding: 16px;
+        margin-left: 4px;
         background-color: var(--tui-base-02);
         border-radius: var(--tui-radius-m);
 

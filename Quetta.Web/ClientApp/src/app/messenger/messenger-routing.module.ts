@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MessengerComponent } from './messenger.component';
 import { MessagesResolver } from '../shared/resolvers/messages/messages.resolver';
+import { ChatInfoResolver } from '../shared/resolvers/chat-info/chat-info.resolver';
 
 const routes: Routes = [
     {
@@ -11,7 +12,7 @@ const routes: Routes = [
         component: MessengerComponent,
         children: [
             { path: '', component: EmptyChatComponent },
-            { path: ':id', component: ChatComponent, resolve: { messages: MessagesResolver } },
+            { path: ':id', component: ChatComponent, resolve: { messages: MessagesResolver, chatInfo: ChatInfoResolver } },
             { path: '**', redirectTo: '' },
         ],
     },

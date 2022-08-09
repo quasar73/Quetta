@@ -23,7 +23,7 @@ namespace Quetta.Web.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [HttpGet("info/{id}")]
+        [HttpGet("info/{chatId}")]
         public async Task<IActionResult> GetChatInfo([FromRoute] string chatId)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;

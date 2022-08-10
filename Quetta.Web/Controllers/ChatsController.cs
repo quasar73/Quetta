@@ -10,11 +10,11 @@ namespace Quetta.Web.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class ChatController : ControllerBase
+    public class ChatsController : ControllerBase
     {
         private readonly IMediator mediator; 
 
-        public ChatController(IMediator mediator)
+        public ChatsController(IMediator mediator)
         {
             this.mediator = mediator;
         }

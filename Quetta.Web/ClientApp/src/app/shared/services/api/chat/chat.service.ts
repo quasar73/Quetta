@@ -11,10 +11,10 @@ export class ChatApiService {
     constructor(private readonly base: BaseService) {}
 
     getChatInfo(chatId: string): Observable<ChatInfoModel | null> {
-        return this.base.get<ChatInfoModel>(`chat/info/${chatId}`);
+        return this.base.get<ChatInfoModel>(`chats/info/${chatId}`);
     }
 
     getChats(): Observable<ChatItemModel[] | null> {
-        return this.base.get<ChatItemModel[]>('chat');
+        return this.base.get<ChatItemModel[]>('chats');
     }
 }

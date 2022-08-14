@@ -8,10 +8,14 @@
         </div>
     </ng-template>
     <div class="selecting-menu" *ngIf="ids.length; else chatInfoTemplate">
-        <div class="select-info tui-text_body-l">Selected {{ ids?.length }} messages</div>
-        <div class="actions">
-            <button tuiButton type="button" appearance="primary" class="tui-space_right-3">Delete</button>
-            <button tuiButton type="button" appearance="cancel" (click)="cancel()">Cancel</button>
+        <div class="select-info tui-text_body-l" *transloco="let t">
+            {{ t('messenger.chat.header.selected', { count: ids?.length }) }}
+        </div>
+        <div class="actions" *transloco="let t">
+            <button tuiButton type="button" appearance="primary" class="tui-space_right-3">
+                {{ t('messenger.chat.header.delete') }}
+            </button>
+            <button tuiButton type="button" appearance="cancel" (click)="cancel()">{{ t('messenger.chat.header.cancel') }}</button>
         </div>
     </div>
 </div>

@@ -31,7 +31,18 @@
         }
     },
     "chat": {
-        "placeholder": "Введите сообщение..."
+        "placeholder": "Введите сообщение...",
+        "contextMenu": {
+            "select": "Выбрать",
+            "copy": "Скопировать",
+            "edit": "Изменить",
+            "delete": "Удалить"
+        },
+        "header": {
+            "selected": "Выбрано сообщений — {{count}}.",
+            "delete": "Удалить",
+            "cancel": "Отменить"
+        }
     },
     "emptyChatMessage": "Выберите чат чтобы начать общение",
     "addChatDialog": {

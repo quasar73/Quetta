@@ -12,22 +12,22 @@
 </div>
 
 <ng-template #noteContext let-close="close" let-activeZone="activeZone">
-    <tui-data-list role="menu" tuiDataListDropdownManager class="context-menu" [tuiActiveZoneParent]="activeZone">
+    <tui-data-list role="menu" tuiDataListDropdownManager class="context-menu" [tuiActiveZoneParent]="activeZone" *transloco="let t">
         <button class="context-menu-item" tuiOption (click)="select()">
             <tui-svg class="context-menu-item-icon" src="tuiIconCheckCircleLarge"></tui-svg>
-            <span>Select</span>
+            <span>{{ t('messenger.chat.contextMenu.select') }}</span>
         </button>
         <button class="context-menu-item" tuiOption (click)="copyText()">
             <tui-svg class="context-menu-item-icon" src="tuiIconCopyLarge"></tui-svg>
-            <span>Copy</span>
+            <span>{{ t('messenger.chat.contextMenu.copy') }}</span>
         </button>
         <button class="context-menu-item" tuiOption (click)="copyText()">
             <tui-svg class="context-menu-item-icon" src="tuiIconEditLarge"></tui-svg>
-            <span>Edit</span>
+            <span>{{ t('messenger.chat.contextMenu.edit') }}</span>
         </button>
         <button class="context-menu-item" tuiOption (click)="copyText()">
             <tui-svg class="context-menu-item-icon" src="tuiIconTrashLarge"></tui-svg>
-            <span>Delete</span>
+            <span>{{ t('messenger.chat.contextMenu.delete') }}</span>
         </button>
     </tui-data-list>
 </ng-template>

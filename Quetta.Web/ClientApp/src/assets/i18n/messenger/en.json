@@ -31,7 +31,18 @@
         }
     },
     "chat": {
-        "placeholder": "Message"
+        "placeholder": "Message",
+        "contextMenu": {
+            "select": "Select",
+            "copy": "Copy",
+            "edit": "Edit",
+            "delete": "Delete"
+        },
+        "header": {
+            "selected": "Selected {{count}} messages.",
+            "delete": "Delete",
+            "cancel": "Cancel"
+        }
     },
     "emptyChatMessage": "Choose a chat to start messaging",
     "addChatDialog": {

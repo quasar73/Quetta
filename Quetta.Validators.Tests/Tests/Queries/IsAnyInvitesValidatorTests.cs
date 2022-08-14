@@ -4,7 +4,7 @@ using FluentValidation.TestHelper;
 
 namespace Quetta.Validators.Tests.Queries
 {
-    public class IsAnyNotificationValidatorTests
+    public class IsAnyInvitesValidatorTests
     {
         private readonly IsAnyInvitesValidator validator = new IsAnyInvitesValidator();
 
@@ -14,7 +14,7 @@ namespace Quetta.Validators.Tests.Queries
         [InlineData("")]
         public void GivenAnInvalidUserIdValue_ShouldHaveValidationError(string userId)
         {
-            var model = new IsAnyNotificationsQuery(userId);
+            var model = new IsAnyInvitesQuery(userId);
             var result = validator.TestValidate(model);
             result.ShouldHaveValidationErrorFor(model => model.UserId);
         }
@@ -22,7 +22,7 @@ namespace Quetta.Validators.Tests.Queries
         [Fact]
         public void GivenAValidUserIdValue_ShouldNotHaveValidationError()
         {
-            var model = new IsAnyNotificationsQuery("someuserid");
+            var model = new IsAnyInvitesQuery("someuserid");
             var result = validator.TestValidate(model);
             result.ShouldNotHaveValidationErrorFor(model => model.UserId);
         }

@@ -1,0 +1,26 @@
+<div class="wrap" @signInPageTrigger>
+    <div class="content">
+        <ng-container *transloco="let t">
+            <div class="title tui-text_h5 tui-space_bottom-5">
+                <div class="welcome-text tui-space_bottom-2">{{ t('signIn.title.welcome') }} <span>Quetta</span>!</div>
+                <div class="choose-service-text">
+                    {{ t('signIn.title.chooseService') }}
+                </div>
+            </div>
+        </ng-container>
+        <div class="buttons">
+            <button class="sign-in-button" tuiButton type="button">
+                <!-- <asl-google-signin-button></asl-google-signin-button> -->
+            </button>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="languages-wrap">
+            <tui-select tuiTextfieldSize="s" [formControl]="languagesControl">
+                Languages
+                <input tuiTextfield />
+                <tui-data-list-wrapper *tuiDataList [items]="languages"></tui-data-list-wrapper>
+            </tui-select>
+        </div>
+    </div>
+</div>

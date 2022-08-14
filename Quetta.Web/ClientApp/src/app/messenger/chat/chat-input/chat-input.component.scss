@@ -1,0 +1,15 @@
+.wrap {
+    height: 100%;
+    padding: 0px 8px 0px 8px;
+
+    .messages-form {
+        display: flex;
+        align-items: flex-end;
+        height: 100%;
+
+        .input {
+            flex-grow: 1;
+            min-height: var(--tui-height-l);
+        }
+    }
+}

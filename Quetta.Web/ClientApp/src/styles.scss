@@ -1,0 +1,28 @@
+html, body {
+    background-color: var(--tui-base-01);
+    height: 100%;
+    width: 100%;
+
+    .t-overlay.t-overlay_visible {
+        background-color: rgba(0, 0, 0, .4);
+    }
+}
+
+$red: var(--tui-negative);
+
+tui-wrapper[data-appearance='cancel'] {
+    background: transparent;
+    color: var(--tui-negative);
+
+    &[data-state='hovered'] {
+        background: var(--tui-clear-hover);
+    }
+
+    &[data-state='pressed'] {
+        background: var(--tui-clear-active);
+    }
+
+    &[data-state='disabled'] {
+        color: var(--tui-accent-hover);
+    }
+}

@@ -1,0 +1,34 @@
+<div class="wrap" #wrap>
+    <ng-container *ngIf="messages?.length; else emptyChatMessage">
+        <div class="notes-wrap">
+            <tui-scrollbar class="notes-scroll" [scrollTop]="notesList.scrollHeight" (scroll)="onScroll()">
+                <div class="notes-list" #notesList>
+                    <div #bottomAnchor></div>
+                    <qtt-note
+                        *ngFor="let message of messages"
+                        [message]="message"
+                        [isSelectingMode]="isSelectingMode"
+                        (messageCopy)="onMessageCopy($event)"
+                        (messageSelected)="onMessageSelected($event, message)"
+                    ></qtt-note>
+                </div>
+            </tui-scrollbar>
+        </div>
+    </ng-container>
+
+    <ng-template #emptyChatMessage>
+        <div class="no-messages-wrap">
+            <span class="tui-text_body-l">There are no messages here. Type anything!</span>
+        </div>
+    </ng-template>
+
+    <tui-marker-icon
+        class="scroll-down-btn"
+        *ngIf="scrollDownButtonVisible"
+        mode="link"
+        src="tuiIconChevronDownLarge"
+        size="s"
+        [@scrollDownButtonTrigger]
+        (click)="scrollDown()"
+    ></tui-marker-icon>
+</div>

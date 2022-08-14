@@ -1,0 +1,21 @@
+<div class="wrap" *ngIf="ids$ | async as ids">
+    <ng-template #chatInfoTemplate>
+        <div class="chat-info">
+            <div class="chat-title tui-text_body-l">{{ chatInfo?.title }}</div>
+            <div class="status">
+                <tui-badge status="success" value="online" size="s"></tui-badge>
+            </div>
+        </div>
+    </ng-template>
+    <div class="selecting-menu" *ngIf="ids.length; else chatInfoTemplate">
+        <div class="select-info tui-text_body-l" *transloco="let t">
+            {{ t('messenger.chat.header.selected', { count: ids?.length }) }}
+        </div>
+        <div class="actions" *transloco="let t">
+            <button tuiButton type="button" appearance="primary" class="tui-space_right-3">
+                {{ t('messenger.chat.header.delete') }}
+            </button>
+            <button tuiButton type="button" appearance="cancel" (click)="cancel()">{{ t('messenger.chat.header.cancel') }}</button>
+        </div>
+    </div>
+</div>

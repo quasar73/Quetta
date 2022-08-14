@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.Apis.Auth.AspNetCore3" Version="1.56.0" />
+    <PackageReference Include="Microsoft.AspNet.SignalR" Version="2.4.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Quetta.Common\Quetta.Common.csproj" />
+    <ProjectReference Include="..\Quetta.Data\Quetta.Data.csproj" />
+  </ItemGroup>
+
+</Project>

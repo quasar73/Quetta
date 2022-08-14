@@ -1,0 +1,16 @@
+<tui-scrollbar class="wrap">
+    <ng-container *ngIf="invites$ | async as invites">
+        <div class="invites-list">
+            <div class="empty-list-message" *ngIf="isListEmpty(invites)">
+                <span *transloco="let t">{{ t('messenger.sidebar.header.invites.noInvites') }}</span>
+            </div>
+            <qtt-invite-item
+                *ngFor="let invite of invites"
+                [hidden]="isRemoved(invite.inviteId)"
+                (inviteAccepted)="onInviteAccepted(invite.inviteId)"
+                (inviteDeclined)="onInviteDeclined(invite.inviteId)"
+                [invite]="invite"
+            ></qtt-invite-item>
+        </div>
+    </ng-container>
+</tui-scrollbar>

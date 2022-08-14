@@ -20,13 +20,13 @@ jobs:
                   node-version: ${{ matrix.node-version }}
                   
             - name: Install packages 
-              working-directory: ./Web/ClientApp
+              working-directory: ./Quetta.Web/ClientApp
               run: npm ci
               
             - name: Testing app
-              working-directory: ./Web/ClientApp
+              working-directory: ./Quetta.Web/ClientApp
               run: npm run test:prod
               
             - name: Linting app 
-              working-directory: ./Web/ClientApp
+              working-directory: ./Quetta.Web/ClientApp
               run: npm run lint

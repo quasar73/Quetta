@@ -1,0 +1,8 @@
+<div class="wrap">
+    <qtt-sidebar-item
+        *ngFor="let chat of chats$ | async"
+        [data]="chat"
+        [active]="isActive(chat.id)"
+        (click)="changeSelection(chat.id)"
+    ></qtt-sidebar-item>
+</div>

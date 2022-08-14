@@ -1,0 +1,65 @@
+{
+    "sidebar": {
+        "header": {
+            "search": "Type here to search...",
+            "actions": {
+                "logout": "Logout",
+                "settings": "Settings"
+            },
+            "add": {
+                "addChat": "Add new chat",
+                "createGroup": "Create new group chat",
+                "createChannel": "Create new channel"
+            },
+            "invites": {
+                "tooltip": "Invites",
+                "title": "New invite",
+                "personalChat": "invited you to personal chat",
+                "groupChat": "invited you to group chat",
+                "accept": "Accept",
+                "decline": "Decline",
+                "noInvites": "You have no invites yet."
+            }
+        },
+        "content": {
+            "chatItem": {
+                "noMessages": "There are no messages here"
+            },
+            "date": {
+                "justNow": "just now"
+            }
+        }
+    },
+    "chat": {
+        "placeholder": "Message",
+        "contextMenu": {
+            "select": "Select",
+            "copy": "Copy",
+            "edit": "Edit",
+            "delete": "Delete"
+        },
+        "header": {
+            "selected": "Selected {{count}} messages.",
+            "delete": "Delete",
+            "cancel": "Cancel"
+        }
+    },
+    "emptyChatMessage": "Choose a chat to start messaging",
+    "addChatDialog": {
+        "header": "Add chat",
+        "description": "To start new chat with some user you have to invite him to chat. Please type an username.",
+        "invite": "Invite",
+        "cancel": "Cancel",
+        "placeholder": "Type an username"
+    },
+    "invite": {
+        "alert": {
+            "notFound": "User not found",
+            "alreadyInvited": "This user already invited",
+            "success": {
+                "title": "User invited",
+                "message": "User @{{username}} successfully invited."
+            }
+        }
+    }
+}

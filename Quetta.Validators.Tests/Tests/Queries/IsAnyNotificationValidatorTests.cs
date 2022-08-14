@@ -6,7 +6,7 @@ namespace Quetta.Validators.Tests.Queries
 {
     public class IsAnyNotificationValidatorTests
     {
-        private readonly IsAnyNotificationValidator validator = new IsAnyNotificationValidator();
+        private readonly IsAnyInvitesValidator validator = new IsAnyInvitesValidator();
 
         [Theory]
         [InlineData(null)]

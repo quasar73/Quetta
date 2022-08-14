@@ -2,7 +2,7 @@
 
 namespace Quetta.Logic.Hubs
 {
-    public class NotificationHub : Hub
+    public class InviteHub : Hub
     {
         public override async Task OnConnectedAsync()
         {

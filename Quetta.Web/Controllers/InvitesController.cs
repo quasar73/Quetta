@@ -35,7 +35,7 @@ namespace Quetta.Web.Controllers
             var senderId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
 
             await mediator.Send(new SendInviteCommand(request, senderId));
-            await mediator.Publish(new NewNotification(request.ReceiverUsername));
+            await mediator.Publish(new NewInviteNotification(request.ReceiverUsername));
 
             return Ok();
         }
@@ -50,7 +50,7 @@ namespace Quetta.Web.Controllers
             var receiverUserName = (await userManager.FindByIdAsync(receiverId)).UserName;
 
             await mediator.Send(new AcceptInviteCommand(request.InviteId, receiverId));
-            await mediator.Publish(new NewNotification(receiverUserName));
+            await mediator.Publish(new NewInviteNotification(receiverUserName));
 
             return Ok();
         }
@@ -65,9 +65,20 @@ namespace Quetta.Web.Controllers
             var receiverUserName = (await userManager.FindByIdAsync(receiverId)).UserName;
 
             await mediator.Send(new DeclineInviteCommand(request.InviteId, receiverId));
-            await mediator.Publish(new NewNotification(receiverUserName));
+            await mediator.Publish(new NewInviteNotification(receiverUserName));
 
             return Ok();
+        }
+
+        [ProducesResponseType(typeof(IsAnyInvitesResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpGet("Any")]
+        public async Task<IActionResult> IsAnyInvites()
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+            var hasNotifications = await mediator.Send(new IsAnyInvitesQuery(userId));
+
+            return Ok(hasNotifications);
         }
 
         [ProducesResponseType(typeof(List<InviteResponse>), StatusCodes.Status200OK)]

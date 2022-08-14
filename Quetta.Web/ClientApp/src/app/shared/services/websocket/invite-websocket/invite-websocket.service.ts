@@ -1,40 +1,40 @@
 import { tap, map } from 'rxjs/operators';
-import { NotificationApiService } from './../../api/notification/notification.service';
 import { TuiAlertService, TuiNotification } from '@taiga-ui/core';
 import { BehaviorSubject, combineLatestWith, Observable } from 'rxjs';
-import { environment } from './../../../../../environments/environment';
+import { environment } from '../../../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { TokenStorage } from '../../auth/token-storage.service';
+import { InviteApiService } from '../../api/invite/invite.service';
 
 @Injectable({
     providedIn: 'root',
 })
-export class NotificationWebsocketService {
-    private readonly notifications$ = new BehaviorSubject<boolean>(false);
+export class InviteWebsocketService {
+    private readonly invites$ = new BehaviorSubject<boolean>(false);
     private hubConnection!: HubConnection;
 
     constructor(
         private readonly tokenStorage: TokenStorage,
         private readonly alertService: TuiAlertService,
-        private readonly notificationService: NotificationApiService
+        private readonly inviteApiService: InviteApiService
     ) {}
 
     startConnection(): Observable<void> {
         return this.tokenStorage.getAccessToken().pipe(
-            combineLatestWith(this.notificationService.isAnyNotifications()),
-            tap(([token, isAnyNotifications]) => {
-                if (isAnyNotifications) {
-                    this.notifications$.next(isAnyNotifications?.hasNotifications);
+            combineLatestWith(this.inviteApiService.isAnyInvites()),
+            tap(([token, isAnyInvites]) => {
+                if (isAnyInvites) {
+                    this.invites$.next(isAnyInvites?.hasInvites);
                 }
 
                 this.hubConnection = new HubConnectionBuilder()
-                    .withUrl(environment.serverUrl + 'notification', { accessTokenFactory: () => token })
+                    .withUrl(environment.serverUrl + 'invite', { accessTokenFactory: () => token })
                     .build();
 
                 this.hubConnection
                     .start()
-                    .then(() => console.log('Notification connection started.'))
+                    .then(() => console.log('Invite connection started.'))
                     .catch(err => console.error('Error while starting connection: ' + err));
             }),
             map(() => {
@@ -45,18 +45,18 @@ export class NotificationWebsocketService {
 
     addNotificationsListner(): void {
         this.hubConnection.on('Notify', isAnyNotifications => {
-            this.notifications$.next(isAnyNotifications);
+            this.invites$.next(isAnyNotifications);
             if (isAnyNotifications) {
-                this.alertService.open('New notification', { status: TuiNotification.Info }).subscribe();
+                this.alertService.open('New invite', { status: TuiNotification.Info }).subscribe();
             }
         });
     }
 
     getNotificationsObserver(): Observable<boolean> {
-        return this.notifications$.asObservable();
+        return this.invites$.asObservable();
     }
 
-    updateNotificationsStatus(hasNotifications: boolean): void {
-        this.notifications$.next(hasNotifications);
+    updateInvitessStatus(hasInvites: boolean): void {
+        this.invites$.next(hasInvites);
     }
 }

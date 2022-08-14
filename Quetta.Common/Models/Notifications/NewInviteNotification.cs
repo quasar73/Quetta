@@ -2,11 +2,11 @@
 
 namespace Quetta.Common.Models.Notifications
 {
-    public class NewNotification : INotification 
+    public class NewInviteNotification : INotification 
     {
         public string ReceiverUsername { get; set; }
 
-        public NewNotification(string receiverUsername)
+        public NewInviteNotification(string receiverUsername)
         {
             ReceiverUsername = receiverUsername;
         }

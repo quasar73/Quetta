@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace  Quetta.Common.Validators.Queries
 {
-    public class IsAnyNotificationValidator : AbstractValidator<IsAnyNotificationsQuery>
+    public class IsAnyInvitesValidator : AbstractValidator<IsAnyInvitesQuery>
     {
-        public IsAnyNotificationValidator()
+        public IsAnyInvitesValidator()
         {
             RuleFor(model => model.UserId).NotEmpty();
         }

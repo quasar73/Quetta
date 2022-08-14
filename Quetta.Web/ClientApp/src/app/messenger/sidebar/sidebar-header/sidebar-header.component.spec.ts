@@ -1,6 +1,5 @@
 import { ReactiveFormsModule } from '@angular/forms';
 import { TuiInputModule, TuiMarkerIconModule } from '@taiga-ui/kit';
-import { NotificationWebsocketService } from './../../../shared/services/websocket/notification-websocket/notification-websocket.service';
 import { TranslocoTestingModule } from '@ngneat/transloco';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TuiSidebarModule } from '@taiga-ui/addon-mobile';
@@ -10,12 +9,13 @@ import { AuthenticationService } from 'src/app/shared/services/auth/authenticati
 
 import { SidebarHeaderComponent } from './sidebar-header.component';
 import { TuiHintModule, TuiHostedDropdownModule } from '@taiga-ui/core';
+import { InviteWebsocketService } from 'src/app/shared/services/websocket/invite-websocket/invite-websocket.service';
 
 describe('SidebarHeaderComponent', () => {
     let component: SidebarHeaderComponent;
     let fixture: ComponentFixture<SidebarHeaderComponent>;
     let mockAuthenticationService: any;
-    let mockNotificationWebsocketService: any;
+    let mockInviteWebsocketService: any;
 
     beforeEach(async () => {
         mockAuthenticationService = jasmine.createSpyObj(['getUserInfo']);
@@ -27,9 +27,9 @@ describe('SidebarHeaderComponent', () => {
             })
         );
 
-        mockNotificationWebsocketService = jasmine.createSpyObj(['getNotificationsObserver', 'addNotificationsListner', 'startConnection']);
-        mockNotificationWebsocketService.getNotificationsObserver.and.returnValue(of(true));
-        mockNotificationWebsocketService.startConnection.and.returnValue(of(true));
+        mockInviteWebsocketService = jasmine.createSpyObj(['getNotificationsObserver', 'addNotificationsListner', 'startConnection']);
+        mockInviteWebsocketService.getNotificationsObserver.and.returnValue(of(true));
+        mockInviteWebsocketService.startConnection.and.returnValue(of(true));
 
         await TestBed.configureTestingModule({
             declarations: [SidebarHeaderComponent],
@@ -45,7 +45,7 @@ describe('SidebarHeaderComponent', () => {
             ],
             providers: [
                 { provide: AuthenticationService, useValue: mockAuthenticationService },
-                { provide: NotificationWebsocketService, useValue: mockNotificationWebsocketService },
+                { provide: InviteWebsocketService, useValue: mockInviteWebsocketService },
             ],
         }).compileComponents();
     });

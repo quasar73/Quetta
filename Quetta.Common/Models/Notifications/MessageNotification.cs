@@ -2,7 +2,7 @@
 
 namespace Quetta.Common.Models.Notifications
 {
-    public class Message : INotification
+    public class MessageNotification : INotification
     {
         public string ChatId { get; set; }
 

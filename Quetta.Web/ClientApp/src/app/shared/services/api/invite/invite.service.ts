@@ -3,11 +3,12 @@ import { BaseService } from './../base/base.service';
 import { Injectable } from '@angular/core';
 import { SendInviteModel } from 'src/app/shared/api-models/send-invite.model';
 import { InviteModel } from 'src/app/shared/api-models/invite.model';
+import { IsAnyInvites } from 'src/app/shared/api-models/is-any-invites.model';
 
 @Injectable({
     providedIn: 'root',
 })
-export class InviteService {
+export class InviteApiService {
     constructor(private base: BaseService) {}
 
     sendInvite(model: SendInviteModel): Observable<void | null> {
@@ -20,6 +21,10 @@ export class InviteService {
 
     declineInvite(inviteId: string): Observable<void | null> {
         return this.base.post<void>('invites/decline', { inviteId });
+    }
+
+    isAnyInvites(): Observable<IsAnyInvites | null> {
+        return this.base.get('invites/any');
     }
 
     getInvites(): Observable<InviteModel[] | null> {

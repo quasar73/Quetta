@@ -73,7 +73,7 @@ builder.Services.AddAuthentication(options =>
                 var accessToken = context.Request.Query["access_token"];
 
                 var path = context.HttpContext.Request.Path;
-                if (!string.IsNullOrEmpty(accessToken) && (path.StartsWithSegments("/notification") || path.StartsWithSegments("/message")))
+                if (!string.IsNullOrEmpty(accessToken) && (path.StartsWithSegments("/invite") || path.StartsWithSegments("/message")))
                 {
                     context.Token = accessToken;
                 }
@@ -140,7 +140,7 @@ app.MapControllers();
 
 app.UseEndpoints(endpoints =>
 {
-    endpoints.MapHub<NotificationHub>("/notification");
+    endpoints.MapHub<InviteHub>("/invite");
     endpoints.MapHub<MessageHub>("/message");
 });
 

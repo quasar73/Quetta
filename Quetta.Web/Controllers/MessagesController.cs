@@ -6,6 +6,7 @@ using Quetta.Common.Models.Commands;
 using System.Security.Claims;
 using Quetta.Common.Models.Queries;
 using Quetta.Common.Models.Notifications;
+using Quetta.Common.Models.Responses;
 
 namespace Quetta.Web.Controllers
 {
@@ -21,6 +22,8 @@ namespace Quetta.Web.Controllers
             this.mediator = mediator;
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [HttpPost]
         public async Task<IActionResult> SendMessage([FromBody] SendMessageReqeust reqeust)
         {
@@ -34,7 +37,7 @@ namespace Quetta.Web.Controllers
             };
 
             var messageId = await mediator.Send(command);
-            await mediator.Publish(new Message
+            await mediator.Publish(new MessageNotification
             {
                 ChatId = reqeust.ChatId,
                 MessageId = messageId,
@@ -43,6 +46,8 @@ namespace Quetta.Web.Controllers
             return Ok();
         }
 
+        [ProducesResponseType(typeof(ICollection<MessageResponse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [HttpGet]
         public async Task<IActionResult> GetMessages([FromQuery] string chatId)
         {

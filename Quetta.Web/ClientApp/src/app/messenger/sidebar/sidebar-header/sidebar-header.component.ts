@@ -1,8 +1,7 @@
-import { NotificationWebsocketService } from './../../../shared/services/websocket/notification-websocket/notification-websocket.service';
 import { InvitesListDialogComponent } from './invites-list-dialog/invites-list-dialog.component';
 import { TranslocoService } from '@ngneat/transloco';
 import { HttpErrorResponse } from '@angular/common/http';
-import { InviteService } from './../../../shared/services/api/invite/invite.service';
+import { InviteApiService } from './../../../shared/services/api/invite/invite.service';
 import { AddChatDialogComponent } from './add-chat-dialog/add-chat-dialog.component';
 import { UntypedFormControl } from '@angular/forms';
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
@@ -10,6 +9,7 @@ import { UserInfo } from 'src/app/shared/models/user-info.model';
 import { AuthenticationService } from 'src/app/shared/services/auth/authentication.service';
 import { TuiAlertService, TuiDialogService, TuiNotification } from '@taiga-ui/core';
 import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
+import { InviteWebsocketService } from 'src/app/shared/services/websocket/invite-websocket/invite-websocket.service';
 
 @Component({
     selector: 'qtt-sidebar-header',
@@ -42,10 +42,10 @@ export class SidebarHeaderComponent implements OnInit {
 
     constructor(
         private readonly authService: AuthenticationService,
-        private readonly inviteService: InviteService,
+        private readonly inviteApiService: InviteApiService,
         private readonly alertService: TuiAlertService,
         private readonly translocoService: TranslocoService,
-        public readonly notificationWebsocketService: NotificationWebsocketService,
+        public readonly inviteWebsocketService: InviteWebsocketService,
         @Inject(TuiDialogService) private readonly dialogService: TuiDialogService
     ) {}
 
@@ -54,8 +54,8 @@ export class SidebarHeaderComponent implements OnInit {
             this.userInfo = info;
         });
 
-        this.notificationWebsocketService.startConnection().subscribe(() => {
-            this.notificationWebsocketService.addNotificationsListner();
+        this.inviteWebsocketService.startConnection().subscribe(() => {
+            this.inviteWebsocketService.addNotificationsListner();
         });
     }
 
@@ -71,7 +71,7 @@ export class SidebarHeaderComponent implements OnInit {
         this.addChatDialog.subscribe({
             next: (username: string | null) => {
                 if (username) {
-                    this.inviteService
+                    this.inviteApiService
                         .sendInvite({
                             receiverUsername: username,
                             isGroupChat: false,

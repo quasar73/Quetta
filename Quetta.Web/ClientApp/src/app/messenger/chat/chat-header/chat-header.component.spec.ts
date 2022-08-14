@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NgxsModule } from '@ngxs/store';
 import { TuiBadgeModule } from '@taiga-ui/kit';
+import { SelectedMessagesState } from 'src/app/state-manager/states/selected-messages.state';
 
 import { ChatHeaderComponent } from './chat-header.component';
 
@@ -10,7 +12,7 @@ describe('ChatHeaderComponent', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             declarations: [ChatHeaderComponent],
-            imports: [TuiBadgeModule],
+            imports: [TuiBadgeModule, NgxsModule.forRoot([SelectedMessagesState])],
         }).compileComponents();
     });
 

@@ -1,7 +1,6 @@
 import { ChatItemModel } from './../../../../shared/api-models/chat-item.model';
 import { TranslocoService } from '@ngneat/transloco';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { dateCalculator } from 'src/app/shared/utils/date-calculator';
 import { ChatType } from 'src/app/shared/enums/chat-type.enum';
 
 @Component({

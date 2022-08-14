@@ -27,10 +27,10 @@ export class ChatInputComponent {
 
     sendMessage(): void {
         if (this.chatId) {
-            const message = {
+            const message: SendMessageModel = {
                 text: this.messageForm.get('text')?.value,
                 chatId: this.chatId,
-            } as SendMessageModel;
+            };
             const code = Guid.create().toString();
 
             this.authService.getUserInfo().subscribe(info => {

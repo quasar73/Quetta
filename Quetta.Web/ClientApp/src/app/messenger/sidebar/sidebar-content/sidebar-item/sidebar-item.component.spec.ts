@@ -4,6 +4,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { getTranslocoModule } from 'src/app/translate/transloco-testing.module';
 
 import { SidebarItemComponent } from './sidebar-item.component';
+import { ChatType } from 'src/app/shared/enums/chat-type.enum';
 
 describe('SidebarItemComponent', () => {
     let component: SidebarItemComponent;
@@ -19,6 +20,12 @@ describe('SidebarItemComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(SidebarItemComponent);
         component = fixture.componentInstance;
+        component.data = {
+            id: 'id',
+            title: 'chat title',
+            chatType: ChatType.Channel,
+            lastMessage: 'last message',
+        };
         fixture.detectChanges();
     });
 

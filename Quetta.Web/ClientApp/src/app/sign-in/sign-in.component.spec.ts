@@ -6,21 +6,18 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { GoogleLoginProvider, SocialAuthService, SocialAuthServiceConfig, SocialLoginModule } from '@abacritt/angularx-social-login';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-
-import { SignInComponent } from './sign-in.component';
 import { environment } from 'src/environments/environment';
 import { getTranslocoModule } from '../translate/transloco-testing.module';
+import { MockProvider } from 'ng-mocks';
+
+import { SignInComponent } from './sign-in.component';
+import { EMPTY } from 'rxjs';
 
 describe('SignInComponent', () => {
     let component: SignInComponent;
     let fixture: ComponentFixture<SignInComponent>;
-    let mockSocialAuthService: { signIn: any };
 
     beforeEach(async () => {
-        mockSocialAuthService = {
-            signIn: jasmine.createSpy('signIn'),
-        };
-
         await TestBed.configureTestingModule({
             declarations: [SignInComponent],
             imports: [
@@ -47,7 +44,9 @@ describe('SignInComponent', () => {
                         onError: err => console.log(err),
                     } as SocialAuthServiceConfig,
                 },
-                { provide: SocialAuthService, useValue: mockSocialAuthService },
+                MockProvider(SocialAuthService, {
+                    authState: EMPTY,
+                }),
             ],
         }).compileComponents();
     });
@@ -64,12 +63,5 @@ describe('SignInComponent', () => {
 
     it('getLanguages should return application languages', () => {
         expect(component.languages).toEqual(['en', 'ru']);
-    });
-
-    it('should call signIn method when Sign in button is clicked', () => {
-        const button = fixture.debugElement.nativeElement.querySelector('.sign-in-button');
-        button.click();
-
-        expect(mockSocialAuthService.signIn).toHaveBeenCalledWith('GOOGLE');
     });
 });

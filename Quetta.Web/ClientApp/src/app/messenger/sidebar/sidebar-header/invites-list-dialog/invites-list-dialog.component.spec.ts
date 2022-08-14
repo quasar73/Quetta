@@ -1,3 +1,5 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { InviteApiService } from './../../../../shared/services/api/invite/invite.service';
 import { TuiScrollbarModule } from '@taiga-ui/core';
 import { InvitesListDialogComponent } from './invites-list-dialog.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -10,7 +12,8 @@ describe('InvitesListDialogComponent', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             declarations: [InvitesListDialogComponent, MockInvitesListDialogComponent],
-            imports: [TuiScrollbarModule],
+            imports: [TuiScrollbarModule, HttpClientTestingModule],
+            providers: [InviteApiService],
         }).compileComponents();
     });
 

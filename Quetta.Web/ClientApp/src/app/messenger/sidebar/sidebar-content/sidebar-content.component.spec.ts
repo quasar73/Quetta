@@ -1,3 +1,6 @@
+import { RouterTestingModule } from '@angular/router/testing';
+import { ChatApiService } from './../../../shared/services/api/chat/chat.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
@@ -9,14 +12,15 @@ describe('SidebarContentComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
+            imports: [HttpClientTestingModule, RouterTestingModule],
             declarations: [SidebarContentComponent, MockSidebarItemComponent],
+            providers: [ChatApiService],
         }).compileComponents();
     });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(SidebarContentComponent);
         component = fixture.componentInstance;
-        component.testData = [];
         fixture.detectChanges();
     });
 

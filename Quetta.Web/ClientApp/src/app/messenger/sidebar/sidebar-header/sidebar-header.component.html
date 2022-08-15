@@ -40,7 +40,7 @@
         </tui-input>
 
         <tui-marker-icon
-            [mode]="(inviteWebsocketService.getNotificationsObserver() | async) ? 'primary' : 'link'"
+            [mode]="(inviteWebsocketService.getInvitesObserver() | async) ? 'primary' : 'link'"
             size="xs"
             src="tuiIconMailLarge"
             class="invites-btn"

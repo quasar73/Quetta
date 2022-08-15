@@ -1,3 +1,4 @@
+import { MockService } from 'ng-mocks';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SignUpFormComponent } from './sign-up-form/sign-up-form.component';
 import { TuiErrorModule, TuiTextfieldControllerModule, TuiSvgModule } from '@taiga-ui/core';
@@ -17,20 +18,19 @@ import { Router } from '@angular/router';
 describe('SignUpComponent', () => {
     let component: SignUpComponent;
     let fixture: ComponentFixture<SignUpComponent>;
-    let mockRegisterUserDataService;
-    let mockRouter: { navigate: any };
+    let spyRouter: { navigate: any };
 
     beforeEach(async () => {
-        mockRegisterUserDataService = jasmine.createSpyObj(['getUserData']);
-        mockRegisterUserDataService.getUserData.and.returnValue(
-            of({
-                firstName: 'TestFirstName',
-                lastName: 'TestLastName',
-                username: 'testUserName',
-                idToken: 'testidToken',
-            })
-        );
-        mockRouter = {
+        const mockRegisterUserDataService = MockService(RegisterUserDataService, {
+            getUserData: () =>
+                of({
+                    firstName: 'TestFirstName',
+                    lastName: 'TestLastName',
+                    username: 'testUserName',
+                    idToken: 'testidToken',
+                }),
+        });
+        spyRouter = {
             navigate: jasmine.createSpy('navigate'),
         };
         await TestBed.configureTestingModule({
@@ -51,7 +51,7 @@ describe('SignUpComponent', () => {
             ],
             providers: [
                 { provide: RegisterUserDataService, useValue: mockRegisterUserDataService },
-                { provide: Router, useValue: mockRouter },
+                { provide: Router, useValue: spyRouter },
             ],
         }).compileComponents();
     });
@@ -106,6 +106,7 @@ describe('SignUpComponent', () => {
     it('should increase activeIndex when next button is clicked', () => {
         component.activeIndex = 0;
         const button = fixture.debugElement.nativeElement.querySelector('.next-button');
+
         button.click();
 
         expect(component.activeIndex).toEqual(1);
@@ -113,8 +114,9 @@ describe('SignUpComponent', () => {
 
     it('should navigate to sign-in page when come back button is clicked', () => {
         const button = fixture.debugElement.nativeElement.querySelector('.come-back-button');
+
         button.click();
 
-        expect(mockRouter.navigate).toHaveBeenCalledWith(['/sign-in']);
+        expect(spyRouter.navigate).toHaveBeenCalledWith(['/sign-in']);
     });
 });

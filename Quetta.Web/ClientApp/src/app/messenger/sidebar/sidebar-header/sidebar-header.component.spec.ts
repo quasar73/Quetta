@@ -10,26 +10,26 @@ import { AuthenticationService } from 'src/app/shared/services/auth/authenticati
 import { SidebarHeaderComponent } from './sidebar-header.component';
 import { TuiHintModule, TuiHostedDropdownModule } from '@taiga-ui/core';
 import { InviteWebsocketService } from 'src/app/shared/services/websocket/invite-websocket/invite-websocket.service';
+import { MockService } from 'ng-mocks';
 
 describe('SidebarHeaderComponent', () => {
     let component: SidebarHeaderComponent;
     let fixture: ComponentFixture<SidebarHeaderComponent>;
-    let mockAuthenticationService: any;
-    let mockInviteWebsocketService: any;
 
     beforeEach(async () => {
-        mockAuthenticationService = jasmine.createSpyObj(['getUserInfo']);
-        mockAuthenticationService.getUserInfo.and.returnValue(
-            of({
-                username: 'testUserName',
-                firstName: 'TestFirstName',
-                lastName: 'TestLastName',
-            })
-        );
+        const mockAuthenticationService = MockService(AuthenticationService, {
+            getUserInfo: () =>
+                of({
+                    username: 'testUserName',
+                    firstName: 'TestFirstName',
+                    lastName: 'TestLastName',
+                }),
+        });
 
-        mockInviteWebsocketService = jasmine.createSpyObj(['getNotificationsObserver', 'addNotificationsListner', 'startConnection']);
-        mockInviteWebsocketService.getNotificationsObserver.and.returnValue(of(true));
-        mockInviteWebsocketService.startConnection.and.returnValue(of(true));
+        const mockInviteWebsocketService = MockService(InviteWebsocketService, {
+            getInvitesObserver: () => of(true),
+            startConnection: () => of(),
+        });
 
         await TestBed.configureTestingModule({
             declarations: [SidebarHeaderComponent],

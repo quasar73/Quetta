@@ -55,7 +55,7 @@ export class SidebarHeaderComponent implements OnInit {
         });
 
         this.inviteWebsocketService.startConnection().subscribe(() => {
-            this.inviteWebsocketService.addNotificationsListner();
+            this.inviteWebsocketService.addInvitesListner();
         });
     }
 

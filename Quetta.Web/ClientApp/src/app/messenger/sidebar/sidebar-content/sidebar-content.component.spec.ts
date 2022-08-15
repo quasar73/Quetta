@@ -1,10 +1,11 @@
 import { RouterTestingModule } from '@angular/router/testing';
 import { ChatApiService } from './../../../shared/services/api/chat/chat.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SidebarContentComponent } from './sidebar-content.component';
+import { MockComponent } from 'ng-mocks';
+import { SidebarItemComponent } from './sidebar-item/sidebar-item.component';
 
 describe('SidebarContentComponent', () => {
     let component: SidebarContentComponent;
@@ -13,7 +14,7 @@ describe('SidebarContentComponent', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             imports: [HttpClientTestingModule, RouterTestingModule],
-            declarations: [SidebarContentComponent, MockSidebarItemComponent],
+            declarations: [SidebarContentComponent, MockComponent(SidebarItemComponent)],
             providers: [ChatApiService],
         }).compileComponents();
     });
@@ -28,9 +29,3 @@ describe('SidebarContentComponent', () => {
         expect(component).toBeTruthy();
     });
 });
-
-@Component({
-    selector: 'qtt-sidebar-item',
-    template: '',
-})
-class MockSidebarItemComponent {}

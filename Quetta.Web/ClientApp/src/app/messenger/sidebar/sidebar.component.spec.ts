@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TuiScrollbarModule } from '@taiga-ui/core';
+import { MockComponents } from 'ng-mocks';
+import { SidebarContentComponent } from './sidebar-content/sidebar-content.component';
+import { SidebarFooterComponent } from './sidebar-footer/sidebar-footer.component';
+import { SidebarHeaderComponent } from './sidebar-header/sidebar-header.component';
 
 import { SidebarComponent } from './sidebar.component';
 
@@ -10,7 +13,7 @@ describe('SidebarComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [SidebarComponent, MockSidebarHeaderComponent, MockSidebarContentComponent, MockSidebarFooterComponent],
+            declarations: [SidebarComponent, ...MockComponents(SidebarHeaderComponent, SidebarContentComponent, SidebarFooterComponent)],
             imports: [TuiScrollbarModule],
         }).compileComponents();
     });
@@ -25,21 +28,3 @@ describe('SidebarComponent', () => {
         expect(component).toBeTruthy();
     });
 });
-
-@Component({
-    selector: 'qtt-sidebar-header',
-    template: '',
-})
-class MockSidebarHeaderComponent {}
-
-@Component({
-    selector: 'qtt-sidebar-content',
-    template: '',
-})
-class MockSidebarContentComponent {}
-
-@Component({
-    selector: 'qtt-sidebar-footer',
-    template: '',
-})
-class MockSidebarFooterComponent {}

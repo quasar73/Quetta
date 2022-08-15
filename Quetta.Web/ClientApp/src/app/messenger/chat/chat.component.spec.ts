@@ -3,11 +3,13 @@ import { AuthenticationService } from 'src/app/shared/services/auth/authenticati
 import { TokenStorage } from './../../shared/services/auth/token-storage.service';
 import { MessageWebsocketService } from './../../shared/services/websocket/message-websocket/message-websocket.service';
 import { ActivatedRoute } from '@angular/router';
-import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockComponents } from 'ng-mocks';
 
 import { ChatComponent } from './chat.component';
+import { ChatContentComponent } from './chat-content/chat-content.component';
+import { ChatHeaderComponent } from './chat-header/chat-header.component';
+import { ChatInputComponent } from './chat-input/chat-input.component';
 
 describe('ChatComponent', () => {
     let component: ChatComponent;
@@ -25,7 +27,7 @@ describe('ChatComponent', () => {
 
         await TestBed.configureTestingModule({
             imports: [HttpClientTestingModule],
-            declarations: [ChatComponent, MockComponents(MockChatContentComponent, MockChatHeaderComponent, MockChatInputComponent)],
+            declarations: [ChatComponent, ...MockComponents(ChatContentComponent, ChatHeaderComponent, ChatInputComponent)],
             providers: [
                 { provide: ActivatedRoute, useValue: mockActivatedRoute },
                 MessageWebsocketService,
@@ -45,21 +47,3 @@ describe('ChatComponent', () => {
         expect(component).toBeTruthy();
     });
 });
-
-@Component({
-    selector: 'qtt-chat-header',
-    template: '',
-})
-class MockChatHeaderComponent {}
-
-@Component({
-    selector: 'qtt-chat-content',
-    template: '',
-})
-class MockChatContentComponent {}
-
-@Component({
-    selector: 'qtt-chat-input',
-    template: '',
-})
-class MockChatInputComponent {}

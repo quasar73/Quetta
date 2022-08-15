@@ -3,7 +3,6 @@ import { InviteApiService } from './../../../../shared/services/api/invite/invit
 import { TuiScrollbarModule } from '@taiga-ui/core';
 import { InvitesListDialogComponent } from './invites-list-dialog.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component } from '@angular/core';
 
 describe('InvitesListDialogComponent', () => {
     let component: InvitesListDialogComponent;
@@ -11,7 +10,7 @@ describe('InvitesListDialogComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [InvitesListDialogComponent, MockInvitesListDialogComponent],
+            declarations: [InvitesListDialogComponent],
             imports: [TuiScrollbarModule, HttpClientTestingModule],
             providers: [InviteApiService],
         }).compileComponents();
@@ -27,9 +26,3 @@ describe('InvitesListDialogComponent', () => {
         expect(component).toBeTruthy();
     });
 });
-
-@Component({
-    selector: 'qtt-invites-item',
-    template: '',
-})
-class MockInvitesListDialogComponent {}

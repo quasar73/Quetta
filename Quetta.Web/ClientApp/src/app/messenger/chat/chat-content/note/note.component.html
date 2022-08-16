@@ -3,7 +3,7 @@
         <tui-checkbox size="l" [formControl]="selectControl"></tui-checkbox>
     </div>
     <div class="note" [class.own-message]="isUserOwner() | async">
-        <span class="tui-text_body-m">{{ message.text }}</span>
+        <span class="tui-text_body-m message">{{ message.text }}</span>
         <span class="info tui-text_body-xs">
             <div class="time">{{ message.date | date: 'H:mm' }}</div>
             <tui-svg [src]="getStatus()" class="status"></tui-svg>

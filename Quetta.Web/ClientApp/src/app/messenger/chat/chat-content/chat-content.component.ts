@@ -66,7 +66,7 @@ export class ChatContentComponent implements OnInit {
         this.bottomAnchor?.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
     }
 
-    onMessageCopy(text: string): void {
+    onMessageCopied(text: string): void {
         this.clipboardService.copy(text);
         this.alertService
             .open('Text successfully copied!', {

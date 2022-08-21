@@ -3,7 +3,7 @@ import { NoteComponent } from './note/note.component';
 import { MockComponent } from 'ng-mocks';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { Actions, NgxsModule, Store, ofActionDispatched } from '@ngxs/store';
+import { Actions, NgxsModule, ofActionDispatched } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { ClientMessageModel } from 'src/app/shared/models/client-message.model';
 import { SelectedMessages } from 'src/app/state-manager/actions/selected-messages.actions';
@@ -15,7 +15,6 @@ import { ChatContentComponent } from './chat-content.component';
 describe('ChatContentComponent', () => {
     let component: ChatContentComponent;
     let fixture: ComponentFixture<ChatContentComponent>;
-    let store: Store;
     let actions$: Observable<any>;
     const messages: ClientMessageModel[] = testMessages;
 
@@ -24,7 +23,7 @@ describe('ChatContentComponent', () => {
             imports: [NgxsModule.forRoot([SelectedMessagesState]), TuiScrollbarModule],
             declarations: [ChatContentComponent, MockComponent(NoteComponent)],
         }).compileComponents();
-        store = TestBed.inject(Store);
+
         actions$ = TestBed.inject(Actions);
     });
 

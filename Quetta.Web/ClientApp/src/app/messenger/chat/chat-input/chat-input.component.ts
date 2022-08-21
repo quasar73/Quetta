@@ -4,8 +4,8 @@ import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms
 import { ChangeDetectionStrategy, Component, Input, Output, EventEmitter } from '@angular/core';
 import { AuthenticationService } from 'src/app/shared/services/auth/authentication.service';
 import { MessageStatus } from 'src/app/shared/enums/message-status.enum';
-import { Guid } from 'guid-typescript';
 import { ClientMessageModel } from 'src/app/shared/models/client-message.model';
+import { GuidService } from 'src/app/shared/services/guid/guid.service';
 
 @Component({
     selector: 'qtt-chat-input',
@@ -23,7 +23,11 @@ export class ChatInputComponent {
         text: new UntypedFormControl('', [Validators.required, Validators.maxLength(2000)]),
     });
 
-    constructor(private readonly messageApiService: MessageApiService, private readonly authService: AuthenticationService) {}
+    constructor(
+        private readonly messageApiService: MessageApiService,
+        private readonly authService: AuthenticationService,
+        private readonly guidService: GuidService
+    ) {}
 
     sendMessage(): void {
         if (this.chatId) {
@@ -31,7 +35,7 @@ export class ChatInputComponent {
                 text: this.messageForm.get('text')?.value,
                 chatId: this.chatId,
             };
-            const code = Guid.create().toString();
+            const code = this.guidService.getValue().toString();
 
             this.authService.getUserInfo().subscribe(info => {
                 this.messageSent.emit({

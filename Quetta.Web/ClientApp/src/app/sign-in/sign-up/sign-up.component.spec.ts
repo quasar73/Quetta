@@ -33,6 +33,7 @@ describe('SignUpComponent', () => {
         spyRouter = {
             navigate: jasmine.createSpy('navigate'),
         };
+
         await TestBed.configureTestingModule({
             declarations: [SignUpComponent, SignUpFormComponent],
             imports: [

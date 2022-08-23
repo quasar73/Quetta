@@ -6,8 +6,8 @@ import { By } from '@angular/platform-browser';
 import { Actions, NgxsModule, ofActionDispatched } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { ClientMessageModel } from 'src/app/shared/models/client-message.model';
-import { SelectedMessages } from 'src/app/state-manager/actions/selected-messages.actions';
-import { SelectedMessagesState } from 'src/app/state-manager/states/selected-messages.state';
+import { SelectedNotes } from 'src/app/state-manager/actions/selected-notes.actions';
+import { SelectedNotesState } from 'src/app/state-manager/states/selected-notes.state';
 import { testMessages } from 'src/app/testing/data/test-messages';
 
 import { ChatContentComponent } from './chat-content.component';
@@ -20,7 +20,7 @@ describe('ChatContentComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [NgxsModule.forRoot([SelectedMessagesState]), TuiScrollbarModule],
+            imports: [NgxsModule.forRoot([SelectedNotesState]), TuiScrollbarModule],
             declarations: [ChatContentComponent, MockComponent(NoteComponent)],
         }).compileComponents();
 
@@ -56,7 +56,7 @@ describe('ChatContentComponent', () => {
     });
 
     it('should dispatch Select action', done => {
-        actions$.pipe(ofActionDispatched(SelectedMessages.Select)).subscribe(() => {
+        actions$.pipe(ofActionDispatched(SelectedNotes.Select)).subscribe(() => {
             expect(component.messages![0].isSelected).toBeTruthy();
             done();
         });
@@ -65,7 +65,7 @@ describe('ChatContentComponent', () => {
     });
 
     it('should dispatch Remove action', done => {
-        actions$.pipe(ofActionDispatched(SelectedMessages.Remove)).subscribe(() => {
+        actions$.pipe(ofActionDispatched(SelectedNotes.Remove)).subscribe(() => {
             expect(component.messages![0].isSelected).toBeFalsy();
             done();
         });

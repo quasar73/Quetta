@@ -4,7 +4,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild, ChangeDetectorRef, OnInit } from '@angular/core';
 import { TuiScrollbarComponent, TuiAlertService, TuiNotification } from '@taiga-ui/core';
 import { Actions, ofActionDispatched, Store } from '@ngxs/store';
-import { SelectedMessages } from 'src/app/state-manager/actions/selected-messages.actions';
+import { SelectedNotes } from 'src/app/state-manager/actions/selected-notes.actions';
 
 const SCROLL_DOWN_BTN_SHOWS = 256;
 
@@ -46,10 +46,10 @@ export class ChatContentComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.actions.pipe(ofActionDispatched(SelectedMessages.Clear)).subscribe(() => {
+        this.actions.pipe(ofActionDispatched(SelectedNotes.Clear)).subscribe(() => {
             this.clearSelecting();
         });
-        this.store.dispatch(new SelectedMessages.Clear());
+        this.store.dispatch(new SelectedNotes.Clear());
     }
 
     onScroll(): void {
@@ -84,8 +84,8 @@ export class ChatContentComponent implements OnInit {
                 this.messages = [...this.messages];
                 this.isSelectingMode = this.messages.some(m => m.isSelected);
                 isSelected
-                    ? this.store.dispatch(new SelectedMessages.Select(message.text))
-                    : this.store.dispatch(new SelectedMessages.Remove(message.text));
+                    ? this.store.dispatch(new SelectedNotes.Select(message.text))
+                    : this.store.dispatch(new SelectedNotes.Remove(message.text));
                 this.cdr.markForCheck();
             }
         }

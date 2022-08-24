@@ -6,11 +6,11 @@
         <div class="text-wrap">
             <div class="title tui-text_body-m">
                 <tui-svg [src]="icon"></tui-svg>
-                <span class="title-text">{{ data.title }}</span>
+                <span class="title-text">{{ title }}</span>
                 <span class="date-time tui-text_body-s">{{ dateTime }}</span>
             </div>
             <div *transloco="let t" class="subtitle tui-text_body-s tui-space_top-1">
-                <span class="tui-space_left-1" *ngIf="data?.lastMessage; else noMessages"> {{ data.lastMessage }} </span>
+                <span class="tui-space_left-1 last-message" *ngIf="data?.lastMessage; else noMessages">{{ data.lastMessage }}</span>
                 <ng-template #noMessages>
                     <span class="no-messages">{{ t('messenger.sidebar.content.chatItem.noMessages') }}</span>
                 </ng-template>

@@ -1,3 +1,4 @@
+import { By } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TuiSelectModule } from '@taiga-ui/kit';
 import { getTranslocoModule } from 'src/app/translate/transloco-testing.module';
@@ -24,5 +25,11 @@ describe('SidebarFooterComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
+    });
+
+    it('should shows right text', () => {
+        const text = fixture.debugElement.query(By.css('.text')).nativeElement;
+
+        expect(text.textContent).toEqual('Quetta the messenger');
     });
 });

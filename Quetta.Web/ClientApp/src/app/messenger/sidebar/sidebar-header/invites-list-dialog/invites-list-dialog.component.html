@@ -7,9 +7,9 @@
             <qtt-invite-item
                 *ngFor="let invite of invites"
                 [hidden]="isRemoved(invite.inviteId)"
+                [invite]="invite"
                 (inviteAccepted)="onInviteAccepted(invite.inviteId)"
                 (inviteDeclined)="onInviteDeclined(invite.inviteId)"
-                [invite]="invite"
             ></qtt-invite-item>
         </div>
     </ng-container>

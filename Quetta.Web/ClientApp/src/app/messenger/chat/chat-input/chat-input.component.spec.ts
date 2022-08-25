@@ -82,4 +82,16 @@ describe('ChatInputComponent', () => {
             text: 'test text',
         });
     });
+
+    it('form should be invalid if validation failed', () => {
+        component.messageForm.setValue({ text: '' });
+        fixture.detectChanges();
+
+        expect(component.messageForm.invalid).toBeTruthy();
+
+        component.messageForm.setValue({ text: 'a'.repeat(2001) });
+        fixture.detectChanges();
+
+        expect(component.messageForm.invalid).toBeTruthy();
+    });
 });

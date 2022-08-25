@@ -36,7 +36,7 @@ module.exports = function (config) {
         logLevel: config.LOG_ERROR,
         autoWatch: true,
         browsers: ['Chrome'],
-        singleRun: true,
+        singleRun: false,
         restartOnFileChange: true,
         retryLimit: -1,
     });

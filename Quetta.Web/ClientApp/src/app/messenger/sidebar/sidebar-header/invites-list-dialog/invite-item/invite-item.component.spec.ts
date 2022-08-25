@@ -49,7 +49,7 @@ describe('InviteItemComponent', () => {
         expect(component.inviteDeclined.emit).toHaveBeenCalledTimes(1);
     });
 
-    it('should emit output on acce[t', () => {
+    it('should emit output on accept', () => {
         spyOn(component.inviteAccepted, 'emit');
         const accept = fixture.nativeElement.querySelector('.accept');
 

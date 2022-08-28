@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quetta.Common", "Quetta.Com
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quetta.Validators.Tests", "Quetta.Validators.Tests\Quetta.Validators.Tests.csproj", "{9FB21D1D-7A58-46A6-B603-E4D0389D48F4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quetta.Tests.Handlers", "Quetta.Tests.Handlers\Quetta.Tests.Handlers.csproj", "{74D76AA3-59F1-4DE1-85AB-CDD437BAA517}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{9FB21D1D-7A58-46A6-B603-E4D0389D48F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9FB21D1D-7A58-46A6-B603-E4D0389D48F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9FB21D1D-7A58-46A6-B603-E4D0389D48F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74D76AA3-59F1-4DE1-85AB-CDD437BAA517}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74D76AA3-59F1-4DE1-85AB-CDD437BAA517}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74D76AA3-59F1-4DE1-85AB-CDD437BAA517}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74D76AA3-59F1-4DE1-85AB-CDD437BAA517}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

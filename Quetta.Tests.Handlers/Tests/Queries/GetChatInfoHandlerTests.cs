@@ -2,6 +2,7 @@
 using Quetta.Common.Exceptions;
 using Quetta.Common.Models.Queries;
 using Quetta.Common.Models.Responses;
+using Quetta.Data;
 using Quetta.Data.Models;
 using Quetta.Logic.Handlers.Queries;
 
@@ -9,7 +10,6 @@ namespace Quetta.Tests.Handlers.Queries
 {
     public class GetChatInfoHandlerTests
     {
-        private TestQuettaDbContextFactory factory;
         private List<User> testUsers = new List<User>()
         {
             new User()
@@ -30,29 +30,13 @@ namespace Quetta.Tests.Handlers.Queries
             }
         };
 
-        public GetChatInfoHandlerTests()
-        {
-            factory = new TestQuettaDbContextFactory();
-
-            using (var dbContext = factory.Create())
-            {
-                var chat = new Chat()
-                {
-                    Id = "00000000-0000-0000-0000-000000000000",
-                    Users = testUsers,
-                    IsGroup = false,
-                };
-                dbContext.AddRange(testUsers);
-                dbContext.Add(chat);
-                dbContext.SaveChanges();
-            }
-        }
-
         [Fact]
         public async void GetChatInfoQuery_RerurnsChatInfo()
         {
-            using(var dbContext = factory.Create())
+            using (var dbContextProvider = new TestQuettaDbContextProvider())
             {
+                var dbContext = dbContextProvider.DbContext;
+                await IntializeDatabase(dbContext);
                 var expectedResult = new ChatInfoResponse()
                 {
                     IsGroup = false,
@@ -67,19 +51,20 @@ namespace Quetta.Tests.Handlers.Queries
                 };
 
                 var result = await handler.Handle(query, new CancellationToken());
-
                 var expectedResultStr = JsonConvert.SerializeObject(expectedResult);
                 var resultStr = JsonConvert.SerializeObject(result);
+
                 Assert.Equal(expectedResultStr, resultStr);
-                dbContext.Database.EnsureDeleted();
             }
         }
 
         [Fact]
         public async void GetChatInfoQueryWithInvalidChatId_ShouldThrowsEntityNotFoundException()
         {
-            using (var dbContext = factory.Create())
+            using (var dbContextProvider = new TestQuettaDbContextProvider())
             {
+                var dbContext = dbContextProvider.DbContext;
+                await IntializeDatabase(dbContext);
                 var expectedResult = new ChatInfoResponse()
                 {
                     IsGroup = false,
@@ -95,15 +80,16 @@ namespace Quetta.Tests.Handlers.Queries
 
 
                 await Assert.ThrowsAsync<EntityNotFoundException>(async () => await handler.Handle(query, new CancellationToken()));
-                dbContext.Database.EnsureDeleted();
             }
         }
 
         [Fact]
         public async void GetChatInfoQueryWithInvalidUserId_ShouldThrowsAccessDeniedException()
         {
-            using (var dbContext = factory.Create())
+            using (var dbContextProvider = new TestQuettaDbContextProvider())
             {
+                var dbContext = dbContextProvider.DbContext;
+                await IntializeDatabase(dbContext);
                 var expectedResult = new ChatInfoResponse()
                 {
                     IsGroup = false,
@@ -119,8 +105,20 @@ namespace Quetta.Tests.Handlers.Queries
 
 
                 await Assert.ThrowsAsync<AccessDeniedException>(async () => await handler.Handle(query, new CancellationToken()));
-                dbContext.Database.EnsureDeleted();
             }
+        }
+
+        private async Task IntializeDatabase(QuettaDbContext dbContext)
+        {
+            await dbContext.Users.AddRangeAsync(testUsers);
+            var testChat = new Chat()
+            {
+                Id = "00000000-0000-0000-0000-000000000000",
+                Users = testUsers,
+                IsGroup = false,
+            };
+            await dbContext.Chats.AddAsync(testChat);
+            await dbContext.SaveChangesAsync();
         }
     }
 }

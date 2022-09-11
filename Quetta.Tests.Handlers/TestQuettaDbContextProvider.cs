@@ -11,7 +11,7 @@ namespace Quetta.Tests.Handlers
         public TestQuettaDbContextProvider()
         {
             var options = new DbContextOptionsBuilder<QuettaDbContext>()
-                .UseInMemoryDatabase(databaseName: "QuettaDb")
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
             DbContext = new QuettaDbContext(options);
         }

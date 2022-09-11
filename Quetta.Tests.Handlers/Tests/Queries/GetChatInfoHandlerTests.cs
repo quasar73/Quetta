@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using FluentAssertions;
 using Quetta.Common.Exceptions;
 using Quetta.Common.Models.Queries;
 using Quetta.Common.Models.Responses;
@@ -22,7 +22,7 @@ namespace Quetta.Tests.Handlers.Queries
             },
             new User()
             {
-                Id = "10000000-0000-0000-0000-000000000000",
+                Id = "00000000-0000-0000-0000-000000000001",
                 UserName = "username2",
                 FirstName = "First",
                 LastName = "Last",
@@ -50,11 +50,9 @@ namespace Quetta.Tests.Handlers.Queries
                     UserId = "00000000-0000-0000-0000-000000000000",
                 };
 
-                var result = await handler.Handle(query, new CancellationToken());
-                var expectedResultStr = JsonConvert.SerializeObject(expectedResult);
-                var resultStr = JsonConvert.SerializeObject(result);
+                var actualResult = await handler.Handle(query, new CancellationToken());
 
-                Assert.Equal(expectedResultStr, resultStr);
+                actualResult.Should().BeEquivalentTo(expectedResult);
             }
         }
 
@@ -100,7 +98,7 @@ namespace Quetta.Tests.Handlers.Queries
                 var query = new GetChatInfoQuery()
                 {
                     ChatId = "00000000-0000-0000-0000-000000000000",
-                    UserId = "00000000-0000-0000-0000-000000000001",
+                    UserId = "00000000-0000-0000-0000-000000000002",
                 };
 
 

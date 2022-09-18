@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using FluentAssertions;
+using Microsoft.AspNetCore.Identity;
 using Moq;
 using Quetta.Common.Models.Queries;
 using Quetta.Data.Models;
@@ -11,8 +12,9 @@ namespace Quetta.Tests.Handlers.Queries
         [Theory]
         [InlineData("username1", true)]
         [InlineData("username2", false)]
-        public async void CheckOutUsernameQuery_RerurnsIsUsernameAvailable(string username, bool isAvailableExpected)
+        public async void CheckOutUsernameQuery_RerurnsIsUsernameAvailable(string username, bool expectedResult)
         {
+            // Arrange
             var userManager = new Mock<UserManager<User>>(Mock.Of<IUserStore<User>>(), null, null, null, null, null, null, null, null);
             userManager.Setup(x => x.FindByNameAsync(It.IsAny<string>())).ReturnsAsync((string username) =>
             {
@@ -26,9 +28,11 @@ namespace Quetta.Tests.Handlers.Queries
             var handler = new CheckOutUsernameHandler(userManager.Object);
             var query = new CheckOutUsernameQuery(username);
 
-            var isAvailable = await handler.Handle(query, new CancellationToken());
+            // Act
+            var actualResult = await handler.Handle(query, new CancellationToken());
 
-            Assert.Equal(isAvailableExpected, isAvailable);
+            // Assert
+            actualResult.Should().Be(expectedResult);
         }
     }
 }

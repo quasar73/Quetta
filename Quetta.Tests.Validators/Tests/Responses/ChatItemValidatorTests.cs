@@ -3,7 +3,7 @@ using Quetta.Common.Enums;
 using Quetta.Common.Models.Responses;
 using Quetta.Common.Validators.Responses;
 
-namespace Quetta.Validators.Tests.Responses
+namespace Quetta.Tests.Validators.Responses
 {
     public class ChatItemValidatorTests
     {

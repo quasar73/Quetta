@@ -2,11 +2,11 @@
 using Quetta.Common.Models.Commands;
 using Quetta.Common.Validators.Commands;
 
-namespace Quetta.Validators.Tests.Commands
+namespace Quetta.Tests.Validators.Commands
 {
-    public class DeclineInviteValidatorTests
+    public class AcceptInviteValidatorTests
     {
-        private readonly DeclineInviteValidator validator = new DeclineInviteValidator();
+        private readonly AcceptInviteValidator validator = new AcceptInviteValidator();
 
         [Theory]
         [InlineData("")]
@@ -14,7 +14,7 @@ namespace Quetta.Validators.Tests.Commands
         [InlineData(null)]
         public void GivenAnInvalidInviteIdValue_ShouldHaveValidationError(string id)
         {
-            var model = new DeclineInviteCommand() { InviteId = id };
+            var model = new AcceptInviteCommand() { InviteId = id };
             var result = validator.TestValidate(model);
             result.ShouldHaveValidationErrorFor(model => model.InviteId);
         }
@@ -25,7 +25,7 @@ namespace Quetta.Validators.Tests.Commands
         [InlineData(null)]
         public void GivenAnInvalidReceiverIdValue_ShouldHaveValidationError(string id)
         {
-            var model = new DeclineInviteCommand() { ReceiverId = id };
+            var model = new AcceptInviteCommand() { ReceiverId = id };
             var result = validator.TestValidate(model);
             result.ShouldHaveValidationErrorFor(model => model.ReceiverId);
         }
@@ -33,8 +33,8 @@ namespace Quetta.Validators.Tests.Commands
         [Fact]
         public void GivenValidValues_ShouldNotHaveValidationError()
         {
-            var model = new DeclineInviteCommand()
-            {
+            var model = new AcceptInviteCommand() 
+            { 
                 InviteId = "someinviteid",
                 ReceiverId = "somereceiverid"
             };

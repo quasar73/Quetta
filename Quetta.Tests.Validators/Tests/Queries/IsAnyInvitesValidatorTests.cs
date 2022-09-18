@@ -2,7 +2,7 @@
 using Quetta.Common.Validators.Queries;
 using FluentValidation.TestHelper;
 
-namespace Quetta.Validators.Tests.Queries
+namespace Quetta.Tests.Validators.Queries
 {
     public class IsAnyInvitesValidatorTests
     {

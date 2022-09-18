@@ -2,7 +2,7 @@
 using Quetta.Common.Models.Commands;
 using Quetta.Common.Validators.Commands;
 
-namespace Quetta.Validators.Tests.Commands
+namespace Quetta.Tests.Validators.Commands
 {
     public class SendMessageValidtorTest
     {

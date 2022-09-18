@@ -2,7 +2,7 @@
 using Quetta.Common.Models.Queries;
 using Quetta.Common.Validators.Queries;
 
-namespace Quetta.Validators.Tests.Queries
+namespace Quetta.Tests.Validators.Queries
 {
     public class GetMessagesValidatorTests
     {

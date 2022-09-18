@@ -2,7 +2,7 @@
 using Quetta.Common.Models.Requests;
 using Quetta.Common.Validators.Requests;
 
-namespace Quetta.Validators.Tests.Requests
+namespace Quetta.Tests.Validators.Requests
 {
     public class RespondInviteValidatorTests
     {

@@ -1,10 +1,10 @@
 ﻿using FluentValidation.TestHelper;
-using Quetta.Common.Models.Responses;
-using Quetta.Common.Validators.Responses;
+using Quetta.Common.Models.Requests;
+using Quetta.Common.Validators.Requests;
 
-namespace Quetta.Validators.Tests.Responses
+namespace Quetta.Tests.Validators.Requests
 {
-    public class MessageValidatorTests
+    public class SendMessageValidatorTests
     {
         public static IEnumerable<object[]> TextData => new List<object[]>
         {
@@ -13,16 +13,13 @@ namespace Quetta.Validators.Tests.Responses
             new object[] { null },
             new object[] { new String('a', 2001) },
         };
-        private readonly MessageValidator validator = new MessageValidator();
+        private readonly SendMessageValidator validator = new SendMessageValidator();
 
         [Theory]
         [MemberData(nameof(TextData))]
         public void GivenAnInvalidTextValue_ShouldHaveValidationError(string text)
         {
-            var model = new MessageResponse
-            {
-                Text = text,
-            };
+            var model = new SendMessageReqeust() { Text = text };
             var result = validator.TestValidate(model);
             result.ShouldHaveValidationErrorFor(model => model.Text);
         }
@@ -31,23 +28,20 @@ namespace Quetta.Validators.Tests.Responses
         [InlineData("")]
         [InlineData(" ")]
         [InlineData(null)]
-        public void GivenAnInvalidUsernameValue_ShouldHaveValidationError(string username)
+        public void GivenAnInvalidChatIdValue_ShouldHaveValidationError(string id)
         {
-            var model = new MessageResponse
-            {
-                Username = username,
-            };
+            var model = new SendMessageReqeust() { ChatId = id };
             var result = validator.TestValidate(model);
-            result.ShouldHaveValidationErrorFor(model => model.Username);
+            result.ShouldHaveValidationErrorFor(model => model.ChatId);
         }
 
         [Fact]
         public void GivenValidValues_ShouldNotHaveValidationError()
         {
-            var model = new MessageResponse
+            var model = new SendMessageReqeust()
             {
-                Text = "some text",
-                Username = "someusername"
+                Text = "some valid text",
+                ChatId = "somechatid",
             };
             var result = validator.TestValidate(model);
             result.ShouldNotHaveAnyValidationErrors();

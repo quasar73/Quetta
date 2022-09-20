@@ -5,37 +5,37 @@ using Quetta.Logic.Handlers.Queries;
 
 namespace Quetta.Tests.Handlers.Queries
 {
-    public class GetInvitesHandlerTests
+    public class GetMessagesHandlerTests
     {
         private readonly IMapper mapper;
 
-        public GetInvitesHandlerTests()
+        public GetMessagesHandlerTests()
         {
             var mockMapper = new MapperConfiguration(cfg =>
             {
-                cfg.AddProfile(new InviteProfile());
+                cfg.AddProfile(new MessageProfile());
             });
             mapper = mockMapper.CreateMapper();
         }
 
         [Theory]
-        [ClassData(typeof(GetInvitesTestCases))]
-        public async void GetInvites_ShouldReturnsInvitesList(GetInvitesTestCaseModel model)
+        [ClassData(typeof(GetMessagesTestCases))]
+        public async void GetMessages_ShouldReturnsMessagesList(GetMessagesTestCaseModel model)
         {
             using (var dbContextProvider = new TestQuettaDbContextProvider())
             {
                 // Arrange
                 var dbContext = dbContextProvider.DbContext;
                 dbContext.Users.AddRange(model.UsersToAdd);
-                dbContext.Invites.AddRange(model.InvitesToAdd);
+                dbContext.Messages.AddRange(model.MessagesToAdd);
                 await dbContext.SaveChangesAsync();
-                var handler = new GetInvitesHandler(dbContext, mapper);
+                var handler = new GetMessagesHandler(dbContext, mapper);
 
                 // Act
                 var actualResult = await handler.Handle(model.IncomingQuery, new CancellationToken());
 
                 // Assert
-                actualResult.Should().BeEquivalentTo(model.ExpectedReturnedInvites);
+                actualResult.Should().BeEquivalentTo(model.ExpectedReturnedMessages);
             }
         }
     }

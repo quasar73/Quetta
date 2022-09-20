@@ -12,7 +12,7 @@ namespace Quetta.Logic.Handlers.Queries
         private readonly IMapper mapper;
         private readonly QuettaDbContext dbContext;
         
-        public GetMessagesHandler(IMapper mapper, QuettaDbContext dbContext)
+        public GetMessagesHandler(QuettaDbContext dbContext, IMapper mapper)
         {
             this.mapper = mapper;
             this.dbContext = dbContext;

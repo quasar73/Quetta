@@ -10,6 +10,8 @@ namespace Quetta.Tests.Handlers.Queries
 {
     public class RefreshTokenHandlerTests
     {
+        private const string ExistingUserId = "00000000-0000-0000-0000-000000000000";
+
         private readonly UserManager<User> userManager;
         private readonly ITokenGenerator tokenGenerator;
 
@@ -18,7 +20,7 @@ namespace Quetta.Tests.Handlers.Queries
             var userManagerMock = new Mock<UserManager<User>>(Mock.Of<IUserStore<User>>(), null, null, null, null, null, null, null, null);
             userManagerMock.Setup(x => x.FindByIdAsync(It.IsAny<string>())).ReturnsAsync((string id) =>
             {
-                return id == "00000000-0000-0000-0000-000000000000" ? new User()
+                return id == ExistingUserId ? new User()
                 {
                     Id = id,
                     UserName = "username",
@@ -75,7 +77,7 @@ namespace Quetta.Tests.Handlers.Queries
                 // Act
                 var act = async () => await handler.Handle(model.IncomingQuery, new CancellationToken());
 
-                // Asset
+                // Assert
                 await act.Should().ThrowAsync<Exception>()
                     .Where(ex => ex.GetType() == model.ExceptionType)
                     .WithMessage(model.ExceptionMessage);

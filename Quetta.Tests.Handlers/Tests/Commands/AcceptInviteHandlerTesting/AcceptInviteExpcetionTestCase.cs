@@ -6,8 +6,9 @@ namespace Quetta.Tests.Handlers.Commands
 {
     public class AcceptInviteExpcetionTestCase : IEnumerable<object[]>
     {
-        private const string ExistingInviteId = "00000000-0000-0000-0000-000000000000";
-        private const string NonexistentInviteId = "00000000-0000-0000-0000-000000000001";
+        private const string ExistingInviteId = "00000000-0000-0000-0000-000000000002";
+        private const string NonexistentInviteId = "00000000-0000-0000-0000-000000000003";
+        private const string InviteId = "00000000-0000-0000-0000-000000000004";
 
         public IEnumerator<object[]> GetEnumerator()
         {
@@ -40,7 +41,7 @@ namespace Quetta.Tests.Handlers.Commands
                     {
                         new Invite()
                         {
-                            Id = "00000000-0000-0000-0000-000000000002",
+                            Id = InviteId ,
                             Sender = AcceptInviteTestUsers.TestUsers.Last(),
                             Receiver = AcceptInviteTestUsers.TestUsers.First(),
                             IsGroupChat = false,
@@ -48,9 +49,9 @@ namespace Quetta.Tests.Handlers.Commands
                             Status = InviteStatus.Pending,
                         },
                     },
-                    AcceptedInviteId = "00000000-0000-0000-0000-000000000002",
+                    AcceptedInviteId = InviteId ,
                     UsersToAdd = AcceptInviteTestUsers.TestUsers,
-                    IncomingCommand = new("00000000-0000-0000-0000-000000000002", AcceptInviteTestUsers.TestUsers.Last().Id),
+                    IncomingCommand = new(InviteId , AcceptInviteTestUsers.TestUsers.Last().Id),
                 }
             };
         }

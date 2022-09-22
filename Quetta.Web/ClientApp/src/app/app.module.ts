@@ -19,7 +19,7 @@ import { TranslocoRootModule } from './translate/transloco-root.module';
 import { TuiInputModule } from '@taiga-ui/kit';
 import { AuthenticationModule } from './shared/services/auth/authentication.module';
 import { NgxsModule } from '@ngxs/store';
-import { SelectedMessagesState } from './state-manager/states/selected-messages.state';
+import { SelectedNotesState } from './state-manager/states/selected-notes.state';
 import { environment } from 'src/environments/environment';
 @NgModule({
     declarations: [AppComponent],
@@ -37,7 +37,7 @@ import { environment } from 'src/environments/environment';
         TranslocoRootModule,
         AuthenticationModule,
         TuiAlertModule,
-        NgxsModule.forRoot([SelectedMessagesState], {
+        NgxsModule.forRoot([SelectedNotesState], {
             developmentMode: !environment.production,
         }),
     ],

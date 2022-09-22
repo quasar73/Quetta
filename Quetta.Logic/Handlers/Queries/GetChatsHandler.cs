@@ -24,7 +24,8 @@ namespace Quetta.Logic.Handlers.Queries
             var userChats = dbContext.Chats
                             .Include(c => c.Users)
                             .Include(c => c.Messages)
-                            .Where(c => c.Users.Any(u => u.Id == request.UserId)).ToList();
+                            .Where(c => c.Users.Any(u => u.Id == request.UserId))
+                            .ToList();
 
             var mappedChats = mapper.Map<IList<ChatItemResponse>>(userChats, opt => opt.AfterMap((src, dest) =>
             {

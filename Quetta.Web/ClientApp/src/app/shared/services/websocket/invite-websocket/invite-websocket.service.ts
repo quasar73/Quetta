@@ -43,7 +43,7 @@ export class InviteWebsocketService {
         );
     }
 
-    addNotificationsListner(): void {
+    addInvitesListner(): void {
         this.hubConnection.on('Notify', isAnyNotifications => {
             this.invites$.next(isAnyNotifications);
             if (isAnyNotifications) {
@@ -52,11 +52,11 @@ export class InviteWebsocketService {
         });
     }
 
-    getNotificationsObserver(): Observable<boolean> {
+    getInvitesObserver(): Observable<boolean> {
         return this.invites$.asObservable();
     }
 
-    updateInvitessStatus(hasInvites: boolean): void {
+    updateInvitesStatus(hasInvites: boolean): void {
         this.invites$.next(hasInvites);
     }
 }

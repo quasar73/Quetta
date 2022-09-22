@@ -1,8 +1,9 @@
+import { SidebarComponent } from './sidebar/sidebar.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MessengerComponent } from './messenger.component';
-import { Component } from '@angular/core';
+import { MockComponent } from 'ng-mocks';
 
 describe('MessengerComponent', () => {
     let component: MessengerComponent;
@@ -10,7 +11,7 @@ describe('MessengerComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [MessengerComponent, MockSidebarComponent],
+            declarations: [MessengerComponent, MockComponent(SidebarComponent)],
             imports: [RouterTestingModule],
         }).compileComponents();
     });
@@ -25,9 +26,3 @@ describe('MessengerComponent', () => {
         expect(component).toBeTruthy();
     });
 });
-
-@Component({
-    selector: 'qtt-sidebar',
-    template: '',
-})
-class MockSidebarComponent {}

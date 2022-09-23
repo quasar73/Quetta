@@ -1,4 +1,3 @@
-import { ChatComponent } from './chat/chat.component';
 import { EmptyChatComponent } from './empty-chat/empty-chat.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -12,7 +11,11 @@ const routes: Routes = [
         component: MessengerComponent,
         children: [
             { path: '', component: EmptyChatComponent },
-            { path: ':id', component: ChatComponent, resolve: { messages: MessagesResolver, chatInfo: ChatInfoResolver } },
+            {
+                path: ':id',
+                loadChildren: () => import('./chat/chat.module').then(m => m.ChatModule),
+                resolve: { messages: MessagesResolver, chatInfo: ChatInfoResolver },
+            },
             { path: '**', redirectTo: '' },
         ],
     },

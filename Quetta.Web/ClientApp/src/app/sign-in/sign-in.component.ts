@@ -9,6 +9,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { TranslocoService } from '@ngneat/transloco';
 import { availableLanguage } from '../shared/consts/languages.const';
 import { SignUpData } from '../state-manager/actions/sign-up-data.actions';
+import { Routes } from '../shared/enums/routes.enum';
 
 @Component({
     selector: 'qtt-sign-in',
@@ -46,6 +47,7 @@ export class SignInComponent implements OnInit {
             this.authApiService.authenticateWithGoogle(result.idToken).subscribe(token => {
                 if (token) {
                     this.authService.saveAccessData(token);
+                    this.router.navigate([Routes.Messenger]);
                 } else {
                     this.store.dispatch(
                         new SignUpData.Set({
@@ -55,7 +57,7 @@ export class SignInComponent implements OnInit {
                             idToken: result.idToken,
                         })
                     );
-                    this.router.navigate(['sign-up']);
+                    this.router.navigate([Routes.SignUp]);
                 }
             });
         });

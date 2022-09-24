@@ -10,6 +10,7 @@ import { UsernameValidator } from 'src/app/shared/validators/username.validator'
 import { TUI_VALIDATION_ERRORS } from '@taiga-ui/kit';
 import { availableLanguage } from 'src/app/shared/consts/languages.const';
 import { Select } from '@ngxs/store';
+import { Routes } from 'src/app/shared/enums/routes.enum';
 
 @Component({
     selector: 'qtt-sign-up',
@@ -91,7 +92,7 @@ export class SignUpComponent implements OnInit {
     }
 
     comeBack(): void {
-        this.router.navigate(['/sign-in']);
+        this.router.navigate([Routes.SignIn]);
     }
 
     getState(index: number): 'normal' | 'pass' | 'error' {

@@ -1,15 +1,15 @@
 import { InvitesListDialogComponent } from './invites-list-dialog/invites-list-dialog.component';
 import { TranslocoService } from '@ngneat/transloco';
 import { HttpErrorResponse } from '@angular/common/http';
-import { InviteApiService } from './../../../shared/services/api/invite/invite.service';
+import { InviteApiService } from '@api-services/invite/invite.service';
 import { AddChatDialogComponent } from './add-chat-dialog/add-chat-dialog.component';
 import { UntypedFormControl } from '@angular/forms';
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
-import { UserInfo } from 'src/app/shared/models/user-info.model';
-import { AuthenticationService } from 'src/app/shared/services/auth/authentication.service';
+import { UserInfo } from '@models/user-info.model';
+import { AuthenticationService } from '@services/auth/authentication.service';
 import { TuiAlertService, TuiDialogService, TuiNotification } from '@taiga-ui/core';
 import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
-import { InviteWebsocketService } from 'src/app/shared/services/websocket/invite-websocket/invite-websocket.service';
+import { InviteWebsocketService } from '@services/websocket/invite-websocket/invite-websocket.service';
 
 @Component({
     selector: 'qtt-sidebar-header',

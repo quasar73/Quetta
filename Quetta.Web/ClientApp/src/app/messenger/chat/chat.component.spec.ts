@@ -1,7 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { AuthenticationService } from 'src/app/shared/services/auth/authentication.service';
-import { TokenStorage } from './../../shared/services/auth/token-storage.service';
-import { MessageWebsocketService } from './../../shared/services/websocket/message-websocket/message-websocket.service';
+import { AuthenticationService } from '@services/auth/authentication.service';
+import { TokenStorage } from '@services/auth/token-storage.service';
+import { MessageWebsocketService } from '@services/websocket/message-websocket/message-websocket.service';
 import { ActivatedRoute } from '@angular/router';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockComponents } from 'ng-mocks';

@@ -1,15 +1,15 @@
 import { Store } from '@ngxs/store';
-import { AuthenticationService } from './../shared/services/auth/authentication.service';
+import { AuthenticationService } from '@services/auth/authentication.service';
 import { UntypedFormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthApiService } from './../shared/services/api/auth/auth.service';
+import { AuthApiService } from '@api-services/auth/auth.service';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { TranslocoService } from '@ngneat/transloco';
-import { availableLanguage } from '../shared/consts/languages.const';
+import { availableLanguage } from '@consts/languages.const';
 import { SignUpData } from '../state-manager/actions/sign-up-data.actions';
-import { Routes } from '../shared/enums/routes.enum';
+import { Routes } from '@enums/routes.enum';
 
 @Component({
     selector: 'qtt-sign-in',

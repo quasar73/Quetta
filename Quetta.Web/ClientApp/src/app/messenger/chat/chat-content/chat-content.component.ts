@@ -1,4 +1,4 @@
-import { ClientMessageModel } from 'src/app/shared/models/client-message.model';
+import { ClientMessageModel } from '@models/client-message.model';
 import { ClipboardService } from 'ngx-clipboard';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild, ChangeDetectorRef, OnInit } from '@angular/core';

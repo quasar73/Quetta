@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { TuiAlertService, TuiNotification } from '@taiga-ui/core';
-import { InviteModel } from './../../../../shared/api-models/invite.model';
-import { InviteApiService } from './../../../../shared/services/api/invite/invite.service';
+import { InviteModel } from '@api-models/invite.model';
+import { InviteApiService } from '@api-services/invite/invite.service';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({

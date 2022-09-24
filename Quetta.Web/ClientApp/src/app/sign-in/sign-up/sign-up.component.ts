@@ -4,13 +4,13 @@ import { TranslocoService } from '@ngneat/transloco';
 import { Router } from '@angular/router';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { lastStepIndex, stepper, usernameMinLength } from 'src/app/shared/consts/sign-on.const';
-import { AuthApiService } from 'src/app/shared/services/api/auth/auth.service';
-import { UsernameValidator } from 'src/app/shared/validators/username.validator';
+import { lastStepIndex, stepper, usernameMinLength } from '@consts/sign-on.const';
+import { AuthApiService } from '@api-services/auth/auth.service';
+import { UsernameValidator } from '@validators/username.validator';
 import { TUI_VALIDATION_ERRORS } from '@taiga-ui/kit';
-import { availableLanguage } from 'src/app/shared/consts/languages.const';
+import { availableLanguage } from '@consts/languages.const';
 import { Select } from '@ngxs/store';
-import { Routes } from 'src/app/shared/enums/routes.enum';
+import { Routes } from '@enums/routes.enum';
 
 @Component({
     selector: 'qtt-sign-up',

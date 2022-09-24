@@ -2,7 +2,7 @@ import { SendMessageModel } from './../../../api-models/send-message.model';
 import { Observable } from 'rxjs';
 import { BaseService } from './../base/base.service';
 import { Injectable } from '@angular/core';
-import { MessageModel } from 'src/app/shared/api-models/message.model';
+import { MessageModel } from '@api-models/message.model';
 
 @Injectable({ providedIn: 'root' })
 export class MessageApiService {

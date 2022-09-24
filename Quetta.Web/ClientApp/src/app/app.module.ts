@@ -15,7 +15,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslocoRootModule } from './translate/transloco-root.module';
 import { TuiInputModule } from '@taiga-ui/kit';
-import { AuthenticationModule } from './shared/services/auth/authentication.module';
+import { AuthenticationModule } from '@services/auth/authentication.module';
 import { NgxsModule } from '@ngxs/store';
 
 import { SelectedNotesState } from './state-manager/states/selected-notes.state';

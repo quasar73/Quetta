@@ -1,8 +1,8 @@
 import { Observable } from 'rxjs';
 import { BaseService } from './../base/base.service';
 import { Injectable } from '@angular/core';
-import { ChatItemModel } from 'src/app/shared/api-models/chat-item.model';
-import { ChatInfoModel } from 'src/app/shared/api-models/chat-info.model';
+import { ChatItemModel } from '@api-models/chat-item.model';
+import { ChatInfoModel } from '@api-models/chat-info.model';
 
 @Injectable({
     providedIn: 'root',

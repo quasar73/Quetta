@@ -1,4 +1,4 @@
-import { AuthenticationModule } from './../shared/services/auth/authentication.module';
+import { AuthenticationModule } from '@services/auth/authentication.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TuiSelectModule } from '@taiga-ui/kit';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';

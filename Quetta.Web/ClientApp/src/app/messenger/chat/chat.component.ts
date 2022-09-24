@@ -1,13 +1,13 @@
-import { ChatInfoModel } from 'src/app/shared/api-models/chat-info.model';
-import { MessageModel } from 'src/app/shared/api-models/message.model';
+import { ChatInfoModel } from '@api-models/chat-info.model';
+import { MessageModel } from '@api-models/message.model';
 import { combineLatestWith } from 'rxjs';
-import { AuthenticationService } from 'src/app/shared/services/auth/authentication.service';
-import { MessageWebsocketService } from './../../shared/services/websocket/message-websocket/message-websocket.service';
-import { SelectedChatService } from './../../shared/services/selected-chat/selected-chat.service';
+import { AuthenticationService } from '@services/auth/authentication.service';
+import { MessageWebsocketService } from '@services/websocket/message-websocket/message-websocket.service';
+import { SelectedChatService } from '@services/selected-chat/selected-chat.service';
 import { ActivatedRoute } from '@angular/router';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ClientMessageModel } from 'src/app/shared/models/client-message.model';
-import { MessageStatus } from 'src/app/shared/enums/message-status.enum';
+import { ClientMessageModel } from '@models/client-message.model';
+import { MessageStatus } from '@enums/message-status.enum';
 
 @Component({
     selector: 'qtt-chat',

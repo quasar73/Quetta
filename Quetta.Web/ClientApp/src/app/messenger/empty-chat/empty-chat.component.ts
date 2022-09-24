@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { SelectedChatService } from 'src/app/shared/services/selected-chat/selected-chat.service';
+import { SelectedChatService } from '@services/selected-chat/selected-chat.service';
 
 @Component({
     selector: 'qtt-empty-chat',

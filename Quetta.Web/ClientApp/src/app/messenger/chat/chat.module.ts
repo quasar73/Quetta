@@ -14,7 +14,7 @@ import { ChatHeaderComponent } from './chat-header/chat-header.component';
 import { ChatInputComponent } from './chat-input/chat-input.component';
 import { ChatComponent } from './chat.component';
 
-import { SkeletonDirective } from 'src/app/shared/directives/skeleton.directive';
+import { SkeletonDirective } from '@directives/skeleton.directive';
 
 @NgModule({
     declarations: [ChatComponent, ChatHeaderComponent, ChatContentComponent, ChatInputComponent, NoteComponent, SkeletonDirective],

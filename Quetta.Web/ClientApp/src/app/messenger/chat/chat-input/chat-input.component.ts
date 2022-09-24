@@ -1,11 +1,11 @@
-import { SendMessageModel } from './../../../shared/api-models/send-message.model';
-import { MessageApiService } from './../../../shared/services/api/message/message.service';
+import { SendMessageModel } from '@api-models/send-message.model';
+import { MessageApiService } from '@api-services/message/message.service';
 import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { ChangeDetectionStrategy, Component, Input, Output, EventEmitter } from '@angular/core';
-import { AuthenticationService } from 'src/app/shared/services/auth/authentication.service';
-import { MessageStatus } from 'src/app/shared/enums/message-status.enum';
-import { ClientMessageModel } from 'src/app/shared/models/client-message.model';
-import { GuidService } from 'src/app/shared/services/guid/guid.service';
+import { AuthenticationService } from '@services/auth/authentication.service';
+import { MessageStatus } from '@enums/message-status.enum';
+import { ClientMessageModel } from '@models/client-message.model';
+import { GuidService } from '@services/guid/guid.service';
 
 @Component({
     selector: 'qtt-chat-input',

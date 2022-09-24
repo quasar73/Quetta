@@ -1,4 +1,4 @@
-import { ChatInfoModel } from 'src/app/shared/api-models/chat-info.model';
+import { ChatInfoModel } from '@api-models/chat-info.model';
 
 export const chatInfoTest: ChatInfoModel = {
     title: 'Test chat',

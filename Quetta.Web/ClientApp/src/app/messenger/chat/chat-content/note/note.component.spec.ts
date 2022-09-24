@@ -2,13 +2,13 @@ import { of } from 'rxjs';
 import { MockProvider } from 'ng-mocks';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TuiSvgModule } from '@taiga-ui/core';
-import { TokenStorage } from './../../../../shared/services/auth/token-storage.service';
+import { TokenStorage } from '@services/auth/token-storage.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { AuthenticationService } from 'src/app/shared/services/auth/authentication.service';
+import { AuthenticationService } from '@services/auth/authentication.service';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NoteComponent } from './note.component';
-import { MessageStatus } from 'src/app/shared/enums/message-status.enum';
+import { MessageStatus } from '@enums/message-status.enum';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TuiCheckboxModule, TuiDropdownContextModule } from '@taiga-ui/kit';
 import { By } from '@angular/platform-browser';

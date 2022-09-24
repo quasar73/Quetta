@@ -1,7 +1,7 @@
-import { MessageApiService } from 'src/app/shared/services/api/message/message.service';
+import { MessageApiService } from '@api-services/message/message.service';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
-import { MessageModel } from 'src/app/shared/api-models/message.model';
+import { MessageModel } from '@api-models/message.model';
 import { Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })

@@ -1,8 +1,8 @@
-import { SelectedChatService } from './../../../shared/services/selected-chat/selected-chat.service';
+import { SelectedChatService } from '@services/selected-chat/selected-chat.service';
 import { Router } from '@angular/router';
-import { ChatItemModel } from './../../../shared/api-models/chat-item.model';
+import { ChatItemModel } from '@api-models/chat-item.model';
 import { Observable } from 'rxjs';
-import { ChatApiService } from './../../../shared/services/api/chat/chat.service';
+import { ChatApiService } from '@api-services/chat/chat.service';
 import { ChangeDetectionStrategy, Component, OnInit, ChangeDetectorRef } from '@angular/core';
 
 @Component({

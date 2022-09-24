@@ -9,7 +9,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SignUpComponent } from './sign-up.component';
 import { getTranslocoModule } from 'src/app/translate/transloco-testing.module';
 import { TuiFieldErrorPipeModule, TuiStepperModule, TuiSelectModule, TuiInputModule } from '@taiga-ui/kit';
-import { lastStepIndex, stepper } from 'src/app/shared/consts/sign-on.const';
+import { lastStepIndex, stepper } from '@consts/sign-on.const';
 import { Router } from '@angular/router';
 import { SignUpDataState } from 'src/app/state-manager/states/sign-up-data.state';
 import { NgxsModule } from '@ngxs/store';

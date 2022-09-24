@@ -1,17 +1,17 @@
 import { ReactiveFormsModule } from '@angular/forms';
 import { getTranslocoModule } from 'src/app/translate/transloco-testing.module';
-import { GuidService } from './../../../shared/services/guid/guid.service';
+import { GuidService } from '@services/guid/guid.service';
 import { EMPTY, of } from 'rxjs';
 import { MockService } from 'ng-mocks';
-import { TokenStorage } from './../../../shared/services/auth/token-storage.service';
-import { MessageApiService } from 'src/app/shared/services/api/message/message.service';
+import { TokenStorage } from '@services/auth/token-storage.service';
+import { MessageApiService } from '@api-services/message/message.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AuthenticationService } from 'src/app/shared/services/auth/authentication.service';
+import { AuthenticationService } from '@services/auth/authentication.service';
 
 import { ChatInputComponent } from './chat-input.component';
 import { Guid } from 'guid-typescript';
-import { MessageStatus } from 'src/app/shared/enums/message-status.enum';
+import { MessageStatus } from '@enums/message-status.enum';
 import { TuiTextAreaModule } from '@taiga-ui/kit';
 
 describe('ChatInputComponent', () => {

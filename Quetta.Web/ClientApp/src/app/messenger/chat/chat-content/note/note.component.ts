@@ -1,10 +1,10 @@
 import { state, trigger, style, transition, animate } from '@angular/animations';
-import { ClientMessageModel } from 'src/app/shared/models/client-message.model';
+import { ClientMessageModel } from '@models/client-message.model';
 import { map, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, OnChanges, OnInit } from '@angular/core';
-import { AuthenticationService } from 'src/app/shared/services/auth/authentication.service';
-import { MessageStatus } from 'src/app/shared/enums/message-status.enum';
+import { AuthenticationService } from '@services/auth/authentication.service';
+import { MessageStatus } from '@enums/message-status.enum';
 import { FormControl } from '@angular/forms';
 
 @Component({

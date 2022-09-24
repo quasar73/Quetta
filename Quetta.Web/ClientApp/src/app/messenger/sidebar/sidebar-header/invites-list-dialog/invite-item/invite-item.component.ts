@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { InviteModel } from 'src/app/shared/api-models/invite.model';
+import { InviteModel } from '@api-models/invite.model';
 
 @Component({
     selector: 'qtt-invite-item',

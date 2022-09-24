@@ -3,7 +3,7 @@ import { UntypedFormControl, Validators } from '@angular/forms';
 import { TuiDialogContext } from '@taiga-ui/core';
 import { TUI_VALIDATION_ERRORS } from '@taiga-ui/kit';
 import { POLYMORPHEUS_CONTEXT } from '@tinkoff/ng-polymorpheus';
-import { usernameMinLength } from 'src/app/shared/consts/sign-on.const';
+import { usernameMinLength } from '@consts/sign-on.const';
 
 @Component({
     selector: 'qtt-add-chat-dialog',

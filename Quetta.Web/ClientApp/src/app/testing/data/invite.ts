@@ -1,4 +1,4 @@
-import { InviteModel } from './../../shared/api-models/invite.model';
+import { InviteModel } from '@api-models/invite.model';
 
 export const testInviteModel: InviteModel = {
     senderUsername: 'username',

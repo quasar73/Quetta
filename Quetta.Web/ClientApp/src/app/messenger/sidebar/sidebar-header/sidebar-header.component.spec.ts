@@ -5,11 +5,11 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TuiSidebarModule } from '@taiga-ui/addon-mobile';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
-import { AuthenticationService } from 'src/app/shared/services/auth/authentication.service';
+import { AuthenticationService } from '@services/auth/authentication.service';
 
 import { SidebarHeaderComponent } from './sidebar-header.component';
 import { TuiHintModule, TuiHostedDropdownModule } from '@taiga-ui/core';
-import { InviteWebsocketService } from 'src/app/shared/services/websocket/invite-websocket/invite-websocket.service';
+import { InviteWebsocketService } from '@services/websocket/invite-websocket/invite-websocket.service';
 import { MockService } from 'ng-mocks';
 
 describe('SidebarHeaderComponent', () => {

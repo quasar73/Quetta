@@ -1,4 +1,4 @@
-import { ChatInfoModel } from 'src/app/shared/api-models/chat-info.model';
+import { ChatInfoModel } from '@api-models/chat-info.model';
 import { SelectedNotes } from 'src/app/state-manager/actions/selected-notes.actions';
 import { Observable } from 'rxjs';
 import { SelectedNotesState } from './../../../state-manager/states/selected-notes.state';

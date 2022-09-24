@@ -1,4 +1,3 @@
-import { MockService } from 'ng-mocks';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SignUpFormComponent } from './sign-up-form/sign-up-form.component';
 import { TuiErrorModule, TuiTextfieldControllerModule, TuiSvgModule } from '@taiga-ui/core';
@@ -10,10 +9,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SignUpComponent } from './sign-up.component';
 import { getTranslocoModule } from 'src/app/translate/transloco-testing.module';
 import { TuiFieldErrorPipeModule, TuiStepperModule, TuiSelectModule, TuiInputModule } from '@taiga-ui/kit';
-import { RegisterUserDataService } from 'src/app/shared/services/register-user-data/register-user-data.service';
-import { of } from 'rxjs';
 import { lastStepIndex, stepper } from 'src/app/shared/consts/sign-on.const';
 import { Router } from '@angular/router';
+import { SignUpDataState } from 'src/app/state-manager/states/sign-up-data.state';
+import { NgxsModule } from '@ngxs/store';
+import { of } from 'rxjs';
 
 describe('SignUpComponent', () => {
     let component: SignUpComponent;
@@ -21,15 +21,6 @@ describe('SignUpComponent', () => {
     let spyRouter: { navigate: any };
 
     beforeEach(async () => {
-        const mockRegisterUserDataService = MockService(RegisterUserDataService, {
-            getUserData: () =>
-                of({
-                    firstName: 'TestFirstName',
-                    lastName: 'TestLastName',
-                    username: 'testUserName',
-                    idToken: 'testidToken',
-                }),
-        });
         spyRouter = {
             navigate: jasmine.createSpy('navigate'),
         };
@@ -49,17 +40,22 @@ describe('SignUpComponent', () => {
                 TuiTextfieldControllerModule,
                 TuiSvgModule,
                 BrowserAnimationsModule,
+                NgxsModule.forRoot([SignUpDataState]),
             ],
-            providers: [
-                { provide: RegisterUserDataService, useValue: mockRegisterUserDataService },
-                { provide: Router, useValue: spyRouter },
-            ],
+            providers: [{ provide: Router, useValue: spyRouter }],
         }).compileComponents();
     });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(SignUpComponent);
         component = fixture.componentInstance;
+        Object.defineProperty(component, 'signUpData$', { writable: true });
+        component.signUpData$ = of({
+            firstName: 'TestFirstName',
+            lastName: 'TestLastName',
+            username: 'testUserName',
+            idToken: 'testidToken',
+        });
         fixture.detectChanges();
     });
 

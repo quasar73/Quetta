@@ -12,6 +12,8 @@ import { MockProvider } from 'ng-mocks';
 
 import { SignInComponent } from './sign-in.component';
 import { EMPTY } from 'rxjs';
+import { NgxsModule } from '@ngxs/store';
+import { SignUpDataState } from '../state-manager/states/sign-up-data.state';
 
 describe('SignInComponent', () => {
     let component: SignInComponent;
@@ -29,6 +31,7 @@ describe('SignInComponent', () => {
                 TuiSelectModule,
                 ReactiveFormsModule,
                 AuthenticationModule,
+                NgxsModule.forRoot([SignUpDataState]),
             ],
             providers: [
                 {

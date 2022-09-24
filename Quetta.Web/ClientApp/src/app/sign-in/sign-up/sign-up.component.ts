@@ -28,7 +28,7 @@ import { Select } from '@ngxs/store';
     ],
 })
 export class SignUpComponent implements OnInit {
-    @Select() signUpData!: Observable<SignUpDataStateModel | null>;
+    @Select() signUpData$!: Observable<SignUpDataStateModel | null>;
 
     signUpForm = new UntypedFormGroup({
         username: new UntypedFormControl('', [Validators.required, Validators.minLength(usernameMinLength)]),
@@ -72,7 +72,7 @@ export class SignUpComponent implements OnInit {
             this.translocoService.setActiveLang(language);
         });
 
-        this.signUpData.subscribe(data => {
+        this.signUpData$.subscribe(data => {
             console.log(data);
             if (data) {
                 this.signUpForm.setValue(data);

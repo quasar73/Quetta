@@ -23,6 +23,7 @@ import { SelectedNotesState } from './state-manager/states/selected-notes.state'
 import { environment } from 'src/environments/environment';
 
 import { AppComponent } from './app.component';
+import { SignUpDataState } from './state-manager/states/sign-up-data.state';
 @NgModule({
     declarations: [AppComponent],
     imports: [
@@ -39,7 +40,7 @@ import { AppComponent } from './app.component';
         TranslocoRootModule,
         AuthenticationModule,
         TuiAlertModule,
-        NgxsModule.forRoot([SelectedNotesState], {
+        NgxsModule.forRoot([SelectedNotesState, SignUpDataState], {
             developmentMode: !environment.production,
         }),
     ],

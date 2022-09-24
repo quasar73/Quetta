@@ -1,6 +1,7 @@
+import { SignUpDataStateModel } from './../../state-manager/models/sign-up-data.model';
+import { Observable } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
 import { Router } from '@angular/router';
-import { RegisterUserDataService } from '../../shared/services/register-user-data/register-user-data.service';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { lastStepIndex, stepper, usernameMinLength } from 'src/app/shared/consts/sign-on.const';
@@ -8,6 +9,7 @@ import { AuthApiService } from 'src/app/shared/services/api/auth/auth.service';
 import { UsernameValidator } from 'src/app/shared/validators/username.validator';
 import { TUI_VALIDATION_ERRORS } from '@taiga-ui/kit';
 import { availableLanguage } from 'src/app/shared/consts/languages.const';
+import { Select } from '@ngxs/store';
 
 @Component({
     selector: 'qtt-sign-up',
@@ -26,6 +28,8 @@ import { availableLanguage } from 'src/app/shared/consts/languages.const';
     ],
 })
 export class SignUpComponent implements OnInit {
+    @Select() signUpData!: Observable<SignUpDataStateModel | null>;
+
     signUpForm = new UntypedFormGroup({
         username: new UntypedFormControl('', [Validators.required, Validators.minLength(usernameMinLength)]),
         firstName: new UntypedFormControl('', Validators.required),
@@ -54,7 +58,6 @@ export class SignUpComponent implements OnInit {
     }
 
     constructor(
-        private readonly registerUserDataService: RegisterUserDataService,
         private readonly authService: AuthApiService,
         private readonly router: Router,
         private readonly translocoService: TranslocoService
@@ -69,9 +72,9 @@ export class SignUpComponent implements OnInit {
             this.translocoService.setActiveLang(language);
         });
 
-        this.registerUserDataService.getUserData().subscribe(data => {
+        this.signUpData.subscribe(data => {
+            console.log(data);
             if (data) {
-                console.log(data);
                 this.signUpForm.setValue(data);
             }
         });

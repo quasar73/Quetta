@@ -1,6 +1,6 @@
+import { Store } from '@ngxs/store';
 import { AuthenticationService } from './../shared/services/auth/authentication.service';
 import { UntypedFormControl } from '@angular/forms';
-import { RegisterUserDataService } from './../shared/services/register-user-data/register-user-data.service';
 import { Router } from '@angular/router';
 import { AuthApiService } from './../shared/services/api/auth/auth.service';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
@@ -8,6 +8,7 @@ import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { TranslocoService } from '@ngneat/transloco';
 import { availableLanguage } from '../shared/consts/languages.const';
+import { SignUpData } from '../state-manager/actions/sign-up-data.actions';
 
 @Component({
     selector: 'qtt-sign-in',
@@ -29,7 +30,7 @@ export class SignInComponent implements OnInit {
         private readonly socialAuthService: SocialAuthService,
         private readonly authApiService: AuthApiService,
         private readonly router: Router,
-        private readonly registerUserDataService: RegisterUserDataService,
+        private readonly store: Store,
         private readonly translocoService: TranslocoService,
         private readonly authService: AuthenticationService
     ) {}
@@ -46,12 +47,14 @@ export class SignInComponent implements OnInit {
                 if (token) {
                     this.authService.saveAccessData(token);
                 } else {
-                    this.registerUserDataService.setUserData({
-                        firstName: result.firstName,
-                        lastName: result.lastName,
-                        username: result.email.split('@')[0],
-                        idToken: result.idToken,
-                    });
+                    this.store.dispatch(
+                        new SignUpData.Set({
+                            firstName: result.firstName,
+                            lastName: result.lastName,
+                            username: result.email.split('@')[0],
+                            idToken: result.idToken,
+                        })
+                    );
                     this.router.navigate(['sign-up']);
                 }
             });

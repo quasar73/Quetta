@@ -15,7 +15,11 @@ namespace Quetta.Logic.Handlers.Queries
         private readonly QuettaDbContext dbContext;
         private readonly ITokenGenerator tokenGenerator;
 
-        public RefreshTokenHandler(UserManager<User> userManager, QuettaDbContext dbContext, ITokenGenerator tokenGenerator)
+        public RefreshTokenHandler(
+            UserManager<User> userManager,
+            QuettaDbContext dbContext,
+            ITokenGenerator tokenGenerator
+        )
         {
             this.userManager = userManager;
             this.dbContext = dbContext;
@@ -24,7 +28,9 @@ namespace Quetta.Logic.Handlers.Queries
 
         public async Task<TokenModel> Handle(RefreshTokenQuery request, CancellationToken cancellationToken)
         {
-            var token = dbContext.RefreshTokens.FirstOrDefault(rt => rt.Token == request.RefreshToken);
+            var token = dbContext.RefreshTokens.FirstOrDefault(
+                rt => rt.Token == request.RefreshToken
+            );
 
             if (token == null)
             {
@@ -42,7 +48,7 @@ namespace Quetta.Logic.Handlers.Queries
             {
                 throw new InvalidTokenException();
             }
-            
+
             dbContext.RefreshTokens.Remove(token);
             await dbContext.SaveChangesAsync();
 

@@ -19,7 +19,10 @@ namespace Quetta.Logic.Handlers.Queries
             this.mapper = mapper;
         }
 
-        public async Task<ICollection<InviteResponse>> Handle(GetInvitesQuery request, CancellationToken cancellationToken)
+        public async Task<ICollection<InviteResponse>> Handle(
+            GetInvitesQuery request,
+            CancellationToken cancellationToken
+        )
         {
             var invites = dbContext.Invites
                 .Include(i => i.Sender)

@@ -18,7 +18,9 @@ namespace Quetta.Logic.Handlers.Queries
 
         public async Task<ChatInfoResponse> Handle(GetChatInfoQuery request, CancellationToken cancellationToken)
         {
-            var chat = dbContext.Chats.Include(c => c.Users).FirstOrDefault(c => c.Id == request.ChatId);
+            var chat = dbContext.Chats
+                .Include(c => c.Users)
+                .FirstOrDefault(c => c.Id == request.ChatId);
 
             if (chat == null)
             {
@@ -27,7 +29,12 @@ namespace Quetta.Logic.Handlers.Queries
 
             if (chat.Users.Any(u => u.Id == request.UserId))
             {
-                var title = chat.IsGroup ? chat.Title : chat.Users.Where(u => u.Id != request.UserId).Select(u => $"{u.FirstName} {u.LastName}").First();
+                var title = chat.IsGroup
+                    ? chat.Title
+                    : chat.Users
+                        .Where(u => u.Id != request.UserId)
+                        .Select(u => $"{u.FirstName} {u.LastName}")
+                        .First();
 
                 var info = new ChatInfoResponse
                 {

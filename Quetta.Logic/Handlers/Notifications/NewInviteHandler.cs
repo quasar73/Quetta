@@ -16,19 +16,27 @@ namespace Quetta.Logic.Handlers.Notifications
         private readonly IHubContext<InviteHub> hubContext;
         private readonly QuettaDbContext dbContext;
 
-        public NewInviteHandler(UserManager<User> userManager, IHubContext<InviteHub> hubContext, QuettaDbContext dbContext)
+        public NewInviteHandler(
+            UserManager<User> userManager,
+            IHubContext<InviteHub> hubContext,
+            QuettaDbContext dbContext
+        )
         {
             this.hubContext = hubContext;
             this.userManager = userManager;
             this.dbContext = dbContext;
         }
 
-        public async Task Handle(NewInviteNotification notification, CancellationToken cancellationToken)
+        public async Task Handle(NewInviteNotification notification,CancellationToken cancellationToken)
         {
             var user = await userManager.FindByNameAsync(notification.ReceiverUsername);
             var hasNotifications = dbContext.Invites
-                                    .Include(i => i.Receiver)
-                                    .Any(i => i.Receiver.UserName == notification.ReceiverUsername && i.Status == InviteStatus.Pending);
+                .Include(i => i.Receiver)
+                .Any(
+                    i =>
+                        i.Receiver.UserName == notification.ReceiverUsername
+                        && i.Status == InviteStatus.Pending
+                );
 
             await hubContext.Clients.Group(user.Id).SendAsync("Notify", hasNotifications);
         }

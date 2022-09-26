@@ -15,21 +15,25 @@ namespace Quetta.Logic.Handlers.Commands
         private readonly IConfiguration configuration;
         private readonly ITokenGenerator tokenGenerator;
 
-        public RegisterGoogleUserHandler(UserManager<User> userManager, IConfiguration configuration, ITokenGenerator tokenGenerator)
+        public RegisterGoogleUserHandler(
+            UserManager<User> userManager,
+            IConfiguration configuration,
+            ITokenGenerator tokenGenerator
+        )
         {
             this.userManager = userManager;
             this.configuration = configuration;
             this.tokenGenerator = tokenGenerator;
         }
 
-        public async Task<TokenModel> Handle(RegisterGoogleUserCommand request, CancellationToken cancellationToken)
+        public async Task<TokenModel> Handle(RegisterGoogleUserCommand request,CancellationToken cancellationToken)
         {
             var clientId = configuration["Authentication:Google:ClientId"];
 
-            Payload payload = await ValidateAsync(request.IdToken, new ValidationSettings
-            {
-                Audience = new[] { clientId }
-            });
+            Payload payload = await ValidateAsync(
+                request.IdToken,
+                new ValidationSettings { Audience = new[] { clientId } }
+            );
 
             var user = new User
             {
@@ -39,7 +43,11 @@ namespace Quetta.Logic.Handlers.Commands
             };
             await userManager.CreateAsync(user);
 
-            var info = new UserLoginInfo(RegisterGoogleUserCommand.PROVIDER, payload.Subject, RegisterGoogleUserCommand.PROVIDER.ToUpperInvariant());
+            var info = new UserLoginInfo(
+                RegisterGoogleUserCommand.PROVIDER,
+                payload.Subject,
+                RegisterGoogleUserCommand.PROVIDER.ToUpperInvariant()
+            );
             var result = await userManager.AddLoginAsync(user, info);
 
             if (result.Succeeded)

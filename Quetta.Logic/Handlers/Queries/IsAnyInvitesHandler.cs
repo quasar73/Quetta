@@ -15,14 +15,16 @@ namespace Quetta.Logic.Handlers.Queries
             this.dbContext = dbContext;
         }
 
-        public async Task<IsAnyInvitesResponse> Handle(IsAnyInvitesQuery request, CancellationToken cancellationToken)
+        public async Task<IsAnyInvitesResponse> Handle(
+            IsAnyInvitesQuery request,
+            CancellationToken cancellationToken
+        )
         {
-            var hasInvites = dbContext.Invites.Any(i => i.ReceiverId == request.UserId && i.Status == InviteStatus.Pending);
+            var hasInvites = dbContext.Invites.Any(
+                i => i.ReceiverId == request.UserId && i.Status == InviteStatus.Pending
+            );
 
-            return new IsAnyInvitesResponse
-            {
-                HasInvites = hasInvites,
-            };
+            return new IsAnyInvitesResponse { HasInvites = hasInvites, };
         }
     }
 }

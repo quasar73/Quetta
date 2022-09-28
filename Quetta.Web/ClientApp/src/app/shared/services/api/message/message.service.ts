@@ -12,6 +12,12 @@ export class MessageApiService {
         return this.base.post<void | null>('messages', model);
     }
 
+    deleteMessages(ids: string[]): Observable<void | null> {
+        return this.base.delete<void | null>('messages', {
+            messageIds: ids,
+        });
+    }
+
     getMessages(chatId: string): Observable<MessageModel[] | null> {
         return this.base.get<MessageModel[] | null>('messages', { chatId });
     }

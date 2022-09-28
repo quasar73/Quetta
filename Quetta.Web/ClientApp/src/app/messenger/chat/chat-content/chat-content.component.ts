@@ -84,8 +84,8 @@ export class ChatContentComponent implements OnInit {
                 this.messages = [...this.messages];
                 this.isSelectingMode = this.messages.some(m => m.isSelected);
                 isSelected
-                    ? this.store.dispatch(new SelectedNotes.Select(message.text))
-                    : this.store.dispatch(new SelectedNotes.Remove(message.text));
+                    ? this.store.dispatch(new SelectedNotes.Select(message.id))
+                    : this.store.dispatch(new SelectedNotes.Remove(message.id));
                 this.cdr.markForCheck();
             }
         }
@@ -94,7 +94,7 @@ export class ChatContentComponent implements OnInit {
     isNextDay(index: number): boolean {
         if (this.messages) {
             if (index === this.messages.length - 1) {
-                return this.messages.length > 1 ? true : false;
+                return this.messages.length > 1;
             }
 
             const currentDate = new Date(this.messages[index].date);

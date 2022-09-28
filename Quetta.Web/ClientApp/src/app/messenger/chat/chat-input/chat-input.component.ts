@@ -39,6 +39,7 @@ export class ChatInputComponent {
 
             this.authService.getUserInfo().subscribe(info => {
                 this.messageSent.emit({
+                    id: null,
                     username: info.username,
                     text: this.messageForm.get('text')?.value,
                     date: new Date().toString(),

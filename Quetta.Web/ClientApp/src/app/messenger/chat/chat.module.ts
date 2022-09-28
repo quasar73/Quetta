@@ -13,7 +13,6 @@ import { NoteComponent } from './chat-content/note/note.component';
 import { ChatHeaderComponent } from './chat-header/chat-header.component';
 import { ChatInputComponent } from './chat-input/chat-input.component';
 import { ChatComponent } from './chat.component';
-
 import { SkeletonDirective } from '@directives/skeleton.directive';
 
 @NgModule({

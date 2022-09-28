@@ -91,6 +91,25 @@ export class ChatContentComponent implements OnInit {
         }
     }
 
+    isNextDay(index: number): boolean {
+        if (this.messages) {
+            if (index === this.messages.length - 1) {
+                return this.messages.length > 1 ? true : false;
+            }
+
+            const currentDate = new Date(this.messages[index].date);
+            const nextDate = new Date(this.messages[index + 1].date);
+
+            return !(
+                currentDate.getDate() === nextDate.getDate() &&
+                currentDate.getMonth() === nextDate.getMonth() &&
+                currentDate.getFullYear() === nextDate.getFullYear()
+            );
+        }
+
+        return false;
+    }
+
     private clearSelecting(): void {
         this.isSelectingMode = false;
         this.messages?.forEach(m => (m.isSelected = false));

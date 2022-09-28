@@ -25,6 +25,17 @@
             .notes-list {
                 display: flex;
                 flex-direction: column-reverse;
+
+                .date {
+                    width: 100%;
+                    display: flex;
+                    justify-content: center;
+                    margin: 4px;
+
+                    ::ng-deep tui-badge .left-content {
+                        display: none;
+                    }
+                }
             }
         }
     }
@@ -35,3 +46,4 @@
         right: 16px;
     }
 }
+

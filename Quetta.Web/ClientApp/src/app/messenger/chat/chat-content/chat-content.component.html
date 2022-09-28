@@ -4,13 +4,18 @@
             <tui-scrollbar class="notes-scroll" [scrollTop]="notesList.scrollHeight" (scroll)="onScroll()">
                 <div class="notes-list" #notesList>
                     <div #bottomAnchor></div>
-                    <qtt-note
-                        *ngFor="let message of messages"
-                        [message]="message"
-                        [isSelectingMode]="isSelectingMode"
-                        (messageCopy)="onMessageCopied($event)"
-                        (messageSelected)="onMessageSelected($event, message)"
-                    ></qtt-note>
+                    <ng-container *ngFor="let message of messages; let i = index">
+                        <qtt-note
+                            [message]="message"
+                            [isSelectingMode]="isSelectingMode"
+                            (messageCopy)="onMessageCopied($event)"
+                            (messageSelected)="onMessageSelected($event, message)"
+                        ></qtt-note>
+                        <div class="date" *ngIf="isNextDay(i)" >
+                            <tui-badge status="neutral" value="{{ message.date | date }}">
+                            </tui-badge>
+                        </div>
+                    </ng-container>
                 </div>
             </tui-scrollbar>
         </div>

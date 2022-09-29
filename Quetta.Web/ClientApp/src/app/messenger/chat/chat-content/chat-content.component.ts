@@ -108,7 +108,7 @@ export class ChatContentComponent implements OnInit {
     onMessageDeleted(message: ClientMessageModel): void {
         this.messageApiService.deleteMessages([message.id ?? '']).subscribe(() => {
             const index = this.messages?.indexOf(message);
-            if (index && index > -1) {
+            if (index !== undefined && index > -1) {
                 this.messages?.splice(index, 1);
                 this.cdr.markForCheck();
             }
@@ -118,7 +118,7 @@ export class ChatContentComponent implements OnInit {
     isNextDay(index: number): boolean {
         if (this.messages) {
             if (index === this.messages.length - 1) {
-                return this.messages.length > 1;
+                return true;
             }
 
             const currentDate = new Date(this.messages[index].date);

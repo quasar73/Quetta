@@ -1,6 +1,6 @@
 ﻿namespace Quetta.Common.Models.Requests
 {
-    public class DeleteMessageRequest
+    public class DeleteMessagesRequest
     {
         public string[] MessageIds { get; set; }
     }

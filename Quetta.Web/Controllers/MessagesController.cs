@@ -51,7 +51,7 @@ namespace Quetta.Web.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpDelete]
-        public async Task<IActionResult> DeleteMessages([FromQuery] DeleteMessageRequest request)
+        public async Task<IActionResult> DeleteMessages([FromQuery] DeleteMessagesRequest request)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
             await mediator.Send(new DeleteMessagesCommand(userId, request.MessageIds));

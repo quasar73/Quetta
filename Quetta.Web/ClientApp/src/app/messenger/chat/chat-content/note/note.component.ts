@@ -23,6 +23,7 @@ import { FormControl } from '@angular/forms';
 export class NoteComponent implements OnInit, OnChanges {
     @Output() messageCopy = new EventEmitter<string>();
     @Output() messageSelected = new EventEmitter<boolean>();
+    @Output() messageDeleted = new EventEmitter<void>();
 
     @Input() message!: ClientMessageModel;
     @Input() isSelectingMode!: boolean;
@@ -64,5 +65,9 @@ export class NoteComponent implements OnInit, OnChanges {
 
     select(): void {
         this.messageSelected.emit(true);
+    }
+
+    delete(): void {
+        this.messageDeleted.emit();
     }
 }

@@ -25,7 +25,7 @@
             <tui-svg class="context-menu-item-icon" src="tuiIconEditLarge"></tui-svg>
             <span>{{ t('messenger.chat.contextMenu.edit') }}</span>
         </button>
-        <button class="context-menu-item" tuiOption (click)="copyText()">
+        <button *ngIf="!message.isSelected" class="context-menu-item" tuiOption (click)="delete()">
             <tui-svg class="context-menu-item-icon" src="tuiIconTrashLarge"></tui-svg>
             <span>{{ t('messenger.chat.contextMenu.delete') }}</span>
         </button>

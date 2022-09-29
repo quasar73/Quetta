@@ -1,3 +1,4 @@
+import { MessageApiService } from './../../../shared/services/api/message/message.service';
 import { ClientMessageModel } from '@models/client-message.model';
 import { ClipboardService } from 'ngx-clipboard';
 import { animate, style, transition, trigger } from '@angular/animations';
@@ -44,7 +45,8 @@ export class ChatContentComponent implements OnInit {
         private readonly alertService: TuiAlertService,
         private readonly cdr: ChangeDetectorRef,
         private readonly store: Store,
-        private readonly actions: Actions
+        private readonly actions: Actions,
+        private readonly messageApiService: MessageApiService
     ) {}
 
     ngOnInit(): void {
@@ -52,9 +54,7 @@ export class ChatContentComponent implements OnInit {
             this.clearSelecting();
         });
         this.actions.pipe(ofActionDispatched(SelectedNotes.Delete)).subscribe(() => {
-            console.log(this.messages);
             this.messages = [...(this.messages?.filter(m => !this.selectedIds.includes(m.id ?? '')) ?? [])];
-            console.log(this.messages);
             this.clearSelecting();
         });
         this.store.dispatch(new SelectedNotes.Clear());
@@ -103,6 +103,16 @@ export class ChatContentComponent implements OnInit {
                 this.cdr.markForCheck();
             }
         }
+    }
+
+    onMessageDeleted(message: ClientMessageModel): void {
+        this.messageApiService.deleteMessages([message.id ?? '']).subscribe(() => {
+            const index = this.messages?.indexOf(message);
+            if (index && index > -1) {
+                this.messages?.splice(index, 1);
+                this.cdr.markForCheck();
+            }
+        });
     }
 
     isNextDay(index: number): boolean {

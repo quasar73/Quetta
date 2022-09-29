@@ -78,18 +78,21 @@ namespace Quetta.Tests.Handlers.Queries
                     {
                         new MessageResponse
                         {
+                            Id = "00000000-0000-0000-0000-000000000000",
                             Text = "Test message one",
                             Username = "username1",
                             Date = new DateTime(2022, 01, 01),
                         },
                         new MessageResponse
                         {
+                            Id = "00000000-0000-0000-0000-000000000001",
                             Text = "Test message two",
                             Username = "username2",
                             Date = new DateTime(2022, 01, 02),
                         },
                         new MessageResponse
                         {
+                            Id = "00000000-0000-0000-0000-000000000002",
                             Text = "Test message three",
                             Username = "username3",
                             Date = new DateTime(2022, 01, 03),

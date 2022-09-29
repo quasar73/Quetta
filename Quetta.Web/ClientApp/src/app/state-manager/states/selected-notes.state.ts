@@ -40,6 +40,13 @@ export class SelectedNotesState {
         });
     }
 
+    @Action(SelectedNotes.Delete)
+    deleteMessages(ctx: StateContext<SelectedNotesStateModel>): void {
+        ctx.setState({
+            ids: [],
+        });
+    }
+
     @Selector()
     static ids(state: SelectedNotesStateModel): string[] | null {
         return state.ids;

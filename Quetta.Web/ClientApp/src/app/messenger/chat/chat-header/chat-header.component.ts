@@ -26,7 +26,7 @@ export class ChatHeaderComponent {
     delete(): void {
         this.ids$.pipe(first()).subscribe(ids => {
             this.messageApiService.deleteMessages(ids).subscribe(() => {
-                this.store.dispatch(new SelectedNotes.Clear());
+                this.store.dispatch(new SelectedNotes.Delete());
             });
         });
     }

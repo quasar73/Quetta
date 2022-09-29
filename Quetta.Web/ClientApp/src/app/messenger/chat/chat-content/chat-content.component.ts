@@ -37,6 +37,8 @@ export class ChatContentComponent implements OnInit {
     scrollDownButtonVisible = false;
     isSelectingMode = false;
 
+    private selectedIds: string[] = [];
+
     constructor(
         private readonly clipboardService: ClipboardService,
         private readonly alertService: TuiAlertService,
@@ -47,6 +49,12 @@ export class ChatContentComponent implements OnInit {
 
     ngOnInit(): void {
         this.actions.pipe(ofActionDispatched(SelectedNotes.Clear)).subscribe(() => {
+            this.clearSelecting();
+        });
+        this.actions.pipe(ofActionDispatched(SelectedNotes.Delete)).subscribe(() => {
+            console.log(this.messages);
+            this.messages = [...(this.messages?.filter(m => !this.selectedIds.includes(m.id ?? '')) ?? [])];
+            console.log(this.messages);
             this.clearSelecting();
         });
         this.store.dispatch(new SelectedNotes.Clear());
@@ -86,6 +94,12 @@ export class ChatContentComponent implements OnInit {
                 isSelected
                     ? this.store.dispatch(new SelectedNotes.Select(message.id))
                     : this.store.dispatch(new SelectedNotes.Remove(message.id));
+
+                const {
+                    selectedNotes: { ids },
+                } = this.store.snapshot();
+                this.selectedIds = [...ids];
+
                 this.cdr.markForCheck();
             }
         }
@@ -111,6 +125,7 @@ export class ChatContentComponent implements OnInit {
     }
 
     private clearSelecting(): void {
+        this.selectedIds = [];
         this.isSelectingMode = false;
         this.messages?.forEach(m => (m.isSelected = false));
         this.messages = [...(this.messages ?? [])];

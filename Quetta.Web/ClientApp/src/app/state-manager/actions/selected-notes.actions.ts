@@ -16,4 +16,10 @@ export namespace SelectedNotes {
 
         constructor() {}
     }
+
+    export class Delete {
+        static readonly type = '[Selected Notes] Delete';
+
+        constructor() {}
+    }
 }

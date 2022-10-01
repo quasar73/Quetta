@@ -6,6 +6,7 @@ import { AuthenticationService } from '@services/auth/authentication.service';
 import { MessageStatus } from '@enums/message-status.enum';
 import { ClientMessageModel } from '@models/client-message.model';
 import { GuidService } from '@services/guid/guid.service';
+import { MessageAddedModel } from '@models/message-added.model';
 
 @Component({
     selector: 'qtt-chat-input',
@@ -15,7 +16,7 @@ import { GuidService } from '@services/guid/guid.service';
 })
 export class ChatInputComponent {
     @Output() messageSent = new EventEmitter<ClientMessageModel>();
-    @Output() messageAdded = new EventEmitter<string>();
+    @Output() messageAdded = new EventEmitter<MessageAddedModel>();
 
     @Input() chatId!: string | null;
 
@@ -35,6 +36,7 @@ export class ChatInputComponent {
                 text: this.messageForm.get('text')?.value,
                 chatId: this.chatId,
             };
+
             const code = this.guidService.getValue().toString();
 
             this.authService.getUserInfo().subscribe(info => {
@@ -49,9 +51,11 @@ export class ChatInputComponent {
                 });
             });
 
-            this.messageApiService.sendMessage(message).subscribe(() => {
-                this.messageForm.reset();
-                this.messageAdded.emit(code);
+            this.messageForm.reset();
+            this.messageApiService.sendMessage(message).subscribe(result => {
+                if (result?.messageId) {
+                    this.messageAdded.emit({ code, messageId: result.messageId });
+                }
             });
         }
     }

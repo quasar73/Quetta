@@ -22,7 +22,7 @@ namespace Quetta.Web.Controllers
             this.mediator = mediator;
         }
 
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(MessageAddedResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [HttpPost]
         public async Task<IActionResult> SendMessage([FromBody] SendMessageReqeust reqeust)
@@ -43,7 +43,7 @@ namespace Quetta.Web.Controllers
                 MessageId = messageId,
             });
 
-            return Ok();
+            return Ok(new MessageAddedResponse(messageId));
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]

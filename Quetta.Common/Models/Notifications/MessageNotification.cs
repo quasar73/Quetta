@@ -7,7 +7,5 @@ namespace Quetta.Common.Models.Notifications
         public string ChatId { get; set; }
 
         public string MessageId { get; set; }
-
-        public string Code { get; set; }
     }
 }

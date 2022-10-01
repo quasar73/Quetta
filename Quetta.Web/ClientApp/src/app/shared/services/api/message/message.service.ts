@@ -8,8 +8,8 @@ import { MessageModel } from '@api-models/message.model';
 export class MessageApiService {
     constructor(private readonly base: BaseService) {}
 
-    sendMessage(model: SendMessageModel): Observable<void | null> {
-        return this.base.post<void | null>('messages', model);
+    sendMessage(model: SendMessageModel): Observable<{ messageId: string } | null> {
+        return this.base.post<{ messageId: string } | null>('messages', model);
     }
 
     deleteMessages(ids: string[]): Observable<void | null> {

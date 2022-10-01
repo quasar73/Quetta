@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ClientMessageModel } from '@models/client-message.model';
 import { MessageStatus } from '@enums/message-status.enum';
+import { MessageAddedModel } from '@models/message-added.model';
 
 @Component({
     selector: 'qtt-chat',
@@ -64,9 +65,9 @@ export class ChatComponent implements OnInit {
         this.cdr.markForCheck();
     }
 
-    onMessageAdded(code: string): void {
-        const index = this.messages.findIndex(m => m.code === code);
-        this.messages[index] = { ...this.messages[index], status: MessageStatus.Unreaded };
+    onMessageAdded(model: MessageAddedModel): void {
+        const index = this.messages.findIndex(m => m.code === model.code);
+        this.messages[index] = { ...this.messages[index], status: MessageStatus.Unreaded, id: model.messageId };
         this.messages = [...this.messages];
         this.cdr.markForCheck();
     }

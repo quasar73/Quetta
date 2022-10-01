@@ -151,11 +151,11 @@ export class ChatContentComponent implements OnInit, OnChanges {
 
             this.messageApiService.getMessages(this.chatId, lastMessageId, 2).subscribe(messages => {
                 this.messages?.push(
-                    ...(messages?.map(m => {
+                    ...(messages?.map(message => {
                         return {
-                            ...m,
-                            code: undefined,
+                            ...message,
                             isSelected: false,
+                            code: undefined,
                         };
                     }) ?? [])
                 );

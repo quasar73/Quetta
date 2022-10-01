@@ -39,6 +39,7 @@ namespace Quetta.Logic.Handlers.Notifications
             }
 
             var messageResponse = mapper.Map<MessageResponse>(message);
+
             await hubContext.Clients
                 .Group(notification.ChatId)
                 .SendAsync("NewMessage", messageResponse);

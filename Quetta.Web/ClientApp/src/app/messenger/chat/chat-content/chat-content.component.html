@@ -12,11 +12,20 @@
                             (messageSelected)="onMessageSelected($event, message)"
                             (messageDeleted)="onMessageDeleted(message)"
                         ></qtt-note>
-                        <div class="date" *ngIf="isNextDay(i)" >
-                            <tui-badge status="neutral" value="{{ message.date | date }}">
-                            </tui-badge>
+                        <div class="date-wrap" *ngIf="isNextDay(i)">
+                            <tui-badge status="neutral" value="{{ message.date | date }}"> </tui-badge>
                         </div>
                     </ng-container>
+                    <div class="load-more-wrap" *ngIf="hasMoreMessages">
+                        <tui-badge
+                            [status]="isMessagesLoading ? 'neutral' : 'primary'"
+                            [hoverable]="!isMessagesLoading"
+                            [value]="isMessagesLoading ? 'Loading' : 'Load more'"
+                            (click)="loadMoreMessages()"
+                        >
+                            <tui-svg src="tuiIconRefresh"></tui-svg>
+                        </tui-badge>
+                    </div>
                 </div>
             </tui-scrollbar>
         </div>

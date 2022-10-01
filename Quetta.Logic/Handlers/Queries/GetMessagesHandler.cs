@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Quetta.Common.Exceptions;
 using Quetta.Common.Models.Queries;
 using Quetta.Common.Models.Responses;
 using Quetta.Data;
+using Quetta.Data.Models;
 
 namespace Quetta.Logic.Handlers.Queries
 {
@@ -24,13 +26,39 @@ namespace Quetta.Logic.Handlers.Queries
             CancellationToken cancellationToken
         )
         {
-            var messages = dbContext.Messages
+            var allMessages = dbContext.Messages
                 .Include(m => m.User)
+                .Include(m => m.Chat)
+                .ThenInclude(c => c.Users)
                 .AsNoTracking()
                 .Where(m => m.ChatId == request.ChatId)
                 .OrderByDescending(m => m.Date)
                 .ToList();
-            var mappedMessages = mapper.Map<List<MessageResponse>>(messages);
+
+            allMessages.ForEach(m =>
+            {
+                if (!m.Chat.Users.Any(u => u.Id == request.UserId))
+                {
+                    throw new AccessDeniedException();
+                }
+            });
+
+            var loadedMessages = new List<Message>();
+
+            if (string.IsNullOrEmpty(request.LastMessageId))
+            {
+                loadedMessages = allMessages.Take(request.Amount).ToList();
+            }
+            else
+            {
+                var lastMessageIndex = allMessages.FindIndex(m => m.Id == request.LastMessageId);
+                loadedMessages = allMessages
+                    .Skip(lastMessageIndex + 1)
+                    .Take(request.Amount)
+                    .ToList();
+            }
+
+            var mappedMessages = mapper.Map<List<MessageResponse>>(loadedMessages);
 
             return mappedMessages;
         }

@@ -18,7 +18,7 @@ export class MessageApiService {
         });
     }
 
-    getMessages(chatId: string): Observable<MessageModel[] | null> {
-        return this.base.get<MessageModel[] | null>('messages', { chatId });
+    getMessages(chatId: string | null, lastMessageId: string | null, amount: number): Observable<MessageModel[] | null> {
+        return this.base.get<MessageModel[] | null>('messages', { amount, chatId: chatId ?? '', lastMessageId: lastMessageId ?? '' });
     }
 }

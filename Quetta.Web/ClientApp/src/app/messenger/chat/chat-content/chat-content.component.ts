@@ -2,7 +2,7 @@ import { MessageApiService } from './../../../shared/services/api/message/messag
 import { ClientMessageModel } from '@models/client-message.model';
 import { ClipboardService } from 'ngx-clipboard';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild, ChangeDetectorRef, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild, ChangeDetectorRef, OnInit, OnChanges } from '@angular/core';
 import { TuiScrollbarComponent, TuiAlertService, TuiNotification } from '@taiga-ui/core';
 import { Actions, ofActionDispatched, Store } from '@ngxs/store';
 import { SelectedNotes } from 'src/app/state-manager/actions/selected-notes.actions';
@@ -27,16 +27,20 @@ const SCROLL_DOWN_BTN_SHOWS = 256;
         ]),
     ],
 })
-export class ChatContentComponent implements OnInit {
+export class ChatContentComponent implements OnInit, OnChanges {
     @ViewChild('notesList') private readonly notesList?: ElementRef<HTMLElement>;
     @ViewChild('wrap') private readonly wrap?: ElementRef<HTMLElement>;
     @ViewChild('bottomAnchor') private readonly bottomAnchor?: ElementRef<HTMLElement>;
     @ViewChild(TuiScrollbarComponent, { read: ElementRef }) private readonly scrollBar?: ElementRef<HTMLElement>;
 
-    @Input() messages!: ClientMessageModel[] | null;
+    @Input() incomingMessages!: ClientMessageModel[] | null;
+    @Input() chatId!: string | null;
 
+    messages!: ClientMessageModel[] | null;
     scrollDownButtonVisible = false;
     isSelectingMode = false;
+    isMessagesLoading = false;
+    hasMoreMessages = true;
 
     private selectedIds: string[] = [];
 
@@ -58,6 +62,12 @@ export class ChatContentComponent implements OnInit {
             this.clearSelecting();
         });
         this.store.dispatch(new SelectedNotes.Clear());
+    }
+
+    ngOnChanges(): void {
+        if (this.incomingMessages) {
+            this.messages = [...this.incomingMessages];
+        }
     }
 
     onScroll(): void {
@@ -132,6 +142,28 @@ export class ChatContentComponent implements OnInit {
         }
 
         return false;
+    }
+
+    loadMoreMessages(): void {
+        if (this.messages) {
+            const lastMessageId = this.messages[this.messages?.length - 1].id;
+            this.isMessagesLoading = true;
+
+            this.messageApiService.getMessages(this.chatId, lastMessageId, 2).subscribe(messages => {
+                this.messages?.push(
+                    ...(messages?.map(m => {
+                        return {
+                            ...m,
+                            code: undefined,
+                            isSelected: false,
+                        };
+                    }) ?? [])
+                );
+                this.hasMoreMessages = messages?.length !== 0;
+                this.isMessagesLoading = false;
+                this.cdr.markForCheck();
+            });
+        }
     }
 
     private clearSelecting(): void {

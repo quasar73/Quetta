@@ -61,9 +61,15 @@ namespace Quetta.Web.Controllers
         [ProducesResponseType(typeof(ICollection<MessageResponse>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [HttpGet]
-        public async Task<IActionResult> GetMessages([FromQuery] string chatId)
+        public async Task<IActionResult> GetMessages(
+            [FromQuery] string chatId,
+            [FromQuery] string? lastMessageId,
+            [FromQuery] int amount
+        )
         {
-            var messages = await mediator.Send(new GetMessagesQuery(chatId));
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+            var command = new GetMessagesQuery(chatId, lastMessageId, amount, userId);
+            var messages = await mediator.Send(command);
             return Ok(messages);
         }
     }

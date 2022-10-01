@@ -7,9 +7,20 @@ namespace Quetta.Common.Models.Queries
     {
         public string ChatId { get; set; }
 
-        public GetMessagesQuery(string chatId) 
+        public string? LastMessageId { get; set; }
+
+        public string UserId { get; set; }
+
+        public int Amount { get; set; }
+
+        public GetMessagesQuery(string chatId, string? lastMessageId, int amount, string userId) 
         {
-            this.ChatId = chatId;
+            ChatId = chatId;
+            LastMessageId = lastMessageId;
+            Amount = amount;
+            UserId = userId;
         }
+
+        public GetMessagesQuery() { }
     }
 }

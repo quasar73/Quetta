@@ -15,7 +15,7 @@ export class MessagesResolver implements Resolve<MessageModel[] | null> {
         const chatId = route.paramMap.get('id');
 
         if (chatId) {
-            return this.messageService.getMessages(chatId);
+            return this.messageService.getMessages(chatId, null, 2);
         } else {
             return [];
         }

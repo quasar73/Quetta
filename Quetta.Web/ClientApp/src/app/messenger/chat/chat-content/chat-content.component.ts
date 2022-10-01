@@ -149,7 +149,7 @@ export class ChatContentComponent implements OnInit, OnChanges {
             const lastMessageId = this.messages[this.messages?.length - 1].id;
             this.isMessagesLoading = true;
 
-            this.messageApiService.getMessages(this.chatId, lastMessageId, 2).subscribe(messages => {
+            this.messageApiService.getMessages(this.chatId, lastMessageId, 10).subscribe(messages => {
                 this.messages?.push(
                     ...(messages?.map(message => {
                         return {

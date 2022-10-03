@@ -1,4 +1,5 @@
-import { MessageApiService } from './../../../shared/services/api/message/message.service';
+import { MessageApiService } from '@api-services/message/message.service';
+import { MessageUpdaterService } from '@services/message-updater/message-updater.service';
 import { ClientMessageModel } from '@models/client-message.model';
 import { ClipboardService } from 'ngx-clipboard';
 import { animate, style, transition, trigger } from '@angular/animations';
@@ -6,6 +7,7 @@ import { ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild, Chang
 import { TuiScrollbarComponent, TuiAlertService, TuiNotification } from '@taiga-ui/core';
 import { Actions, ofActionDispatched, Store } from '@ngxs/store';
 import { SelectedNotes } from 'src/app/state-manager/actions/selected-notes.actions';
+import { MessageStatus } from '@enums/message-status.enum';
 
 const SCROLL_DOWN_BTN_SHOWS = 256;
 
@@ -50,18 +52,39 @@ export class ChatContentComponent implements OnInit, OnChanges {
         private readonly cdr: ChangeDetectorRef,
         private readonly store: Store,
         private readonly actions: Actions,
-        private readonly messageApiService: MessageApiService
+        private readonly messageApiService: MessageApiService,
+        private readonly messageUpdaterService: MessageUpdaterService
     ) {}
 
     ngOnInit(): void {
         this.actions.pipe(ofActionDispatched(SelectedNotes.Clear)).subscribe(() => {
             this.clearSelecting();
         });
+
         this.actions.pipe(ofActionDispatched(SelectedNotes.Delete)).subscribe(() => {
             this.messages = [...(this.messages?.filter(m => !this.selectedIds.includes(m.id ?? '')) ?? [])];
             this.clearSelecting();
         });
+
         this.store.dispatch(new SelectedNotes.Clear());
+
+        this.messageUpdaterService.getSentMessage().subscribe(message => {
+            if (message) {
+                this.messages = [message, ...(this.messages ?? [])];
+                this.cdr.markForCheck();
+            }
+        });
+
+        this.messageUpdaterService.getAddedMessage().subscribe(model => {
+            if (model && this.messages) {
+                const index = this.messages.findIndex(m => m.code === model.code);
+                if (index > -1) {
+                    this.messages[index] = { ...this.messages[index], status: MessageStatus.Unreaded, id: model.messageId };
+                    this.messages = [...this.messages];
+                    this.cdr.markForCheck();
+                }
+            }
+        });
     }
 
     ngOnChanges(): void {

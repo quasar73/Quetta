@@ -150,12 +150,12 @@ export class ChatContentComponent implements OnInit, OnChanges {
 
     isNextDay(index: number): boolean {
         if (this.messages) {
-            if (index === this.messages.length - 1) {
+            if (index === 0) {
                 return true;
             }
 
             const currentDate = new Date(this.messages[index].date);
-            const nextDate = new Date(this.messages[index + 1].date);
+            const nextDate = new Date(this.messages[index - 1].date);
 
             return !(
                 currentDate.getDate() === nextDate.getDate() &&
@@ -168,23 +168,26 @@ export class ChatContentComponent implements OnInit, OnChanges {
     }
 
     loadMoreMessages(): void {
-        if (this.messages) {
-            const lastMessageId = this.messages[this.messages?.length - 1].id;
+        if (this.messages && this.scrollBar) {
+            const scrollCurrent = this.scrollBar.nativeElement.scrollTop;
+            const lastMessageId = this.messages[0].id;
             this.isMessagesLoading = true;
 
             this.messageApiService.getMessages(this.chatId, lastMessageId, 10).subscribe(messages => {
-                this.messages?.push(
+                this.messages = [
                     ...(messages?.map(message => {
                         return {
                             ...message,
                             isSelected: false,
                             code: undefined,
                         };
-                    }) ?? [])
-                );
+                    }) ?? []),
+                    ...this.messages!,
+                ];
                 this.hasMoreMessages = messages?.length !== 0;
                 this.isMessagesLoading = false;
                 this.cdr.markForCheck();
+                this.scrollBar!.nativeElement.scrollTop = scrollCurrent;
             });
         }
     }

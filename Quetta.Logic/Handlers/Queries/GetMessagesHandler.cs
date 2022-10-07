@@ -58,7 +58,7 @@ namespace Quetta.Logic.Handlers.Queries
                     .ToList();
             }
 
-            var mappedMessages = mapper.Map<List<MessageResponse>>(loadedMessages);
+            var mappedMessages = mapper.Map<List<MessageResponse>>(loadedMessages.OrderBy(m => m.Date).ToList());
 
             return mappedMessages;
         }

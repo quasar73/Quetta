@@ -1,7 +1,7 @@
 <div class="wrap" #wrap>
     <ng-container *ngIf="messages?.length; else emptyChatMessage">
         <div class="notes-wrap">
-            <tui-scrollbar class="notes-scroll" (scroll)="onScroll()">
+            <tui-scrollbar #notesScroll class="notes-scroll">
                 <cdk-virtual-scroll-viewport tuiScrollable itemSize="64" class="view-port tui-zero-scrollbar">
                     <div class="load-more-wrap" *ngIf="hasMoreMessages">
                         <tui-badge

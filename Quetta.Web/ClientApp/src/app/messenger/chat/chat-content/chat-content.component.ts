@@ -3,11 +3,22 @@ import { MessageUpdaterService } from '@services/message-updater/message-updater
 import { ClientMessageModel } from '@models/client-message.model';
 import { ClipboardService } from 'ngx-clipboard';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild, ChangeDetectorRef, OnInit, OnChanges } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    ElementRef,
+    Input,
+    ViewChild,
+    ChangeDetectorRef,
+    OnInit,
+    OnChanges,
+    AfterViewInit,
+} from '@angular/core';
 import { TuiScrollbarComponent, TuiAlertService, TuiNotification } from '@taiga-ui/core';
 import { Actions, ofActionDispatched, Store } from '@ngxs/store';
 import { SelectedNotes } from 'src/app/state-manager/actions/selected-notes.actions';
 import { MessageStatus } from '@enums/message-status.enum';
+import { delay, of, tap, EMPTY } from 'rxjs';
 
 const SCROLL_DOWN_BTN_SHOWS = 256;
 
@@ -29,8 +40,8 @@ const SCROLL_DOWN_BTN_SHOWS = 256;
         ]),
     ],
 })
-export class ChatContentComponent implements OnInit, OnChanges {
-    @ViewChild('notesList') private readonly notesList?: ElementRef<HTMLElement>;
+export class ChatContentComponent implements OnInit, OnChanges, AfterViewInit {
+    @ViewChild('notesScroll') private readonly notesScroll?: TuiScrollbarComponent;
     @ViewChild('wrap') private readonly wrap?: ElementRef<HTMLElement>;
     @ViewChild('bottomAnchor') private readonly bottomAnchor?: ElementRef<HTMLElement>;
     @ViewChild(TuiScrollbarComponent, { read: ElementRef }) private readonly scrollBar?: ElementRef<HTMLElement>;
@@ -56,52 +67,40 @@ export class ChatContentComponent implements OnInit, OnChanges {
         private readonly messageUpdaterService: MessageUpdaterService
     ) {}
 
-    ngOnInit(): void {
-        this.actions.pipe(ofActionDispatched(SelectedNotes.Clear)).subscribe(() => {
-            this.clearSelecting();
-        });
-
-        this.actions.pipe(ofActionDispatched(SelectedNotes.Delete)).subscribe(() => {
-            this.messages = [...(this.messages?.filter(m => !this.selectedIds.includes(m.id ?? '')) ?? [])];
-            this.clearSelecting();
-        });
-
-        this.store.dispatch(new SelectedNotes.Clear());
-
-        this.messageUpdaterService.getSentMessage().subscribe(message => {
-            if (message) {
-                this.messages = [message, ...(this.messages ?? [])];
-                this.cdr.markForCheck();
-            }
-        });
-
-        this.messageUpdaterService.getAddedMessage().subscribe(model => {
-            if (model && this.messages) {
-                const index = this.messages.findIndex(m => m.code === model.code);
-                if (index > -1) {
-                    this.messages[index] = { ...this.messages[index], status: MessageStatus.Unreaded, id: model.messageId };
-                    this.messages = [...this.messages];
-                    this.cdr.markForCheck();
-                }
-            }
-        });
-    }
-
     ngOnChanges(): void {
         if (this.incomingMessages) {
             this.messages = [...this.incomingMessages];
         }
     }
 
-    onScroll(): void {
-        if (this.scrollBar && this.notesList && this.wrap) {
-            const scrollTop = this.scrollBar.nativeElement.scrollTop;
-            const scrollHeight = this.notesList.nativeElement.scrollHeight;
-            const wrapHeight = this.wrap.nativeElement.clientHeight;
-
-            this.scrollDownButtonVisible = scrollHeight - scrollTop - wrapHeight > SCROLL_DOWN_BTN_SHOWS;
-        }
+    ngOnInit(): void {
+        this.initializeSelectingSubscribtions();
+        this.initializeMessagesUpdater();
     }
+
+    ngAfterViewInit(): void {
+        of(EMPTY)
+            .pipe(
+                delay(0),
+                tap(() => {
+                    if (this.notesScroll?.browserScrollRef.nativeElement) {
+                        this.notesScroll.browserScrollRef.nativeElement.scrollTop =
+                            this.notesScroll.browserScrollRef.nativeElement.scrollHeight;
+                    }
+                })
+            )
+            .subscribe();
+    }
+
+    // onScroll(): void {
+    //     if (this.scrollBar && this.notesList && this.wrap) {
+    //         const scrollTop = this.scrollBar.nativeElement.scrollTop;
+    //         const scrollHeight = this.notesList.nativeElement.scrollHeight;
+    //         const wrapHeight = this.wrap.nativeElement.clientHeight;
+
+    //         this.scrollDownButtonVisible = scrollHeight - scrollTop - wrapHeight > SCROLL_DOWN_BTN_SHOWS;
+    //     }
+    // }
 
     scrollDown(): void {
         this.bottomAnchor?.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
@@ -190,6 +189,39 @@ export class ChatContentComponent implements OnInit, OnChanges {
                 this.scrollBar!.nativeElement.scrollTop = scrollCurrent;
             });
         }
+    }
+
+    private initializeSelectingSubscribtions(): void {
+        this.actions.pipe(ofActionDispatched(SelectedNotes.Clear)).subscribe(() => {
+            this.clearSelecting();
+        });
+
+        this.actions.pipe(ofActionDispatched(SelectedNotes.Delete)).subscribe(() => {
+            this.messages = [...(this.messages?.filter(m => !this.selectedIds.includes(m.id ?? '')) ?? [])];
+            this.clearSelecting();
+        });
+
+        this.store.dispatch(new SelectedNotes.Clear());
+    }
+
+    private initializeMessagesUpdater(): void {
+        this.messageUpdaterService.getSentMessage().subscribe(message => {
+            if (message) {
+                this.messages = [message, ...(this.messages ?? [])];
+                this.cdr.markForCheck();
+            }
+        });
+
+        this.messageUpdaterService.getAddedMessage().subscribe(model => {
+            if (model && this.messages) {
+                const index = this.messages.findIndex(m => m.code === model.code);
+                if (index > -1) {
+                    this.messages[index] = { ...this.messages[index], status: MessageStatus.Unreaded, id: model.messageId };
+                    this.messages = [...this.messages];
+                    this.cdr.markForCheck();
+                }
+            }
+        });
     }
 
     private clearSelecting(): void {

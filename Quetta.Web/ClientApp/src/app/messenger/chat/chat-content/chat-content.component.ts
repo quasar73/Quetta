@@ -44,13 +44,12 @@ export class ChatContentComponent implements OnInit, OnChanges, AfterViewInit {
     @ViewChild('notesScroll') private readonly notesScroll?: TuiScrollbarComponent;
     @ViewChild('wrap') private readonly wrap?: ElementRef<HTMLElement>;
     @ViewChild('bottomAnchor') private readonly bottomAnchor?: ElementRef<HTMLElement>;
-    @ViewChild(TuiScrollbarComponent, { read: ElementRef }) private readonly scrollBar?: ElementRef<HTMLElement>;
 
     @Input() incomingMessages!: ClientMessageModel[] | null;
     @Input() chatId!: string | null;
 
     messages!: ClientMessageModel[] | null;
-    scrollDownButtonVisible = false;
+    isScrollDownButtonVisible = false;
     isSelectingMode = false;
     isMessagesLoading = false;
     hasMoreMessages = true;
@@ -92,15 +91,18 @@ export class ChatContentComponent implements OnInit, OnChanges, AfterViewInit {
             .subscribe();
     }
 
-    // onScroll(): void {
-    //     if (this.scrollBar && this.notesList && this.wrap) {
-    //         const scrollTop = this.scrollBar.nativeElement.scrollTop;
-    //         const scrollHeight = this.notesList.nativeElement.scrollHeight;
-    //         const wrapHeight = this.wrap.nativeElement.clientHeight;
+    onScroll(): void {
+        if (!this.notesScroll || !this.wrap) {
+            return;
+        }
 
-    //         this.scrollDownButtonVisible = scrollHeight - scrollTop - wrapHeight > SCROLL_DOWN_BTN_SHOWS;
-    //     }
-    // }
+        const { nativeElement } = this.notesScroll.browserScrollRef;
+        const scrollTop = nativeElement.scrollTop;
+        const scrollHeight = nativeElement.scrollHeight;
+        const wrapHeight = this.wrap.nativeElement.clientHeight;
+
+        this.isScrollDownButtonVisible = scrollHeight - scrollTop - wrapHeight > SCROLL_DOWN_BTN_SHOWS;
+    }
 
     scrollDown(): void {
         this.bottomAnchor?.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
@@ -167,8 +169,7 @@ export class ChatContentComponent implements OnInit, OnChanges, AfterViewInit {
     }
 
     loadMoreMessages(): void {
-        if (this.messages && this.scrollBar) {
-            const scrollCurrent = this.scrollBar.nativeElement.scrollTop;
+        if (this.messages) {
             const lastMessageId = this.messages[0].id;
             this.isMessagesLoading = true;
 
@@ -186,7 +187,6 @@ export class ChatContentComponent implements OnInit, OnChanges, AfterViewInit {
                 this.hasMoreMessages = messages?.length !== 0;
                 this.isMessagesLoading = false;
                 this.cdr.markForCheck();
-                this.scrollBar!.nativeElement.scrollTop = scrollCurrent;
             });
         }
     }

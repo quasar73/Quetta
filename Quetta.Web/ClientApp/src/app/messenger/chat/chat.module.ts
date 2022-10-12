@@ -7,7 +7,6 @@ import { TuiScrollbarModule, TuiSvgModule, TuiDataListModule, TuiAlertModule, Tu
 import { ChatRoutingModule } from './chat-routing.module';
 import { ClipboardModule } from 'ngx-clipboard';
 import { TranslocoModule } from '@ngneat/transloco';
-import { ScrollingModule } from '@angular/cdk/scrolling';
 
 import { ChatContentComponent } from './chat-content/chat-content.component';
 import { NoteComponent } from './chat-content/note/note.component';
@@ -36,7 +35,6 @@ import { SkeletonDirective } from '@directives/skeleton.directive';
         TuiRootModule,
         TuiButtonModule,
         TranslocoModule,
-        ScrollingModule,
     ],
 })
 export class ChatModule {}

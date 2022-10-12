@@ -22,30 +22,22 @@
             height: 100%;
             width: 100%;
 
-            ::ng-deep .t-content {
-                height: 100%;
+            .date-wrap {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                margin: 4px;
+
+                ::ng-deep tui-badge .left-content {
+                    display: none;
+                }
             }
 
-            .view-port {
-                height: 100%;
-
-                .date-wrap {
-                    width: 100%;
-                    display: flex;
-                    justify-content: center;
-                    margin: 4px;
-
-                    ::ng-deep tui-badge .left-content {
-                        display: none;
-                    }
-                }
-
-                .load-more-wrap {
-                    width: 100%;
-                    display: flex;
-                    justify-content: center;
-                    margin: 4px;
-                }
+            .load-more-wrap {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                margin: 4px;
             }
         }
     }

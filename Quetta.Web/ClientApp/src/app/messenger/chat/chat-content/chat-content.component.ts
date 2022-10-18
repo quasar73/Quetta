@@ -170,8 +170,8 @@ export class ChatContentComponent implements OnInit, OnChanges, AfterViewInit {
 
     loadMoreMessages(): void {
         if (this.messages) {
-            const lastMessageId = this.messages[0].id;
             this.isMessagesLoading = true;
+            const lastMessageId = this.messages[0].id;
 
             this.messageApiService.getMessages(this.chatId, lastMessageId, 10).subscribe(messages => {
                 this.messages = [

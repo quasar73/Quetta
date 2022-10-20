@@ -6,6 +6,7 @@ using Quetta.Common.Models.Queries;
 using Quetta.Common.Models.Responses;
 using Quetta.Data;
 using Quetta.Data.Models;
+using Quetta.Logic.Interfaces;
 
 namespace Quetta.Logic.Handlers.Queries
 {
@@ -14,11 +15,13 @@ namespace Quetta.Logic.Handlers.Queries
     {
         private readonly IMapper mapper;
         private readonly QuettaDbContext dbContext;
+        private readonly IBaseEncryptingService encryptingService;
 
-        public GetMessagesHandler(QuettaDbContext dbContext, IMapper mapper)
+        public GetMessagesHandler(QuettaDbContext dbContext, IMapper mapper, IBaseEncryptingService encryptingService)
         {
             this.mapper = mapper;
             this.dbContext = dbContext;
+            this.encryptingService = encryptingService;
         }
 
         public async Task<ICollection<MessageResponse>> Handle(
@@ -35,12 +38,14 @@ namespace Quetta.Logic.Handlers.Queries
                 .OrderByDescending(m => m.Date)
                 .ToList();
 
-            allMessages.ForEach(m =>
+            allMessages.ForEach(async m =>
             {
                 if (!m.Chat.Users.Any(u => u.Id == request.UserId))
                 {
                     throw new AccessDeniedException();
                 }
+
+                m.Text = await encryptingService.Decrypt(m.Text);
             });
 
             var loadedMessages = new List<Message>();

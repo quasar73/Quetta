@@ -105,6 +105,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<ITokenGenerator, TokenGenerator>();
+builder.Services.AddScoped<IBaseEncryptingService, AESEnctyptingService>();
 
 builder.Services.AddHostedService<TokenCleanerHostedService>();
 

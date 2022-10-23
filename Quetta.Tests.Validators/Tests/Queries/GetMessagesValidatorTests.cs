@@ -14,7 +14,10 @@ namespace Quetta.Tests.Validators.Queries
         [InlineData("")]
         public void GivenAnInvalidChatIdValue_ShouldHaveValidationError(string id)
         {
-            var model = new GetMessagesQuery(id);
+            var model = new GetMessagesQuery()
+            {
+                ChatId = id
+            };
             var result = validator.TestValidate(model);
             result.ShouldHaveValidationErrorFor(model => model.ChatId);
         }
@@ -22,7 +25,10 @@ namespace Quetta.Tests.Validators.Queries
         [Fact]
         public void GivenAValidValue_ShouldNotHaveValidationError()
         {
-            var model = new GetMessagesQuery("somechatid");
+            var model = new GetMessagesQuery()
+            {
+                ChatId = "somechatid"
+            };
             var result = validator.TestValidate(model);
             result.ShouldNotHaveValidationErrorFor(model => model.ChatId);
         }

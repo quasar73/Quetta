@@ -1,4 +1,5 @@
-﻿using Quetta.Logic.Interfaces;
+﻿using Microsoft.Extensions.Configuration;
+using Quetta.Logic.Interfaces;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -6,25 +7,30 @@ namespace Quetta.Logic.Services
 {
     public class AESEnctyptingService : IBaseEncryptingService
     {
-        private byte[] Salt { get; set; }
-        private string Secret { get; set; }
+        private readonly IConfiguration configuration;
 
-        public AESEnctyptingService()
+        private byte[] Salt { get; set; }
+        private string ActualSecret { get; set; }
+
+        public AESEnctyptingService(IConfiguration configuration)
         {
-            Salt = Encoding.ASCII.GetBytes("salt");
-            Secret = "eShVmYq3t6w9z$C&";
+            this.configuration = configuration;
+
+            Salt = Encoding.ASCII.GetBytes(configuration["Crypt:Salt"]);
+            var actualSecretName = configuration["Crypt:ActualSecret"];
+            ActualSecret = configuration.GetValue<string>($"Crypt:Secrets:{actualSecretName}");
         }
 
         public async Task<string> Encrypt(string text)
         {
-            if (string.IsNullOrEmpty(text) || string.IsNullOrEmpty(Secret))
+            if (string.IsNullOrEmpty(text) || string.IsNullOrEmpty(ActualSecret))
             {
                 throw new ArgumentNullException();
             }
 
             string enctyptedText = null;
 
-            Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(Secret, Salt);
+            Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(ActualSecret, Salt);
 
             using (var aes = Aes.Create())
             {
@@ -50,9 +56,9 @@ namespace Quetta.Logic.Services
             return enctyptedText;
         }
 
-        public async Task<string?> Decrypt(string text)
+        public async Task<string?> Decrypt(string text, string secretVersion)
         {
-            if (string.IsNullOrEmpty(text) || string.IsNullOrEmpty(Secret))
+            if (string.IsNullOrEmpty(text) || string.IsNullOrEmpty(ActualSecret))
             {
                 throw new ArgumentNullException();
             }
@@ -61,7 +67,8 @@ namespace Quetta.Logic.Services
 
             try
             {
-                Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(Secret, Salt);
+                var secret = configuration.GetValue<string>($"Crypt:Secrets:{secretVersion}");
+                Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(secret, Salt);
 
                 byte[] bytes = Convert.FromBase64String(text);
                 using (MemoryStream msDecrypt = new MemoryStream(bytes))

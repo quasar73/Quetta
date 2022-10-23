@@ -67,16 +67,27 @@ namespace Quetta.Logic.Handlers.Queries
 
             var mappedMessages = mapper.Map<List<MessageResponse>>(
                 loadedMessages.OrderBy(m => m.Date).ToList(),
-                opt => opt.AfterMap((src, dest) => 
-                {
-                    dest.ForEach(async m =>
-                    {
-                        var text = await encryptingService.Decrypt(m.Text);
+                opt =>
+                    opt.AfterMap(
+                        (src, dest) =>
+                        {
+                            var tuple = (src as List<Message>)!
+                                .Zip(
+                                    dest,
+                                    (x, y) => new Tuple<Message, MessageResponse>(x, y)
+                                )
+                                .ToList();
+                            tuple.ForEach(async t =>
+                            {
+                                var message = t.Item1;
+                                var messageResponse = t.Item2;
+                                var text = await encryptingService.Decrypt(message.Text, message.SecretVersion);
 
-                        m.IsSupported = !string.IsNullOrEmpty(text);
-                        m.Text = text ?? "";
-                    });
-                })
+                                messageResponse.IsSupported = !string.IsNullOrEmpty(text);
+                                messageResponse.Text = text ?? "";
+                            });
+                        }
+                    )
             );
 
             return mappedMessages;

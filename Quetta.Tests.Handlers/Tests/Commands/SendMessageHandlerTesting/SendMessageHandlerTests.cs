@@ -1,10 +1,24 @@
 ﻿using FluentAssertions;
+using Moq;
 using Quetta.Logic.Handlers.Commands;
+using Quetta.Logic.Interfaces;
 
 namespace Quetta.Tests.Handlers.Commands
 {
     public class SendMessageHandlerTests
     {
+        private readonly IBaseEncryptingService encryptingService;
+
+        public SendMessageHandlerTests()
+        {
+            var encryptingServiceMock = new Mock<IBaseEncryptingService>();
+            encryptingServiceMock.Setup(x => x.Encrypt(It.IsAny<string>())).ReturnsAsync(() =>
+            {
+                return "Encrypted message.";
+            });
+            encryptingService = encryptingServiceMock.Object;
+        }
+
         [Theory]
         [ClassData(typeof(SendMessageTestCase))]
         public async void SendMessage_ShouldCreateNewMessage(SendMessageTestCaseModel model)
@@ -13,7 +27,7 @@ namespace Quetta.Tests.Handlers.Commands
             {
                 // Arrange
                 var dbContext = dbContextProvider.DbContext;
-                var handler = new SendMessageHandler(dbContext);
+                var handler = new SendMessageHandler(dbContext, encryptingService);
 
                 // Act
                 var id = await handler.Handle(model.IncomingCommand, new CancellationToken());

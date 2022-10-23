@@ -26,7 +26,7 @@ namespace Quetta.Tests.Handlers.Commands
                          ChatId = ChatId,
                          UserId = SendreId,
                          Date = new DateTime(2022, 01, 01),
-                         Text = TestText,
+                         Text = "Encrypted message.",
                     }
                 },
             };

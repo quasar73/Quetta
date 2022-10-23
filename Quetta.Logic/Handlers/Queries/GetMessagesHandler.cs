@@ -17,7 +17,11 @@ namespace Quetta.Logic.Handlers.Queries
         private readonly QuettaDbContext dbContext;
         private readonly IBaseEncryptingService encryptingService;
 
-        public GetMessagesHandler(QuettaDbContext dbContext, IMapper mapper, IBaseEncryptingService encryptingService)
+        public GetMessagesHandler(
+            QuettaDbContext dbContext,
+            IMapper mapper,
+            IBaseEncryptingService encryptingService
+        )
         {
             this.mapper = mapper;
             this.dbContext = dbContext;
@@ -44,8 +48,6 @@ namespace Quetta.Logic.Handlers.Queries
                 {
                     throw new AccessDeniedException();
                 }
-
-                m.Text = await encryptingService.Decrypt(m.Text);
             });
 
             var loadedMessages = new List<Message>();
@@ -63,7 +65,19 @@ namespace Quetta.Logic.Handlers.Queries
                     .ToList();
             }
 
-            var mappedMessages = mapper.Map<List<MessageResponse>>(loadedMessages.OrderBy(m => m.Date).ToList());
+            var mappedMessages = mapper.Map<List<MessageResponse>>(
+                loadedMessages.OrderBy(m => m.Date).ToList(),
+                opt => opt.AfterMap((src, dest) => 
+                {
+                    dest.ForEach(async m =>
+                    {
+                        var text = await encryptingService.Decrypt(m.Text);
+
+                        m.IsSupported = !string.IsNullOrEmpty(text);
+                        m.Text = text ?? "";
+                    });
+                })
+            );
 
             return mappedMessages;
         }

@@ -6,4 +6,5 @@ export interface MessageModel {
     username: string;
     date: string;
     status: MessageStatus;
+    isSupported: boolean;
 }

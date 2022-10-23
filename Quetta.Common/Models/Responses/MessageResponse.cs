@@ -9,5 +9,7 @@
         public string Username { get; set; }
 
         public DateTime Date { get; set; }
+
+        public bool IsSupported { get; set; }
     }
 }

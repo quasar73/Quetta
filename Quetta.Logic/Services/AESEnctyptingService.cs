@@ -50,7 +50,7 @@ namespace Quetta.Logic.Services
             return enctyptedText;
         }
 
-        public async Task<string> Decrypt(string text)
+        public async Task<string?> Decrypt(string text)
         {
             if (string.IsNullOrEmpty(text) || string.IsNullOrEmpty(Secret))
             {
@@ -59,24 +59,31 @@ namespace Quetta.Logic.Services
 
             string dectyptedText = null;
 
-            Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(Secret, Salt);
-           
-            byte[] bytes = Convert.FromBase64String(text);
-            using (MemoryStream msDecrypt = new MemoryStream(bytes))
+            try
             {
-                using(var aes = Aes.Create())
+                Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(Secret, Salt);
+
+                byte[] bytes = Convert.FromBase64String(text);
+                using (MemoryStream msDecrypt = new MemoryStream(bytes))
                 {
-                    aes.Key = key.GetBytes(aes.KeySize / 8);
-                    aes.IV = ReadByteArray(msDecrypt);
-                    ICryptoTransform decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
-                    using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
+                    using (var aes = Aes.Create())
                     {
-                        using (StreamReader srDecrypt = new StreamReader(csDecrypt))
+                        aes.Key = key.GetBytes(aes.KeySize / 8);
+                        aes.IV = ReadByteArray(msDecrypt);
+                        ICryptoTransform decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
+                        using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
                         {
-                            dectyptedText = srDecrypt.ReadToEnd();
+                            using (StreamReader srDecrypt = new StreamReader(csDecrypt))
+                            {
+                                dectyptedText = srDecrypt.ReadToEnd();
+                            }
                         }
                     }
-                }   
+                }
+            }
+            catch
+            {
+                return null;
             }
 
             return dectyptedText;

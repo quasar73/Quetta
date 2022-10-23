@@ -47,6 +47,7 @@ export class ChatInputComponent {
                     date: new Date().toString(),
                     status: MessageStatus.Pending,
                     isSelected: false,
+                    isSupported: true,
                     code,
                 });
             });

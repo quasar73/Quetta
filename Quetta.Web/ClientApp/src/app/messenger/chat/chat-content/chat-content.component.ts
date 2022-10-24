@@ -207,7 +207,7 @@ export class ChatContentComponent implements OnInit, OnChanges, AfterViewInit {
     private initializeMessagesUpdater(): void {
         this.messageUpdaterService.getSentMessage().subscribe(message => {
             if (message) {
-                this.messages = [message, ...(this.messages ?? [])];
+                this.messages = [...(this.messages ?? []), message];
                 this.cdr.markForCheck();
             }
         });

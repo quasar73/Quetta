@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Quetta.Common.Models.Queries;
 using Quetta.Common.Models.Responses;
 using Quetta.Common.Enums;
+using Quetta.Logic.Interfaces;
 
 namespace Quetta.Logic.Handlers.Queries
 {
@@ -12,11 +13,17 @@ namespace Quetta.Logic.Handlers.Queries
     {
         private readonly QuettaDbContext dbContext;
         private readonly IMapper mapper;
+        private readonly IBaseEncryptingService encryptingService;
 
-        public GetChatsHandler(QuettaDbContext dbContext, IMapper mapper)
+        public GetChatsHandler(
+            QuettaDbContext dbContext,
+            IMapper mapper,
+            IBaseEncryptingService encryptingService
+        )
         {
             this.dbContext = dbContext;
             this.mapper = mapper;
+            this.encryptingService = encryptingService;
         }
 
         public async Task<ICollection<ChatItemResponse>> Handle(
@@ -38,7 +45,7 @@ namespace Quetta.Logic.Handlers.Queries
                         {
                             dest.ToList()
                                 .ForEach(
-                                    (chat) =>
+                                    async (chat) =>
                                     {
                                         if (chat.ChatType == ChatType.PersonalChat)
                                         {
@@ -52,6 +59,15 @@ namespace Quetta.Logic.Handlers.Queries
                                             chat.Title = dbContext.Chats
                                                 .First(c => c.Id == chat.Id)
                                                 .Title!;
+                                        }
+
+                                        if (!string.IsNullOrEmpty(chat.LastMessage))
+                                        {
+                                            chat.LastMessage = await encryptingService.Decrypt(
+                                                chat.LastMessage,
+                                                chat.LastMessageSecretVersion!
+                                            );
+                                            chat.LastMessageSecretVersion = null;
                                         }
                                     }
                                 );

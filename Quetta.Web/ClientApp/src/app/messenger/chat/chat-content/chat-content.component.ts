@@ -149,6 +149,10 @@ export class ChatContentComponent implements OnInit, OnChanges, AfterViewInit {
         });
     }
 
+    onViewport(): void {
+        console.log('in viewport!')
+    }
+
     isNextDay(index: number): boolean {
         if (this.messages) {
             if (index === 0) {

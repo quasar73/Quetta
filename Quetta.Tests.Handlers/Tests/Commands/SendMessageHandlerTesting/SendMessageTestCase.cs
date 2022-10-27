@@ -27,6 +27,7 @@ namespace Quetta.Tests.Handlers.Commands
                          UserId = SendreId,
                          Date = new DateTime(2022, 01, 01),
                          Text = "Encrypted message.",
+                         SecretVersion = "actualSecret",
                     }
                 },
             };

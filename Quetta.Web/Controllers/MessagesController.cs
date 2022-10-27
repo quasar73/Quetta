@@ -37,11 +37,9 @@ namespace Quetta.Web.Controllers
             };
 
             var messageId = await mediator.Send(command);
-            await mediator.Publish(new MessageNotification
-            {
-                ChatId = reqeust.ChatId,
-                MessageId = messageId,
-            });
+            await mediator.Publish(
+                new MessageNotification { ChatId = reqeust.ChatId, MessageId = messageId, }
+            );
 
             return Ok(new MessageAddedResponse(messageId));
         }
@@ -55,6 +53,18 @@ namespace Quetta.Web.Controllers
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
             await mediator.Send(new DeleteMessagesCommand(userId, request.MessageIds));
+            return Ok();
+        }
+
+        [ProducesResponseType(typeof(void), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [HttpGet("Read")]
+        public async Task<IActionResult> ReadMessages([FromQuery] string messageId)
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+            var command = new ReadMessagesCommand(messageId, userId);
+            await mediator.Send(command);
             return Ok();
         }
 

@@ -245,17 +245,16 @@ export class ChatContentComponent implements OnInit, OnChanges, AfterViewInit {
 
     private initializeReadService(): void {
         this.noteReadService.getMessageIdAsObservable().subscribe(model => {
-            if (model && this.messages?.length) {
-                const message = this.messages.find(m => m.id == model.noteId);
+            if (model) {
+                const message = this.messages!.find(m => m.id == model.noteId);
                 const unreadMessages = this.messages?.filter(m => m.date <= message!.date && m.status == MessageStatus.Unread);
-                unreadMessages
-                    ?.map(m => m.id)
-                    .forEach(id => {
-                        const index = this.messages!.findIndex(m => m.id === id);
-                        if (index > -1) {
-                            this.messages![index] = { ...this.messages![index], status: MessageStatus.Read };
-                        }
-                    });
+                unreadMessages?.forEach(message => {
+                    const index = this.messages!.findIndex(m => m.id === message.id);
+                    if (index > -1) {
+                        this.messages![index] = { ...this.messages![index], status: MessageStatus.Read };
+                    }
+                });
+                this.messageApiService.readMessage(model.noteId).subscribe();
                 this.cdr.markForCheck();
             }
         });

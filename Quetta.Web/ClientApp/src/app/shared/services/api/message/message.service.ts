@@ -13,12 +13,16 @@ export class MessageApiService {
     }
 
     deleteMessages(ids: string[]): Observable<void | null> {
-        return this.base.delete<void | null>('messages', {
+        return this.base.delete<void>('messages', {
             messageIds: ids,
         });
     }
 
     getMessages(chatId: string | null, lastMessageId: string | null, amount: number): Observable<MessageModel[] | null> {
-        return this.base.get<MessageModel[] | null>('messages', { amount, chatId: chatId ?? '', lastMessageId: lastMessageId ?? '' });
+        return this.base.get<MessageModel[]>('messages', { amount, chatId: chatId ?? '', lastMessageId: lastMessageId ?? '' });
+    }
+
+    readMessage(messageId: string): Observable<void | null> {
+        return this.base.get<void>('messages/read', { messageId });
     }
 }

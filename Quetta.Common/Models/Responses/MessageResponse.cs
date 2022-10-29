@@ -12,6 +12,8 @@
 
         public bool IsSupported { get; set; }
 
+        public bool IsOwner { get; set; }
+
         public ICollection<ReaderResponse> Readers { get; set; }
     }
 }

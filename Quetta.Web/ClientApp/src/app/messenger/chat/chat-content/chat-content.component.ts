@@ -162,7 +162,7 @@ export class ChatContentComponent implements OnInit, OnChanges, AfterViewInit {
     }
 
     onVisibilityChange(event: string, message: ClientMessageModel, index: number): void {
-        if (event == 'VISIBLE' && message.status == MessageStatus.Unread) {
+        if (event == 'VISIBLE' && message.status == MessageStatus.Unread && !message.isOwner) {
             this.noteReadService.readMessage(message.id!, index);
         }
     }

@@ -49,6 +49,7 @@ export class ChatInputComponent {
                     isSelected: false,
                     isSupported: true,
                     readers: [],
+                    isOwner: true,
                     code,
                 });
             });

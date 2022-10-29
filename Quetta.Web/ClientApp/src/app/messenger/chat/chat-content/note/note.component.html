@@ -2,7 +2,7 @@
     <div class="tui-space_right-4 selector" [@selection]="isSelectingMode ? 'expanded' : 'collapsed'">
         <tui-checkbox size="l" *ngIf="isSelectingMode" [formControl]="selectControl"></tui-checkbox>
     </div>
-    <div class="note" [class.own-message]="isUserOwner() | async">
+    <div class="note" [class.own-message]="message.isOwner">
         <span *ngIf="message.isSupported; else unsupportedText" class="tui-text_body-m">{{ message.text }}</span>
         <ng-template #unsupportedText>
             <span class="tui-text_body-m unsupported">

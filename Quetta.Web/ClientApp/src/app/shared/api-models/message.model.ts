@@ -7,4 +7,5 @@ export interface MessageModel {
     date: string;
     isSupported: boolean;
     readers: ReaderModel[];
+    isOwner: boolean;
 }

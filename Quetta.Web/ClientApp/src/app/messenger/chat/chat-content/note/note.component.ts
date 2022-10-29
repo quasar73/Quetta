@@ -1,9 +1,7 @@
 import { state, trigger, style, transition, animate } from '@angular/animations';
 import { ClientMessageModel } from '@models/client-message.model';
-import { map, tap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, OnChanges, OnInit } from '@angular/core';
-import { AuthenticationService } from '@services/auth/authentication.service';
 import { MessageStatus } from '@enums/message-status.enum';
 import { FormControl } from '@angular/forms';
 
@@ -30,7 +28,7 @@ export class NoteComponent implements OnInit, OnChanges {
 
     readonly selectControl = new FormControl<boolean>(false);
 
-    constructor(private readonly authService: AuthenticationService) {}
+    constructor() {}
 
     ngOnInit(): void {
         this.selectControl.valueChanges.pipe(tap(value => this.messageSelected.emit(value ?? false))).subscribe();
@@ -38,14 +36,6 @@ export class NoteComponent implements OnInit, OnChanges {
 
     ngOnChanges(): void {
         this.selectControl.setValue(this.message.isSelected);
-    }
-
-    isUserOwner(): Observable<boolean> {
-        return this.authService.getUserInfo().pipe(
-            map(info => {
-                return info.username === this.message.username;
-            })
-        );
     }
 
     getStatus(): string {

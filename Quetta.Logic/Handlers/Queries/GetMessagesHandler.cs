@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Quetta.Common.Exceptions;
 using Quetta.Common.Models.Queries;
@@ -16,16 +17,19 @@ namespace Quetta.Logic.Handlers.Queries
         private readonly IMapper mapper;
         private readonly QuettaDbContext dbContext;
         private readonly IBaseEncryptingService encryptingService;
+        private readonly UserManager<User> userManager;
 
         public GetMessagesHandler(
             QuettaDbContext dbContext,
             IMapper mapper,
-            IBaseEncryptingService encryptingService
+            IBaseEncryptingService encryptingService,
+            UserManager<User> userManager
         )
         {
             this.mapper = mapper;
             this.dbContext = dbContext;
             this.encryptingService = encryptingService;
+            this.userManager = userManager;
         }
 
         public async Task<ICollection<MessageResponse>> Handle(
@@ -66,6 +70,7 @@ namespace Quetta.Logic.Handlers.Queries
                     .ToList();
             }
 
+            var user = await userManager.FindByIdAsync(request.UserId);
             var mappedMessages = mapper.Map<List<MessageResponse>>(
                 loadedMessages.OrderBy(m => m.Date).ToList(),
                 opt =>
@@ -85,6 +90,7 @@ namespace Quetta.Logic.Handlers.Queries
                                 var text = await encryptingService.Decrypt(message.Text, message.SecretVersion);
 
                                 messageResponse.IsSupported = !string.IsNullOrEmpty(text);
+                                messageResponse.IsOwner = messageResponse.Username == user.UserName;
                                 messageResponse.Text = text ?? "";
                             });
                         }

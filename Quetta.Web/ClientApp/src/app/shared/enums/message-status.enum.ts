@@ -1,5 +1,5 @@
 export enum MessageStatus {
     Pending,
-    Readed,
-    Unreaded,
+    Read,
+    Unread,
 }

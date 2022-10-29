@@ -11,5 +11,7 @@
         public DateTime Date { get; set; }
 
         public bool IsSupported { get; set; }
+
+        public ICollection<ReaderResponse> Readers { get; set; }
     }
 }

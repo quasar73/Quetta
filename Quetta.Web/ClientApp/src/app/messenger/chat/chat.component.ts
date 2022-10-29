@@ -9,6 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ClientMessageModel } from '@models/client-message.model';
 import { MessageAddedModel } from '@models/message-added.model';
+import { getStatus } from '@utils/status-calculator';
 
 @Component({
     selector: 'qtt-chat',
@@ -37,8 +38,8 @@ export class ChatComponent implements OnInit {
         if (this.chatId) {
             this.activatedRoute.data.subscribe(({ messages, chatInfo }) => {
                 this.messages = [
-                    ...(messages?.map((m: MessageModel) => {
-                        return { ...m, code: undefined, isSelected: false };
+                    ...(messages?.map((message: MessageModel) => {
+                        return { ...message, code: undefined, isSelected: false, status: getStatus(message) };
                     }) ?? []),
                 ];
                 this.chatInfo = chatInfo;
@@ -55,7 +56,7 @@ export class ChatComponent implements OnInit {
                 .pipe(combineLatestWith(this.authService.getUserInfo()))
                 .subscribe(([message, info]) => {
                     if (message.username !== info.username) {
-                        this.onMessageSent({ ...message, code: undefined, isSelected: false });
+                        this.onMessageSent({ ...message, code: undefined, isSelected: false, status: getStatus(message) });
                     }
                 });
         }

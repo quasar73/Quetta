@@ -1,10 +1,10 @@
-import { MessageStatus } from '../enums/message-status.enum';
+import { ReaderModel } from '@models/reader.model';
 
 export interface MessageModel {
     id: string | null;
     text: string;
     username: string;
     date: string;
-    status: MessageStatus;
     isSupported: boolean;
+    readers: ReaderModel[];
 }

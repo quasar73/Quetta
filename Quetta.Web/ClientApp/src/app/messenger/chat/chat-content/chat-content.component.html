@@ -18,12 +18,14 @@
                         <tui-badge status="neutral" value="{{ message.date | date }}"> </tui-badge>
                     </div>
                     <qtt-note
+                        [id]="i"
+                        qttEnterViewportNotifier
                         [message]="message"
                         [isSelectingMode]="isSelectingMode"
                         (messageCopy)="onMessageCopied($event)"
                         (messageSelected)="onMessageSelected($event, message)"
                         (messageDeleted)="onMessageDeleted(message)"
-                        (inViewportAction)="onViewport()"
+                        (visibilityChange)="onVisibilityChange($event, message, i)"
                     ></qtt-note>
                 </ng-container>
 

@@ -19,6 +19,7 @@ import { Actions, ofActionDispatched, Store } from '@ngxs/store';
 import { SelectedNotes } from 'src/app/state-manager/actions/selected-notes.actions';
 import { MessageStatus } from '@enums/message-status.enum';
 import { delay, of, tap, EMPTY } from 'rxjs';
+import { NoteReadService } from '@services/note-read/note-read.service';
 
 const SCROLL_DOWN_BTN_SHOWS = 256;
 
@@ -63,7 +64,8 @@ export class ChatContentComponent implements OnInit, OnChanges, AfterViewInit {
         private readonly store: Store,
         private readonly actions: Actions,
         private readonly messageApiService: MessageApiService,
-        private readonly messageUpdaterService: MessageUpdaterService
+        private readonly messageUpdaterService: MessageUpdaterService,
+        private readonly noteReadService: NoteReadService
     ) {}
 
     ngOnChanges(): void {
@@ -75,6 +77,7 @@ export class ChatContentComponent implements OnInit, OnChanges, AfterViewInit {
     ngOnInit(): void {
         this.initializeSelectingSubscribtions();
         this.initializeMessagesUpdater();
+        this.initializeReadService();
     }
 
     ngAfterViewInit(): void {
@@ -82,9 +85,18 @@ export class ChatContentComponent implements OnInit, OnChanges, AfterViewInit {
             .pipe(
                 delay(0),
                 tap(() => {
-                    if (this.notesScroll?.browserScrollRef.nativeElement) {
-                        this.notesScroll.browserScrollRef.nativeElement.scrollTop =
-                            this.notesScroll.browserScrollRef.nativeElement.scrollHeight;
+                    if (this.messages?.some(m => m.status == MessageStatus.Unread)) {
+                        const index = this.messages.findIndex(m => m.status == MessageStatus.Unread);
+                        console.log(index);
+                        if (index > -1) {
+                            const element = document.getElementById(index.toString());
+                            element!.scrollIntoView();
+                        }
+                    } else {
+                        if (this.notesScroll?.browserScrollRef.nativeElement) {
+                            this.notesScroll.browserScrollRef.nativeElement.scrollTop =
+                                this.notesScroll.browserScrollRef.nativeElement.scrollHeight;
+                        }
                     }
                 })
             )
@@ -149,8 +161,10 @@ export class ChatContentComponent implements OnInit, OnChanges, AfterViewInit {
         });
     }
 
-    onViewport(): void {
-        console.log('in viewport!')
+    onVisibilityChange(event: string, message: ClientMessageModel, index: number): void {
+        if (event == 'VISIBLE' && message.status == MessageStatus.Unread) {
+            this.noteReadService.readMessage(message.id!, index);
+        }
     }
 
     isNextDay(index: number): boolean {
@@ -184,6 +198,7 @@ export class ChatContentComponent implements OnInit, OnChanges, AfterViewInit {
                             ...message,
                             isSelected: false,
                             code: undefined,
+                            status: MessageStatus.Unread,
                         };
                     }) ?? []),
                     ...this.messages!,
@@ -220,10 +235,28 @@ export class ChatContentComponent implements OnInit, OnChanges, AfterViewInit {
             if (model && this.messages) {
                 const index = this.messages.findIndex(m => m.code === model.code);
                 if (index > -1) {
-                    this.messages[index] = { ...this.messages[index], status: MessageStatus.Unreaded, id: model.messageId };
+                    this.messages[index] = { ...this.messages[index], status: MessageStatus.Unread, id: model.messageId };
                     this.messages = [...this.messages];
                     this.cdr.markForCheck();
                 }
+            }
+        });
+    }
+
+    private initializeReadService(): void {
+        this.noteReadService.getMessageIdAsObservable().subscribe(model => {
+            if (model && this.messages?.length) {
+                const message = this.messages.find(m => m.id == model.noteId);
+                const unreadMessages = this.messages?.filter(m => m.date <= message!.date && m.status == MessageStatus.Unread);
+                unreadMessages
+                    ?.map(m => m.id)
+                    .forEach(id => {
+                        const index = this.messages!.findIndex(m => m.id === id);
+                        if (index > -1) {
+                            this.messages![index] = { ...this.messages![index], status: MessageStatus.Read };
+                        }
+                    });
+                this.cdr.markForCheck();
             }
         });
     }

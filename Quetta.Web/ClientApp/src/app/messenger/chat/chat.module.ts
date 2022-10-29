@@ -14,9 +14,18 @@ import { ChatHeaderComponent } from './chat-header/chat-header.component';
 import { ChatInputComponent } from './chat-input/chat-input.component';
 import { ChatComponent } from './chat.component';
 import { SkeletonDirective } from '@directives/skeleton.directive';
+import { EnterTheViewportNotifierDirective } from '@directives/enter-viewport.directive';
 
 @NgModule({
-    declarations: [ChatComponent, ChatHeaderComponent, ChatContentComponent, ChatInputComponent, NoteComponent, SkeletonDirective],
+    declarations: [
+        ChatComponent,
+        ChatHeaderComponent,
+        ChatContentComponent,
+        ChatInputComponent,
+        NoteComponent,
+        SkeletonDirective,
+        EnterTheViewportNotifierDirective,
+    ],
     imports: [
         CommonModule,
         ChatRoutingModule,

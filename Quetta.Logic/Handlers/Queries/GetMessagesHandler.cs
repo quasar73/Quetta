@@ -35,6 +35,7 @@ namespace Quetta.Logic.Handlers.Queries
         {
             var allMessages = dbContext.Messages
                 .Include(m => m.User)
+                .Include(m => m.WhoRead)
                 .Include(m => m.Chat)
                 .ThenInclude(c => c.Users)
                 .AsNoTracking()

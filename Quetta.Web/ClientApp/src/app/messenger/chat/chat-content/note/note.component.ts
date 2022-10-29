@@ -52,10 +52,10 @@ export class NoteComponent implements OnInit, OnChanges {
         switch (this.message.status) {
             case MessageStatus.Pending:
                 return 'tuiIconTime';
-            case MessageStatus.Unreaded:
-                return 'tuiIconCheck';
-            default:
+            case MessageStatus.Read:
                 return 'tuiIconEyeOpen';
+            default:
+                return 'tuiIconCheck';
         }
     }
 

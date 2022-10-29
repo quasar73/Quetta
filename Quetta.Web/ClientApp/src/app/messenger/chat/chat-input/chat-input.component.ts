@@ -48,6 +48,7 @@ export class ChatInputComponent {
                     status: MessageStatus.Pending,
                     isSelected: false,
                     isSupported: true,
+                    readers: [],
                     code,
                 });
             });

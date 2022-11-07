@@ -7,6 +7,7 @@ using Quetta.Common.Models.Notifications;
 using Quetta.Common.Models.Responses;
 using Quetta.Data;
 using Quetta.Logic.Hubs;
+using Quetta.Logic.Interfaces;
 
 namespace Quetta.Logic.Handlers.Notifications
 {
@@ -14,20 +15,26 @@ namespace Quetta.Logic.Handlers.Notifications
     {
         private readonly IHubContext<MessageHub> hubContext;
         private readonly QuettaDbContext dbContext;
+        private readonly IBaseEncryptingService encryptingService;
         private readonly IMapper mapper;
 
         public MessageHandler(
             IHubContext<MessageHub> hubContext,
             QuettaDbContext dbContext,
-            IMapper mapper
+            IMapper mapper,
+            IBaseEncryptingService encryptingService
         )
         {
             this.hubContext = hubContext;
             this.dbContext = dbContext;
             this.mapper = mapper;
+            this.encryptingService = encryptingService;
         }
 
-        public async Task Handle(MessageNotification notification,CancellationToken cancellationToken)
+        public async Task Handle(
+            MessageNotification notification,
+            CancellationToken cancellationToken
+        )
         {
             var message = dbContext.Messages
                 .Include(m => m.User)
@@ -38,7 +45,10 @@ namespace Quetta.Logic.Handlers.Notifications
                 throw new EntityNotFoundException();
             }
 
+            var text = await encryptingService.Decrypt(message.Text, message.SecretVersion);
             var messageResponse = mapper.Map<MessageResponse>(message);
+            messageResponse.Text = text ?? "";
+            messageResponse.IsSupported = text != null;
 
             await hubContext.Clients
                 .Group(notification.ChatId)

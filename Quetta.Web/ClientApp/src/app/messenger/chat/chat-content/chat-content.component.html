@@ -18,8 +18,8 @@
                         <tui-badge status="neutral" value="{{ message.date | date }}"> </tui-badge>
                     </div>
                     <qtt-note
-                        [id]="i"
                         qttEnterViewportNotifier
+                        [id]="i"
                         [message]="message"
                         [isSelectingMode]="isSelectingMode"
                         (messageCopy)="onMessageCopied($event)"

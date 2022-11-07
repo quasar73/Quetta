@@ -13,6 +13,7 @@ import {
     OnInit,
     OnChanges,
     AfterViewInit,
+    AfterViewChecked,
 } from '@angular/core';
 import { TuiScrollbarComponent, TuiAlertService, TuiNotification } from '@taiga-ui/core';
 import { Actions, ofActionDispatched, Store } from '@ngxs/store';
@@ -41,7 +42,7 @@ const SCROLL_DOWN_BTN_SHOWS = 256;
         ]),
     ],
 })
-export class ChatContentComponent implements OnInit, OnChanges, AfterViewInit {
+export class ChatContentComponent implements OnInit, OnChanges, AfterViewInit, AfterViewChecked {
     @ViewChild('notesScroll') private readonly notesScroll?: TuiScrollbarComponent;
     @ViewChild('wrap') private readonly wrap?: ElementRef<HTMLElement>;
     @ViewChild('bottomAnchor') private readonly bottomAnchor?: ElementRef<HTMLElement>;
@@ -54,6 +55,7 @@ export class ChatContentComponent implements OnInit, OnChanges, AfterViewInit {
     isSelectingMode = false;
     isMessagesLoading = false;
     hasMoreMessages = true;
+    isCanBeScrolled = false;
 
     private selectedIds: string[] = [];
 
@@ -67,6 +69,15 @@ export class ChatContentComponent implements OnInit, OnChanges, AfterViewInit {
         private readonly messageUpdaterService: MessageUpdaterService,
         private readonly noteReadService: NoteReadService
     ) {}
+
+    ngAfterViewChecked(): void {
+        if (this.isCanBeScrolled) {
+            if (this.notesScroll?.browserScrollRef.nativeElement) {
+                this.notesScroll.browserScrollRef.nativeElement.scrollTop = this.notesScroll.browserScrollRef.nativeElement.scrollHeight;
+            }
+            this.isCanBeScrolled = false;
+        }
+    }
 
     ngOnChanges(): void {
         if (this.incomingMessages) {
@@ -87,7 +98,6 @@ export class ChatContentComponent implements OnInit, OnChanges, AfterViewInit {
                 tap(() => {
                     if (this.messages?.some(m => m.status == MessageStatus.Unread)) {
                         const index = this.messages.findIndex(m => m.status == MessageStatus.Unread);
-                        console.log(index);
                         if (index > -1) {
                             const element = document.getElementById(index.toString());
                             element!.scrollIntoView();
@@ -237,6 +247,7 @@ export class ChatContentComponent implements OnInit, OnChanges, AfterViewInit {
                 if (index > -1) {
                     this.messages[index] = { ...this.messages[index], status: MessageStatus.Unread, id: model.messageId };
                     this.messages = [...this.messages];
+                    this.isCanBeScrolled = true;
                     this.cdr.markForCheck();
                 }
             }

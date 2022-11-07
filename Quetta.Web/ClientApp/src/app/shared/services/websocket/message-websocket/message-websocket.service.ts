@@ -36,6 +36,13 @@ export class MessageWebsocketService {
         );
     }
 
+    stopConnection(): void {
+        this.hubConnection
+            .stop()
+            .then(() => console.log('Message connection stopped.'))
+            .catch(err => console.error('Error while stopping connection: ' + err));
+    }
+
     addNotificationsListner(): void {
         this.hubConnection.on('NewMessage', message => {
             this.messages$.next(message);

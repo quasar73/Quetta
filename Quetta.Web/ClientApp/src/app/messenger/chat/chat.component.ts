@@ -1,12 +1,12 @@
 import { MessageUpdaterService } from '@services/message-updater/message-updater.service';
 import { ChatInfoModel } from '@api-models/chat-info.model';
 import { MessageModel } from '@api-models/message.model';
-import { combineLatestWith } from 'rxjs';
+import { combineLatestWith, Subscription } from 'rxjs';
 import { AuthenticationService } from '@services/auth/authentication.service';
 import { MessageWebsocketService } from '@services/websocket/message-websocket/message-websocket.service';
 import { SelectedChatService } from '@services/selected-chat/selected-chat.service';
 import { ActivatedRoute } from '@angular/router';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, OnDestroy } from '@angular/core';
 import { ClientMessageModel } from '@models/client-message.model';
 import { MessageAddedModel } from '@models/message-added.model';
 import { getStatus } from '@utils/status-calculator';
@@ -17,10 +17,12 @@ import { getStatus } from '@utils/status-calculator';
     styleUrls: ['./chat.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit, OnDestroy {
     messages!: ClientMessageModel[];
     chatInfo!: ChatInfoModel | null;
     chatId!: string | null;
+
+    private readonly subscriptions = new Subscription();
 
     constructor(
         private readonly activatedRoute: ActivatedRoute,
@@ -46,19 +48,23 @@ export class ChatComponent implements OnInit {
                 this.cdr.markForCheck();
             });
 
-            this.messageWebsocketService.startConnection().subscribe(() => {
-                this.messageWebsocketService.addToGroup(this.chatId);
-                this.messageWebsocketService.addNotificationsListner();
-            });
+            this.subscriptions.add(
+                this.messageWebsocketService.startConnection().subscribe(() => {
+                    this.messageWebsocketService.addToGroup(this.chatId);
+                    this.messageWebsocketService.addNotificationsListner();
+                })
+            );
 
-            this.messageWebsocketService
-                .getMessagesObservable()
-                .pipe(combineLatestWith(this.authService.getUserInfo()))
-                .subscribe(([message, info]) => {
-                    if (message.username !== info.username) {
-                        this.onMessageSent({ ...message, code: undefined, isSelected: false, status: getStatus(message) });
-                    }
-                });
+            this.subscriptions.add(
+                this.messageWebsocketService
+                    .getMessagesObservable()
+                    .pipe(combineLatestWith(this.authService.getUserInfo()))
+                    .subscribe(([message, info]) => {
+                        if (message.username !== info.username) {
+                            this.onMessageSent({ ...message, code: undefined, isSelected: false, status: getStatus(message) });
+                        }
+                    })
+            );
         }
     }
 
@@ -68,5 +74,10 @@ export class ChatComponent implements OnInit {
 
     onMessageAdded(model: MessageAddedModel): void {
         this.messageUpdaterService.updateAddedMessage(model);
+    }
+
+    ngOnDestroy(): void {
+        this.messageWebsocketService.stopConnection();
+        this.subscriptions.unsubscribe();
     }
 }

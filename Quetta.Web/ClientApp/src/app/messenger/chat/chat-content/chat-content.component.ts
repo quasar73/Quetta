@@ -21,6 +21,7 @@ import { SelectedNotes } from 'src/app/state-manager/actions/selected-notes.acti
 import { MessageStatus } from '@enums/message-status.enum';
 import { delay, of, tap, EMPTY } from 'rxjs';
 import { NoteReadService } from '@services/note-read/note-read.service';
+import { getStatus } from '@utils/status-calculator';
 
 const SCROLL_DOWN_BTN_SHOWS = 256;
 
@@ -208,7 +209,7 @@ export class ChatContentComponent implements OnInit, OnChanges, AfterViewInit, A
                             ...message,
                             isSelected: false,
                             code: undefined,
-                            status: MessageStatus.Unread,
+                            status: getStatus(message),
                         };
                     }) ?? []),
                     ...this.messages!,

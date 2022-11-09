@@ -191,6 +191,7 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapHub<InviteHub>("/invite");
     endpoints.MapHub<MessageHub>("/message");
+    endpoints.MapHub<ReadHub>("/read");
 });
 
 using (var scope = app.Services.CreateScope())

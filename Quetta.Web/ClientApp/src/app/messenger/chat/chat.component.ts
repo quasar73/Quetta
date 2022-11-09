@@ -1,3 +1,4 @@
+import { ReadWebsocketService } from '@services/websocket/read-websocket/read-websocket.service';
 import { MessageUpdaterService } from '@services/message-updater/message-updater.service';
 import { ChatInfoModel } from '@api-models/chat-info.model';
 import { MessageModel } from '@api-models/message.model';
@@ -30,7 +31,8 @@ export class ChatComponent implements OnInit, OnDestroy {
         private readonly messageWebsocketService: MessageWebsocketService,
         private readonly authService: AuthenticationService,
         private readonly cdr: ChangeDetectorRef,
-        private readonly messageUpdaterService: MessageUpdaterService
+        private readonly messageUpdaterService: MessageUpdaterService,
+        private readonly readWebsocketService: ReadWebsocketService
     ) {}
 
     ngOnInit(): void {
@@ -52,6 +54,13 @@ export class ChatComponent implements OnInit, OnDestroy {
                 this.messageWebsocketService.startConnection().subscribe(() => {
                     this.messageWebsocketService.addToGroup(this.chatId);
                     this.messageWebsocketService.addNotificationsListner();
+                })
+            );
+
+            this.subscriptions.add(
+                this.readWebsocketService.startConnection().subscribe(() => {
+                    this.readWebsocketService.addToGroup(this.chatId);
+                    this.readWebsocketService.addNotificationsListner();
                 })
             );
 

@@ -3,12 +3,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Quetta.Common.Exceptions;
 using Quetta.Common.Models.Commands;
+using Quetta.Common.Models.Responses;
 using Quetta.Data;
 using Quetta.Data.Models;
 
 namespace Quetta.Logic.Handlers.Commands
 {
-    public class ReadMessagesHandler : IRequestHandler<ReadMessagesCommand, Unit>
+    public class ReadMessagesHandler : IRequestHandler<ReadMessagesCommand, ReadMessagesResponse>
     {
         private readonly QuettaDbContext dbContext;
         private readonly UserManager<User> userManager;
@@ -19,7 +20,7 @@ namespace Quetta.Logic.Handlers.Commands
             this.userManager = userManager;
         }
 
-        public async Task<Unit> Handle(
+        public async Task<ReadMessagesResponse> Handle(
             ReadMessagesCommand request,
             CancellationToken cancellationToken
         )
@@ -57,7 +58,11 @@ namespace Quetta.Logic.Handlers.Commands
 
             await dbContext.SaveChangesAsync();
 
-            return Unit.Value;
+            return new ReadMessagesResponse
+            {
+                MessageIds = unreadMessages.Select(u => u.Id).ToArray(),
+                ChatId = chat.Id,
+            };
         }
     }
 }

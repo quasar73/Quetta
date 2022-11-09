@@ -1,8 +1,9 @@
 ﻿using MediatR;
+using Quetta.Common.Models.Responses;
 
 namespace Quetta.Common.Models.Commands
 {
-    public class ReadMessagesCommand : IRequest<Unit>
+    public class ReadMessagesCommand : IRequest<ReadMessagesResponse>
     {
         public string MessageId { get; set; }
 

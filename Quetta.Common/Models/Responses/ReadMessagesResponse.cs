@@ -1,9 +1,10 @@
 ﻿namespace Quetta.Common.Models.Responses
 {
+    // TODO: Validation
     public class ReadMessagesResponse
     {
-        public string ChatId { get; set; }
-
         public string[] MessageIds { get; set; }
+
+        public ReaderResponse Reader { get; set; }
     }
 }

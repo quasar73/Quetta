@@ -2,6 +2,7 @@
 using Quetta.Common.Models.Notifications;
 using Microsoft.AspNetCore.SignalR;
 using Quetta.Logic.Hubs;
+using Quetta.Common.Models.Responses;
 
 namespace Quetta.Logic.Handlers.Notifications
 {
@@ -18,7 +19,14 @@ namespace Quetta.Logic.Handlers.Notifications
         {
             await hubContext.Clients
                 .Group(notification.ChatId)
-                .SendAsync("ReadMessages", notification.MessageIds);
+                .SendAsync(
+                    "ReadMessages",
+                    new ReadMessagesResponse
+                    {
+                        MessageIds = notification.MessageIds,
+                        Reader = notification.Reader,
+                    }
+                );
         }
     }
 }

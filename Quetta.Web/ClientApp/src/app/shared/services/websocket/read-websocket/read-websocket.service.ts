@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
+import { ReadMessagesModel } from '@models/read-messages.model';
 import { TokenStorage } from '@services/auth/token-storage.service';
-import { delayWhen, from, map, Observable, tap } from 'rxjs';
+import { delayWhen, from, map, Observable, Subject, tap } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
     providedIn: 'root',
 })
 export class ReadWebsocketService {
+    private readonly read$ = new Subject<ReadMessagesModel>();
     private hubConnection!: HubConnection;
 
     constructor(private readonly tokenStorage: TokenStorage) {}
@@ -41,9 +43,8 @@ export class ReadWebsocketService {
     }
 
     addNotificationsListner(): void {
-        this.hubConnection.on('ReadMessages', messageIds => {
-            console.log(messageIds);
-            // this.messages$.next(message);
+        this.hubConnection.on('ReadMessages', readModel => {
+            this.read$.next(readModel);
         });
     }
 
@@ -51,5 +52,9 @@ export class ReadWebsocketService {
         if (chatId) {
             this.hubConnection.invoke('SetChat', chatId);
         }
+    }
+
+    getReadObservable(): Observable<ReadMessagesModel> {
+        return this.read$.asObservable();
     }
 }

@@ -64,8 +64,7 @@ namespace Quetta.Web.Controllers
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
             var command = new ReadMessagesCommand(messageId, userId);
-            var response = await mediator.Send(command);
-            await mediator.Publish(new ReadNotification(response));
+            await mediator.Send(command);
 
             return Ok();
         }

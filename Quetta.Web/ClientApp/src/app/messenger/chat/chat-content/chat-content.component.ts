@@ -14,14 +14,16 @@ import {
     OnChanges,
     AfterViewInit,
     AfterViewChecked,
+    OnDestroy,
 } from '@angular/core';
 import { TuiScrollbarComponent, TuiAlertService, TuiNotification } from '@taiga-ui/core';
 import { Actions, ofActionDispatched, Store } from '@ngxs/store';
 import { SelectedNotes } from 'src/app/state-manager/actions/selected-notes.actions';
 import { MessageStatus } from '@enums/message-status.enum';
-import { delay, of, tap, EMPTY } from 'rxjs';
+import { delay, of, tap, EMPTY, Subscription } from 'rxjs';
 import { NoteReadService } from '@services/note-read/note-read.service';
 import { getStatus } from '@utils/status-calculator';
+import { ReadWebsocketService } from '@services/websocket/read-websocket/read-websocket.service';
 
 const SCROLL_DOWN_BTN_SHOWS = 256;
 
@@ -43,7 +45,7 @@ const SCROLL_DOWN_BTN_SHOWS = 256;
         ]),
     ],
 })
-export class ChatContentComponent implements OnInit, OnChanges, AfterViewInit, AfterViewChecked {
+export class ChatContentComponent implements OnInit, OnChanges, AfterViewInit, AfterViewChecked, OnDestroy {
     @ViewChild('notesScroll') private readonly notesScroll?: TuiScrollbarComponent;
     @ViewChild('wrap') private readonly wrap?: ElementRef<HTMLElement>;
     @ViewChild('bottomAnchor') private readonly bottomAnchor?: ElementRef<HTMLElement>;
@@ -59,6 +61,7 @@ export class ChatContentComponent implements OnInit, OnChanges, AfterViewInit, A
     isCanBeScrolled = false;
 
     private selectedIds: string[] = [];
+    private readonly subscriptions = new Subscription();
 
     constructor(
         private readonly clipboardService: ClipboardService,
@@ -68,7 +71,8 @@ export class ChatContentComponent implements OnInit, OnChanges, AfterViewInit, A
         private readonly actions: Actions,
         private readonly messageApiService: MessageApiService,
         private readonly messageUpdaterService: MessageUpdaterService,
-        private readonly noteReadService: NoteReadService
+        private readonly noteReadService: NoteReadService,
+        private readonly readWebsocketService: ReadWebsocketService
     ) {}
 
     ngAfterViewChecked(): void {
@@ -90,6 +94,24 @@ export class ChatContentComponent implements OnInit, OnChanges, AfterViewInit, A
         this.initializeSelectingSubscribtions();
         this.initializeMessagesUpdater();
         this.initializeReadService();
+
+        this.subscriptions.add(
+            this.readWebsocketService.getReadObservable().subscribe(readModel => {
+                readModel.messageIds.forEach(mId => {
+                    const index = this.messages?.findIndex(m => m.id === mId);
+
+                    if (index !== undefined && index > -1) {
+                        this.messages![index] = {
+                            ...this.messages![index],
+                            readers: [readModel.reader, ...this.messages![index].readers],
+                            status: MessageStatus.Read,
+                        };
+                    }
+                });
+
+                this.cdr.markForCheck();
+            })
+        );
     }
 
     ngAfterViewInit(): void {
@@ -112,6 +134,10 @@ export class ChatContentComponent implements OnInit, OnChanges, AfterViewInit, A
                 })
             )
             .subscribe();
+    }
+
+    ngOnDestroy(): void {
+        this.subscriptions.unsubscribe();
     }
 
     onScroll(): void {
@@ -247,7 +273,6 @@ export class ChatContentComponent implements OnInit, OnChanges, AfterViewInit, A
                 const index = this.messages.findIndex(m => m.code === model.code);
                 if (index > -1) {
                     this.messages[index] = { ...this.messages[index], status: MessageStatus.Unread, id: model.messageId };
-                    this.messages = [...this.messages];
                     this.isCanBeScrolled = true;
                     this.cdr.markForCheck();
                 }

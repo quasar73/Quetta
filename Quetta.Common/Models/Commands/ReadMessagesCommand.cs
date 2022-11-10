@@ -3,7 +3,7 @@ using Quetta.Common.Models.Responses;
 
 namespace Quetta.Common.Models.Commands
 {
-    public class ReadMessagesCommand : IRequest<ReadMessagesResponse>
+    public class ReadMessagesCommand : IRequest
     {
         public string MessageId { get; set; }
 

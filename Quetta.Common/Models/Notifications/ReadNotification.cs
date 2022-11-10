@@ -9,10 +9,6 @@ namespace Quetta.Common.Models.Notifications
 
         public string[] MessageIds { get; set; }
 
-        public ReadNotification(ReadMessagesResponse model)
-        {
-            MessageIds = model.MessageIds;
-            ChatId = model.ChatId;
-        }
+        public ReaderResponse Reader { get; set; }
     }
 }

@@ -7,6 +7,7 @@ import {
     TuiDataListWrapperModule,
     TuiIslandModule,
     TuiFieldErrorPipeModule,
+    TuiBadgeModule,
 } from '@taiga-ui/kit';
 import {
     TuiScrollbarModule,
@@ -73,6 +74,7 @@ import { InvitesListDialogComponent } from './sidebar-header/invites-list-dialog
         TuiIslandModule,
         TuiErrorModule,
         TuiFieldErrorPipeModule,
+        TuiBadgeModule,
         TranslocoModule,
         ReactiveFormsModule,
     ],

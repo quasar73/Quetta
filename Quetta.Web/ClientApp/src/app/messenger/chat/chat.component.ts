@@ -87,6 +87,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.messageWebsocketService.stopConnection();
+        this.readWebsocketService.stopConnection();
         this.subscriptions.unsubscribe();
     }
 }

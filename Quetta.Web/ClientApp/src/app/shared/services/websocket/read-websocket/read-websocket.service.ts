@@ -38,7 +38,7 @@ export class ReadWebsocketService {
     stopConnection(): void {
         this.hubConnection
             .stop()
-            .then(() => console.log('Message connection stopped.'))
+            .then(() => console.log('Read connection stopped.'))
             .catch(err => console.error('Error while stopping connection: ' + err));
     }
 

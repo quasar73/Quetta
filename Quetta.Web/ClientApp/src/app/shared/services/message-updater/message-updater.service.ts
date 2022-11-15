@@ -1,5 +1,5 @@
 import { ClientMessageModel } from './../../models/client-message.model';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { MessageAddedModel } from '@models/message-added.model';
 
@@ -7,8 +7,8 @@ import { MessageAddedModel } from '@models/message-added.model';
     providedIn: 'root',
 })
 export class MessageUpdaterService {
-    private readonly sentMessage$ = new BehaviorSubject<ClientMessageModel | null>(null);
-    private readonly addedMessage$ = new BehaviorSubject<MessageAddedModel | null>(null);
+    private readonly sentMessage$ = new Subject<ClientMessageModel | null>();
+    private readonly addedMessage$ = new Subject<MessageAddedModel | null>();
 
     constructor() {}
 

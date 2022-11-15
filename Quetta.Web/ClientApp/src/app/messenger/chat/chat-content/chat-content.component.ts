@@ -172,7 +172,6 @@ export class ChatContentComponent implements OnInit, OnChanges, AfterViewInit, A
 
             if (index > -1 && this.messages) {
                 this.messages[index] = { ...this.messages[index], isSelected: isSelected };
-                this.messages = [...this.messages];
                 this.isSelectingMode = this.messages.some(m => m.isSelected);
                 isSelected
                     ? this.store.dispatch(new SelectedNotes.Select(message.id))

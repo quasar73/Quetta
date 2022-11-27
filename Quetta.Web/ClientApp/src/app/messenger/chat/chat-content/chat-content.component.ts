@@ -24,6 +24,7 @@ import { delay, of, tap, EMPTY, Subscription } from 'rxjs';
 import { NoteReadService } from '@services/note-read/note-read.service';
 import { getStatus } from '@utils/status-calculator';
 import { ReadWebsocketService } from '@services/websocket/read-websocket/read-websocket.service';
+import { ChatUnreadService } from '@services/chat-unread/chat-unread.service';
 
 const SCROLL_DOWN_BTN_SHOWS = 256;
 
@@ -72,7 +73,8 @@ export class ChatContentComponent implements OnInit, OnChanges, AfterViewInit, A
         private readonly messageApiService: MessageApiService,
         private readonly messageUpdaterService: MessageUpdaterService,
         private readonly noteReadService: NoteReadService,
-        private readonly readWebsocketService: ReadWebsocketService
+        private readonly readWebsocketService: ReadWebsocketService,
+        private readonly chatUnreadService: ChatUnreadService
     ) {}
 
     ngAfterViewChecked(): void {
@@ -291,6 +293,11 @@ export class ChatContentComponent implements OnInit, OnChanges, AfterViewInit, A
                     }
                 });
                 this.messageApiService.readMessage(model.noteId).subscribe();
+
+                if (this.messages?.every(m => m.status === MessageStatus.Read)) {
+                    this.chatUnreadService.updateChat(0, this.chatId ?? '');
+                }
+
                 this.cdr.markForCheck();
             }
         });

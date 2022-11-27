@@ -69,6 +69,18 @@ namespace Quetta.Logic.Handlers.Queries
                                             );
                                             chat.LastMessageSecretVersion = null;
                                         }
+
+                                        chat.AmountOfUnread = dbContext.Messages
+                                            .Include(m => m.WhoRead)
+                                            .Where(
+                                                m =>
+                                                    m.ChatId == chat.Id
+                                                    && m.UserId != request.UserId
+                                                    && !m.WhoRead
+                                                        .Select(wr => wr.Id)
+                                                        .Contains(request.UserId)
+                                            )
+                                            .Count();
                                     }
                                 );
                         }

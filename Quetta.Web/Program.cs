@@ -86,7 +86,12 @@ builder.Services
                 var path = context.HttpContext.Request.Path;
                 if (
                     !string.IsNullOrEmpty(accessToken)
-                    && (path.StartsWithSegments("/invite") || path.StartsWithSegments("/message"))
+                    && (
+                        path.StartsWithSegments("/invite")
+                        || path.StartsWithSegments("/message")
+                        || path.StartsWithSegments("/read")
+                        || path.StartsWithSegments("/sidebar")
+                    )
                 )
                 {
                     context.Token = accessToken;
@@ -121,30 +126,34 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Quetta API", Version = "v1" });
-    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        Description = "JWT Authorization",
-        Name = "Authorization",
-        In = ParameterLocation.Header,
-        Type = SecuritySchemeType.Http,
-        Scheme = "bearer",
-        BearerFormat = "JWT"
-    });
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement()
-    {
+    c.AddSecurityDefinition(
+        "Bearer",
+        new OpenApiSecurityScheme
         {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                }
-
-            },
-            new List<string>()
+            Description = "JWT Authorization",
+            Name = "Authorization",
+            In = ParameterLocation.Header,
+            Type = SecuritySchemeType.Http,
+            Scheme = "bearer",
+            BearerFormat = "JWT"
         }
-    });
+    );
+    c.AddSecurityRequirement(
+        new OpenApiSecurityRequirement()
+        {
+            {
+                new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    }
+                },
+                new List<string>()
+            }
+        }
+    );
 });
 
 builder.Services.AddScoped<ITokenGenerator, TokenGenerator>();
@@ -192,6 +201,7 @@ app.UseEndpoints(endpoints =>
     endpoints.MapHub<InviteHub>("/invite");
     endpoints.MapHub<MessageHub>("/message");
     endpoints.MapHub<ReadHub>("/read");
+    endpoints.MapHub<SidebarHub>("/sidebar");
 });
 
 using (var scope = app.Services.CreateScope())

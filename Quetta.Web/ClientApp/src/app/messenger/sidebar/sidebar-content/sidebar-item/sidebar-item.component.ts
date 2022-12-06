@@ -2,7 +2,7 @@ import { ChatItemModel } from '@api-models/chat-item.model';
 import { TranslocoService } from '@ngneat/transloco';
 import { ChangeDetectionStrategy, Component, Input, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ChatType } from '@enums/chat-type.enum';
-import { ChatUnreadService } from '@services/chat-unread/chat-unread.service';
+import { ChatUnreadModel, ChatUnreadService } from '@services/chat-unread/chat-unread.service';
 
 @Component({
     selector: 'qtt-sidebar-item',
@@ -48,9 +48,8 @@ export class SidebarItemComponent implements OnInit {
 
     ngOnInit(): void {
         this.chatUnreadService.addChat(this.data.id);
-        this.chatUnreadService.getChatAsObservable(this.data.id)?.subscribe((amount: number) => {
-            this.data = { ...this.data, amountOfUnread: amount };
-            console.log(amount)
+        this.chatUnreadService.getChatAsObservable(this.data.id)?.subscribe((model: ChatUnreadModel) => {
+            this.data = { ...this.data, amountOfUnread: model.amount, lastMessage: model.text ?? this.data.lastMessage };
             this.cdr.markForCheck();
         });
     }

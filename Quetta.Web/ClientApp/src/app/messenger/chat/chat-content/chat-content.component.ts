@@ -295,7 +295,7 @@ export class ChatContentComponent implements OnInit, OnChanges, AfterViewInit, A
                 this.messageApiService.readMessage(model.noteId).subscribe();
 
                 if (this.messages?.every(m => m.status === MessageStatus.Read)) {
-                    this.chatUnreadService.updateChat(0, this.chatId ?? '');
+                    this.chatUnreadService.updateChat(this.chatId ?? '', 0);
                 }
 
                 this.cdr.markForCheck();

@@ -44,7 +44,7 @@ namespace Quetta.Tests.Validators.Responses
         [Fact]
         public void GivenValidValues_ShouldNotHaveValidationError()
         {
-            // Act
+            // Arrange
             var model = new SidebarResponse()
             {
                 Username = "username",

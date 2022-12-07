@@ -14,16 +14,26 @@ namespace Quetta.Tests.Validators.Queries
         [InlineData(null)]
         public void GivenAnInvalidUserIdValue_ShouldHaveValidationError(string id)
         {
+            // Arrange
             var model = new GetChatsQuery(id);
+
+            // Act
             var result = validator.TestValidate(model);
+
+            // Assert
             result.ShouldHaveValidationErrorFor(model => model.UserId);
         }
 
         [Fact]
         public void GivenAnValidUserIdValue_ShouldNotHaveValidationError()
         {
+            // Arrange
             var model = new GetChatsQuery("someuserid");
+
+            // Act
             var result = validator.TestValidate(model);
+
+            // Assert
             result.ShouldNotHaveValidationErrorFor(model => model.UserId);
         }
     }

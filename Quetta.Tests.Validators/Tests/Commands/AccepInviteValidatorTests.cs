@@ -14,8 +14,13 @@ namespace Quetta.Tests.Validators.Commands
         [InlineData(null)]
         public void GivenAnInvalidInviteIdValue_ShouldHaveValidationError(string id)
         {
+            // Arrange
             var model = new AcceptInviteCommand() { InviteId = id };
+
+            // Act
             var result = validator.TestValidate(model);
+
+            // Assert
             result.ShouldHaveValidationErrorFor(model => model.InviteId);
         }
 
@@ -25,20 +30,30 @@ namespace Quetta.Tests.Validators.Commands
         [InlineData(null)]
         public void GivenAnInvalidReceiverIdValue_ShouldHaveValidationError(string id)
         {
+            // Arrange
             var model = new AcceptInviteCommand() { ReceiverId = id };
+
+            // Act
             var result = validator.TestValidate(model);
+
+            // Assert
             result.ShouldHaveValidationErrorFor(model => model.ReceiverId);
         }
 
         [Fact]
         public void GivenValidValues_ShouldNotHaveValidationError()
         {
+            // Arrange
             var model = new AcceptInviteCommand() 
             { 
                 InviteId = "someinviteid",
                 ReceiverId = "somereceiverid"
             };
+
+            // Act
             var result = validator.TestValidate(model);
+
+            // Assert
             result.ShouldNotHaveAnyValidationErrors();
         }
     }

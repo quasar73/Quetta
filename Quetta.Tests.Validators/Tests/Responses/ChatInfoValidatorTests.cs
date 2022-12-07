@@ -14,11 +14,13 @@ namespace Quetta.Tests.Validators.Responses
         [InlineData(null)]
         public void GivenAnInvalidTitleValue_ShouldHaveValidationError(string title)
         {
-            var model = new ChatInfoResponse
-            {
-                Title = title
-            };
+            // Arrange
+            var model = new ChatInfoResponse { Title = title };
+
+            // Act
             var result = validator.TestValidate(model);
+
+            // Asssert
             result.ShouldHaveValidationErrorFor(model => model.Title);
         }
 
@@ -27,23 +29,26 @@ namespace Quetta.Tests.Validators.Responses
         [InlineData(-1)]
         public void GivenAnInvalidMembersValue_ShouldHaveValidationError(int members)
         {
-            var model = new ChatInfoResponse
-            {
-                Members = members
-            };
+            // Arrange
+            var model = new ChatInfoResponse { Members = members };
+
+            // Act
             var result = validator.TestValidate(model);
+
+            // Asssert
             result.ShouldHaveValidationErrorFor(model => model.Members);
         }
 
         [Fact]
         public void GivenAValidValues_ShouldNotHaveValidationErrors()
         {
-            var model = new ChatInfoResponse
-            {
-                Title = "some title",
-                Members = 2
-            };
+            // Arrange
+            var model = new ChatInfoResponse { Title = "some title", Members = 2 };
+
+            // Act
             var result = validator.TestValidate(model);
+
+            // Asssert
             result.ShouldNotHaveAnyValidationErrors();
         }
     }

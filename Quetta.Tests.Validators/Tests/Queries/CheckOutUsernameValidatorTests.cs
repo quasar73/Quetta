@@ -16,16 +16,26 @@ namespace Quetta.Tests.Validators.Queries
         [InlineData("veryverylonglastnameover20chars")]
         public void GivenAnInvalidUsernameValue_ShouldHaveValidationError(string usernmae)
         {
+            // Arrange
             var model = new CheckOutUsernameQuery(usernmae);
+
+            // Act
             var result = validator.TestValidate(model);
+
+            // Assert
             result.ShouldHaveValidationErrorFor(model => model.Username);
         }
 
         [Fact]
         public void GivenAnValidUsernameValue_ShouldNotHaveValidationError()
         {
+            // Arrange
             var model = new CheckOutUsernameQuery("username");
+
+            // Act
             var result = validator.TestValidate(model);
+
+            // Assert
             result.ShouldNotHaveValidationErrorFor(model => model.Username);
         }
     }

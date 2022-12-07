@@ -14,16 +14,26 @@ namespace Quetta.Tests.Validators.Requests
         [InlineData(null)]
         public void GivenAnInvalidReceiverUsernameValue_ShouldHaveValidationError(string username)
         {
+            // Arrange
             var model = new SendInviteRequest() { ReceiverUsername = username };
+
+            // Act
             var result = validator.TestValidate(model);
+
+            //Assert
             result.ShouldHaveValidationErrorFor(model => model.ReceiverUsername);
         }
 
         [Fact]
         public void GivenValidValues_ShouldNotHaveValidationError()
         {
+            // Arrange
             var model = new SendInviteRequest() { ReceiverUsername = "Username" };
+
+            // Act
             var result = validator.TestValidate(model);
+
+            // Assert
             result.ShouldNotHaveAnyValidationErrors();
         }
     }

@@ -14,8 +14,13 @@ namespace Quetta.Tests.Validators.Commands
         [InlineData(null)]
         public void GivenAnInvalidIdTokenValue_ShouldHaveValidationError(string idToken)
         {
+            // Arrange
             var model = new RegisterGoogleUserCommand { IdToken = idToken };
+
+            // Act
             var result = validator.TestValidate(model);
+
+            // Assert
             result.ShouldHaveValidationErrorFor(model => model.IdToken);
         }
 
@@ -26,8 +31,13 @@ namespace Quetta.Tests.Validators.Commands
         [InlineData("veryverylongfirstnameover20chars")]
         public void GivenAnInvalidFirstNameValue_ShouldHaveValidationError(string firstName)
         {
+            // Arrange
             var model = new RegisterGoogleUserCommand { FirstName = firstName };
+
+            // Act
             var result = validator.TestValidate(model);
+
+            // Assert
             result.ShouldHaveValidationErrorFor(model => model.FirstName);
         }
 
@@ -38,8 +48,13 @@ namespace Quetta.Tests.Validators.Commands
         [InlineData("veryverylonglastnameover20chars")]
         public void GivenAnInvalidLastNameValue_ShouldHaveValidationError(string lastName)
         {
+            // Arrange
             var model = new RegisterGoogleUserCommand { LastName = lastName };
+
+            // Act
             var result = validator.TestValidate(model);
+
+            // Assert
             result.ShouldHaveValidationErrorFor(model => model.LastName);
         }
 
@@ -51,14 +66,20 @@ namespace Quetta.Tests.Validators.Commands
         [InlineData("veryverylongusernameover20chars")]
         public void GivenAnInvalidUserNameValue_ShouldHaveValidationError(string username)
         {
+            // Arrange
             var model = new RegisterGoogleUserCommand { Username = username };
+
+            // Act
             var result = validator.TestValidate(model);
+
+            // Assert
             result.ShouldHaveValidationErrorFor(model => model.Username);
         }
 
         [Fact]
         public void GivenValidValues_ShouldNotHaveValidationError()
         {
+            // Arrange
             var model = new RegisterGoogleUserCommand
             {
                 IdToken = "someidtoken",
@@ -66,7 +87,11 @@ namespace Quetta.Tests.Validators.Commands
                 LastName = "LastName",
                 Username = "Username",
             };
+
+            // Act
             var result = validator.TestValidate(model);
+
+            // Assert
             result.ShouldNotHaveAnyValidationErrors();
         }
     }

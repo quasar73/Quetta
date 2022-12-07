@@ -14,11 +14,16 @@ namespace Quetta.Tests.Validators.Queries
         [InlineData(null)]
         public void GivenAnInvalidChatIdValue_ShouldHaveValidationError(string chatId)
         {
+            // Arrange
             var model = new GetChatInfoQuery
             {
                 ChatId = chatId
             };
+
+            // Act
             var result = validator.TestValidate(model);
+
+            // Assert
             result.ShouldHaveValidationErrorFor(model => model.ChatId);
         }
 
@@ -28,23 +33,33 @@ namespace Quetta.Tests.Validators.Queries
         [InlineData(null)]
         public void GivenAnInvalidUserIdValue_ShouldHaveValidationError(string userId)
         {
+            // Arrange
             var model = new GetChatInfoQuery
             {
                 UserId = userId
             };
+
+            // Act
             var result = validator.TestValidate(model);
+
+            // Assert
             result.ShouldHaveValidationErrorFor(model => model.UserId);
         }
 
         [Fact]
         public void GivenAValidValues_ShouldNotHaveValidationErrors()
         {
+            // Arrange
             var model = new GetChatInfoQuery
             {
                 UserId = "someuserid",
                 ChatId = "somechatid"
             };
+
+            // Act
             var result = validator.TestValidate(model);
+
+            // Assert
             result.ShouldNotHaveAnyValidationErrors();
         }
     }

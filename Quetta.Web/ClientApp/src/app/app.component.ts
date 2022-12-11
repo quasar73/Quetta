@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 @Component({
     selector: 'qtt-root',
@@ -7,5 +8,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
-    title = 'ClientApp';
+    title = 'Quetta';
+
+    constructor(private readonly titleService: Title) {
+        titleService.setTitle(this.title);
+    }
 }

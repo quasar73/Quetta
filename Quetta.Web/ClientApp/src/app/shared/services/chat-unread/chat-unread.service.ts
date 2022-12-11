@@ -18,7 +18,7 @@ export class ChatUnreadService {
 
     updateChat(chatId: string, amount: number, text?: string): void {
         if (chatId in this.chats) {
-            return this.chats[chatId].next({ amount, text: text ?? null });
+            this.chats[chatId].next({ amount, text: text ?? null });
         }
     }
 

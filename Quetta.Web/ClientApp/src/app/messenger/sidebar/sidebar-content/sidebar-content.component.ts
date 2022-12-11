@@ -6,6 +6,7 @@ import { ChatApiService } from '@api-services/chat/chat.service';
 import { ChangeDetectionStrategy, Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { SidebarWebsocketService } from '@services/websocket/sidebar-websocket/sidebar-websocket.service';
 import { ChatUnreadService } from '@services/chat-unread/chat-unread.service';
+import { ClientNotificationsService } from '@services/client-notifications/client-notifications.service';
 
 @Component({
     selector: 'qtt-sidebar-content',
@@ -23,6 +24,7 @@ export class SidebarContentComponent implements OnInit {
         private readonly selectedChatService: SelectedChatService,
         private readonly sidebarWebsocketService: SidebarWebsocketService,
         private readonly chatUnreadService: ChatUnreadService,
+        private readonly clientNotificationsService: ClientNotificationsService,
         private readonly cdr: ChangeDetectorRef
     ) {}
 
@@ -40,6 +42,7 @@ export class SidebarContentComponent implements OnInit {
 
         this.sidebarWebsocketService.getSidebarObservable().subscribe(res => {
             this.chatUnreadService.updateChat(res.chatId, res.amount, res.text);
+            this.clientNotificationsService.updateAmount(res.chatId, res.amount);
             this.cdr.markForCheck();
         });
     }

@@ -1,3 +1,4 @@
+import { ClientNotificationsService } from '@services/client-notifications/client-notifications.service';
 import { MessageApiService } from '@api-services/message/message.service';
 import { MessageUpdaterService } from '@services/message-updater/message-updater.service';
 import { ClientMessageModel } from '@models/client-message.model';
@@ -74,7 +75,8 @@ export class ChatContentComponent implements OnInit, OnChanges, AfterViewInit, A
         private readonly messageUpdaterService: MessageUpdaterService,
         private readonly noteReadService: NoteReadService,
         private readonly readWebsocketService: ReadWebsocketService,
-        private readonly chatUnreadService: ChatUnreadService
+        private readonly chatUnreadService: ChatUnreadService,
+        private readonly clientNotificationsService: ClientNotificationsService
     ) {}
 
     ngAfterViewChecked(): void {
@@ -300,6 +302,7 @@ export class ChatContentComponent implements OnInit, OnChanges, AfterViewInit, A
 
                     if (this.messages?.every(m => m.status === MessageStatus.Read)) {
                         this.chatUnreadService.updateChat(this.chatId ?? '', 0);
+                        this.clientNotificationsService.updateAmount(this.chatId ?? '', 0);
                     }
 
                     this.cdr.markForCheck();

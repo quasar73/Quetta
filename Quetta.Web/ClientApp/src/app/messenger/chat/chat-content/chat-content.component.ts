@@ -26,7 +26,7 @@ import { getStatus } from '@utils/status-calculator';
 import { ReadWebsocketService } from '@services/websocket/read-websocket/read-websocket.service';
 import { ChatUnreadService } from '@services/chat-unread/chat-unread.service';
 
-const SCROLL_DOWN_BTN_SHOWS = 256;
+const SCROLL_DOWN_BTN_SHOWS = 128;
 
 @Component({
     selector: 'qtt-chat-content',
@@ -214,11 +214,10 @@ export class ChatContentComponent implements OnInit, OnChanges, AfterViewInit, A
             const currentDate = new Date(this.messages[index].date);
             const nextDate = new Date(this.messages[index - 1].date);
 
-            return !(
-                currentDate.getDate() === nextDate.getDate() &&
-                currentDate.getMonth() === nextDate.getMonth() &&
-                currentDate.getFullYear() === nextDate.getFullYear()
-            );
+            currentDate.setHours(0, 0, 0, 0);
+            nextDate.setHours(0, 0, 0, 0);
+
+            return currentDate.getTime() !== nextDate.getTime();
         }
 
         return false;

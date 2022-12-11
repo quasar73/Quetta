@@ -262,45 +262,51 @@ export class ChatContentComponent implements OnInit, OnChanges, AfterViewInit, A
     }
 
     private initializeMessagesUpdater(): void {
-        this.messageUpdaterService.getSentMessage().subscribe(message => {
-            if (message) {
-                this.messages = [...(this.messages ?? []), message];
-                this.cdr.markForCheck();
-            }
-        });
-
-        this.messageUpdaterService.getAddedMessage().subscribe(model => {
-            if (model && this.messages) {
-                const index = this.messages.findIndex(m => m.code === model.code);
-                if (index > -1) {
-                    this.messages[index] = { ...this.messages[index], status: MessageStatus.Unread, id: model.messageId };
-                    this.isCanBeScrolled = true;
+        this.subscriptions.add(
+            this.messageUpdaterService.getSentMessage().subscribe(message => {
+                if (message) {
+                    this.messages = [...(this.messages ?? []), message];
                     this.cdr.markForCheck();
                 }
-            }
-        });
+            })
+        );
+
+        this.subscriptions.add(
+            this.messageUpdaterService.getAddedMessage().subscribe(model => {
+                if (model && this.messages) {
+                    const index = this.messages.findIndex(m => m.code === model.code);
+                    if (index > -1) {
+                        this.messages[index] = { ...this.messages[index], status: MessageStatus.Unread, id: model.messageId };
+                        this.isCanBeScrolled = true;
+                        this.cdr.markForCheck();
+                    }
+                }
+            })
+        );
     }
 
     private initializeReadService(): void {
-        this.noteReadService.getMessageIdAsObservable().subscribe(model => {
-            if (model) {
-                const message = this.messages!.find(m => m.id == model.noteId);
-                const unreadMessages = this.messages?.filter(m => m.date <= message!.date && m.status == MessageStatus.Unread);
-                unreadMessages?.forEach(message => {
-                    const index = this.messages!.findIndex(m => m.id === message.id);
-                    if (index > -1) {
-                        this.messages![index] = { ...this.messages![index], status: MessageStatus.Read };
+        this.subscriptions.add(
+            this.noteReadService.getMessageIdAsObservable().subscribe(model => {
+                if (model) {
+                    const message = this.messages!.find(m => m.id == model.noteId);
+                    const unreadMessages = this.messages?.filter(m => m.date <= message!.date && m.status == MessageStatus.Unread);
+                    unreadMessages?.forEach(message => {
+                        const index = this.messages!.findIndex(m => m.id === message.id);
+                        if (index > -1) {
+                            this.messages![index] = { ...this.messages![index], status: MessageStatus.Read };
+                        }
+                    });
+                    this.messageApiService.readMessage(model.noteId).subscribe();
+
+                    if (this.messages?.every(m => m.status === MessageStatus.Read)) {
+                        this.chatUnreadService.updateChat(this.chatId ?? '', 0);
                     }
-                });
-                this.messageApiService.readMessage(model.noteId).subscribe();
 
-                if (this.messages?.every(m => m.status === MessageStatus.Read)) {
-                    this.chatUnreadService.updateChat(this.chatId ?? '', 0);
+                    this.cdr.markForCheck();
                 }
-
-                this.cdr.markForCheck();
-            }
-        });
+            })
+        );
     }
 
     private clearSelecting(): void {

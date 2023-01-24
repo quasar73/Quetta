@@ -267,6 +267,8 @@ export class ChatContentComponent implements OnInit, OnChanges, AfterViewInit, A
             this.messageUpdaterService.getSentMessage().subscribe(message => {
                 if (message) {
                     this.messages = [...(this.messages ?? []), message];
+                    this.isCanBeScrolled = true;
+                    this.scrollDown();
                     this.cdr.markForCheck();
                 }
             })

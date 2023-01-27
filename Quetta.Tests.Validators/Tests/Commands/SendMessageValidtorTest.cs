@@ -21,8 +21,13 @@ namespace Quetta.Tests.Validators.Commands
         [InlineData(null)]
         public void GivenAnInvalidSenderIdValue_ShouldHaveValidationError(string id)
         {
+            // Arrange
             var model = new SendMessageCommand() { SenderId = id };
+
+            // Act
             var result = validator.TestValidate(model);
+
+            // Assert
             result.ShouldHaveValidationErrorFor(model => model.SenderId);
         }
 
@@ -32,8 +37,13 @@ namespace Quetta.Tests.Validators.Commands
         [InlineData(null)]
         public void GivenAnInvalidChatIdValue_ShouldHaveValidationError(string id)
         {
+            // Arrange
             var model = new SendMessageCommand() { ChatId = id };
+
+            // Act
             var result = validator.TestValidate(model);
+
+            // Assert
             result.ShouldHaveValidationErrorFor(model => model.ChatId);
         }
 
@@ -41,21 +51,31 @@ namespace Quetta.Tests.Validators.Commands
         [MemberData(nameof(TextData))]
         public void GivenAnInvalidTextValue_ShouldHaveValidationError(string text)
         {
+            // Arrange
             var model = new SendMessageCommand() { Text = text };
+
+            // Act
             var result = validator.TestValidate(model);
+
+            // Assert
             result.ShouldHaveValidationErrorFor(model => model.Text);
         }
 
         [Fact]
         public void GivenValidValues_ShouldNotHaveValidationError()
         {
+            // Arrange
             var model = new SendMessageCommand()
             {
                 SenderId = "somesenderid",
                 ChatId = "somechatid",
                 Text = "some valid text",
             };
+
+            // Act
             var result = validator.TestValidate(model);
+
+            // Assert
             result.ShouldNotHaveAnyValidationErrors();
         }
     }

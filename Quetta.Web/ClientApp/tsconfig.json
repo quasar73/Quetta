@@ -17,6 +17,18 @@
         "moduleResolution": "node",
         "importHelpers": true,
         "target": "es2020",
+        "paths": {
+            "@api-services/*": ["./src/app/shared/services/api/*"],
+            "@services/*": ["./src/app/shared/services/*"],
+            "@api-models/*": ["./src/app/shared/api-models/*"],
+            "@consts/*": ["./src/app/shared/consts/*"],
+            "@directives/*": ["./src/app/shared/directives/*"],
+            "@enums/*": ["./src/app/shared/enums/*"],
+            "@models/*": ["./src/app/shared/models/*"],
+            "@resolvers/*": ["./src/app/shared/resolvers/*"],
+            "@utils/*": ["./src/app/shared/utils/*"],
+            "@validators/*": ["./src/app/shared/validators/*"],
+        },
         "module": "es2020",
         "lib": ["es2020", "dom"],
         "resolveJsonModule": true

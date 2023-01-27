@@ -1,6 +1,6 @@
 import { EMPTY } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ChatApiService } from './../../../shared/services/api/chat/chat.service';
+import { ChatApiService } from '@api-services/chat/chat.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 

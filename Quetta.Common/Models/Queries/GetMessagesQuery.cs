@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Quetta.Common.Models.Requests;
 using Quetta.Common.Models.Responses;
 
 namespace Quetta.Common.Models.Queries
@@ -7,9 +8,20 @@ namespace Quetta.Common.Models.Queries
     {
         public string ChatId { get; set; }
 
-        public GetMessagesQuery(string chatId) 
+        public string? LastMessageId { get; set; }
+
+        public string UserId { get; set; }
+
+        public int Amount { get; set; }
+
+        public GetMessagesQuery(GetMessagesRequest request, string userId) 
         {
-            this.ChatId = chatId;
+            ChatId = request.ChatId;
+            LastMessageId = request.LastMessageId;
+            Amount = request.Amount;
+            UserId = userId;
         }
+
+        public GetMessagesQuery() { }
     }
 }

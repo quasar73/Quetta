@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Quetta.Data.Models
+﻿namespace Quetta.Data.Models
 {
     public class Message
     {
@@ -10,6 +8,8 @@ namespace Quetta.Data.Models
 
         public DateTime Date { get; set; }
 
+        public string SecretVersion { get; set; }
+
         public string ChatId { get; set; }
 
         public virtual Chat Chat { get; set; }
@@ -17,5 +17,7 @@ namespace Quetta.Data.Models
         public string UserId { get; set; }
 
         public virtual User User { get; set; }
+
+        public virtual ICollection<User> WhoRead { get; set; }
     }
 }

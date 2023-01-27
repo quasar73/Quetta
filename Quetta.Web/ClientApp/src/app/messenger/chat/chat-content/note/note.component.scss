@@ -30,6 +30,11 @@
             }
         }
 
+        .unsupported {
+            font-style: italic;
+            color: var(--tui-text-03);
+        }
+
         .info {
             width: 100%;
             display: flex;

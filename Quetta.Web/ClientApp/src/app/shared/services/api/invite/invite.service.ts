@@ -1,9 +1,9 @@
 import { Observable } from 'rxjs';
 import { BaseService } from './../base/base.service';
 import { Injectable } from '@angular/core';
-import { SendInviteModel } from 'src/app/shared/api-models/send-invite.model';
-import { InviteModel } from 'src/app/shared/api-models/invite.model';
-import { IsAnyInvites } from 'src/app/shared/api-models/is-any-invites.model';
+import { SendInviteModel } from '@api-models/send-invite.model';
+import { InviteModel } from '@api-models/invite.model';
+import { IsAnyInvites } from '@api-models/is-any-invites.model';
 
 @Injectable({
     providedIn: 'root',

@@ -1,4 +1,4 @@
-import { MessageModel } from 'src/app/shared/api-models/message.model';
+import { MessageModel } from '@api-models/message.model';
 import { delayWhen, map, tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
@@ -34,6 +34,13 @@ export class MessageWebsocketService {
                 return;
             })
         );
+    }
+
+    stopConnection(): void {
+        this.hubConnection
+            .stop()
+            .then(() => console.log('Message connection stopped.'))
+            .catch(err => console.error('Error while stopping connection: ' + err));
     }
 
     addNotificationsListner(): void {

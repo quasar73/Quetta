@@ -1,17 +1,35 @@
 <div class="wrap" #wrap>
     <ng-container *ngIf="messages?.length; else emptyChatMessage">
         <div class="notes-wrap">
-            <tui-scrollbar class="notes-scroll" [scrollTop]="notesList.scrollHeight" (scroll)="onScroll()">
-                <div class="notes-list" #notesList>
-                    <div #bottomAnchor></div>
+            <tui-scrollbar #notesScroll class="notes-scroll" (scroll)="onScroll()">
+                <div class="load-more-wrap" *ngIf="hasMoreMessages">
+                    <tui-badge
+                        [status]="isMessagesLoading ? 'neutral' : 'primary'"
+                        [hoverable]="!isMessagesLoading"
+                        [value]="isMessagesLoading ? 'Loading' : 'Load more'"
+                        (click)="loadMoreMessages()"
+                    >
+                        <tui-svg src="tuiIconRefresh"></tui-svg>
+                    </tui-badge>
+                </div>
+
+                <ng-container *ngFor="let message of messages; let i = index">
+                    <div class="date-wrap" *ngIf="isNextDay(i)">
+                        <tui-badge status="neutral" value="{{ message.date | date }}"> </tui-badge>
+                    </div>
                     <qtt-note
-                        *ngFor="let message of messages"
+                        qttEnterViewportNotifier
+                        [id]="i"
                         [message]="message"
                         [isSelectingMode]="isSelectingMode"
                         (messageCopy)="onMessageCopied($event)"
                         (messageSelected)="onMessageSelected($event, message)"
+                        (messageDeleted)="onMessageDeleted(message)"
+                        (visibilityChange)="onVisibilityChange($event, message, i)"
                     ></qtt-note>
-                </div>
+                </ng-container>
+
+                <div #bottomAnchor></div>
             </tui-scrollbar>
         </div>
     </ng-container>
@@ -24,7 +42,7 @@
 
     <tui-marker-icon
         class="scroll-down-btn"
-        *ngIf="scrollDownButtonVisible"
+        *ngIf="isScrollDownButtonVisible"
         mode="link"
         src="tuiIconChevronDownLarge"
         size="s"

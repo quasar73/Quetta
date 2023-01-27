@@ -1,4 +1,4 @@
-import { AuthApiService } from 'src/app/shared/services/api/auth/auth.service';
+import { AuthApiService } from '@api-services/auth/auth.service';
 import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
 import { Observable, timer } from 'rxjs';
 import { debounceTime, map, switchMap } from 'rxjs/operators';

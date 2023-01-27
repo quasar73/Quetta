@@ -5,7 +5,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Actions, NgxsModule, ofActionDispatched } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { ClientMessageModel } from 'src/app/shared/models/client-message.model';
+import { ClientMessageModel } from '@models/client-message.model';
 import { SelectedNotes } from 'src/app/state-manager/actions/selected-notes.actions';
 import { SelectedNotesState } from 'src/app/state-manager/states/selected-notes.state';
 import { testMessages } from 'src/app/testing/data/test-messages';

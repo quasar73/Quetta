@@ -1,13 +1,16 @@
 ﻿using AutoMapper;
 using FluentAssertions;
+using Moq;
 using Quetta.Data.Mapping;
 using Quetta.Logic.Handlers.Queries;
+using Quetta.Logic.Interfaces;
 
 namespace Quetta.Tests.Handlers.Queries
 {
     public class GetChatsHandlerTests
     {
         private readonly IMapper mapper;
+        private readonly IBaseEncryptingService encryptingService;
 
         public GetChatsHandlerTests()
         {
@@ -16,6 +19,15 @@ namespace Quetta.Tests.Handlers.Queries
                 cfg.AddProfile(new ChatProfile());
             });
             mapper = mockMapper.CreateMapper();
+
+            var encryptingServiceMock = new Mock<IBaseEncryptingService>();
+            encryptingServiceMock
+                .Setup(x => x.Decrypt(It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync(() =>
+                {
+                    return "Decrypted message.";
+                });
+            encryptingService = encryptingServiceMock.Object;
         }
 
         [Theory]
@@ -31,7 +43,7 @@ namespace Quetta.Tests.Handlers.Queries
                 dbContext.Chats.AddRange(model.ChatsToAdd);
                 dbContext.Messages.AddRange(model.MessagesToAdd);
                 await dbContext.SaveChangesAsync();
-                var handler = new GetChatsHandler(dbContext, mapper);
+                var handler = new GetChatsHandler(dbContext, mapper, encryptingService);
 
                 // Act
                 var actualResult = await handler.Handle(model.IncomingQuery, new CancellationToken());

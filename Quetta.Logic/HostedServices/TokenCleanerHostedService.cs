@@ -11,7 +11,10 @@ namespace Quetta.Logic.HostedServices
         private readonly IServiceScopeFactory scopeFactory;
         private Timer timer = null!;
 
-        public TokenCleanerHostedService(ILogger<TokenCleanerHostedService> logger, IServiceScopeFactory scopeFactory)
+        public TokenCleanerHostedService(
+            ILogger<TokenCleanerHostedService> logger,
+            IServiceScopeFactory scopeFactory
+        )
         {
             this.logger = logger;
             this.scopeFactory = scopeFactory;
@@ -22,7 +25,7 @@ namespace Quetta.Logic.HostedServices
             logger.LogInformation("Token Cleaner Hosted Service running.");
 
             timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromMinutes(30));
-            
+
             return Task.CompletedTask;
         }
 
@@ -45,15 +48,17 @@ namespace Quetta.Logic.HostedServices
             using (var scope = scopeFactory.CreateScope())
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<QuettaDbContext>();
-                
+
                 var tokens = dbContext.RefreshTokens.Where(t => t.Expires < DateTime.UtcNow);
                 var count = tokens.Count();
                 dbContext.RemoveRange(tokens);
                 dbContext.SaveChanges();
 
-                logger.LogInformation("Token Cleaner Hosted Service is working. Removed tokens: {Count}", count);
+                logger.LogInformation(
+                    "Token Cleaner Hosted Service is working. Removed tokens: {Count}",
+                    count
+                );
             }
-            
         }
     }
 }

@@ -16,21 +16,32 @@ export class SelectedNotesState {
     @Action(SelectedNotes.Select)
     selectMessage(ctx: StateContext<SelectedNotesStateModel>, action: SelectedNotes.Select): void {
         const state = ctx.getState();
-        ctx.setState({
-            ids: [...state.ids, action.id],
-        });
+        action.id === null
+            ? null
+            : ctx.setState({
+                  ids: [...state.ids, action.id],
+              });
     }
 
     @Action(SelectedNotes.Remove)
     removeMessage(ctx: StateContext<SelectedNotesStateModel>, action: SelectedNotes.Remove): void {
         const state = ctx.getState();
-        ctx.setState({
-            ids: [...state.ids.filter(id => id !== action.id)],
-        });
+        action.id === null
+            ? null
+            : ctx.setState({
+                  ids: [...state.ids.filter(id => id !== action.id)],
+              });
     }
 
     @Action(SelectedNotes.Clear)
     clearMessages(ctx: StateContext<SelectedNotesStateModel>): void {
+        ctx.setState({
+            ids: [],
+        });
+    }
+
+    @Action(SelectedNotes.Delete)
+    deleteMessages(ctx: StateContext<SelectedNotesStateModel>): void {
         ctx.setState({
             ids: [],
         });

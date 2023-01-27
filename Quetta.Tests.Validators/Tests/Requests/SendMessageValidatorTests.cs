@@ -19,8 +19,13 @@ namespace Quetta.Tests.Validators.Requests
         [MemberData(nameof(TextData))]
         public void GivenAnInvalidTextValue_ShouldHaveValidationError(string text)
         {
+            // Arrange
             var model = new SendMessageReqeust() { Text = text };
+
+            // Act
             var result = validator.TestValidate(model);
+
+            // Assert
             result.ShouldHaveValidationErrorFor(model => model.Text);
         }
 
@@ -30,20 +35,30 @@ namespace Quetta.Tests.Validators.Requests
         [InlineData(null)]
         public void GivenAnInvalidChatIdValue_ShouldHaveValidationError(string id)
         {
+            // Arrange
             var model = new SendMessageReqeust() { ChatId = id };
+
+            // Act
             var result = validator.TestValidate(model);
+
+            // Assert
             result.ShouldHaveValidationErrorFor(model => model.ChatId);
         }
 
         [Fact]
         public void GivenValidValues_ShouldNotHaveValidationError()
         {
+            // Arrange
             var model = new SendMessageReqeust()
             {
                 Text = "some valid text",
                 ChatId = "somechatid",
             };
+
+            // Act
             var result = validator.TestValidate(model);
+
+            // Assert
             result.ShouldNotHaveAnyValidationErrors();
         }
     }

@@ -30,17 +30,22 @@ namespace Quetta.Logic.Services
             var expires = DateTime.UtcNow.AddDays(1);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new[]
-                {
-                    new Claim(JwtRegisteredClaimNames.Sub, user.Id),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                    new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
-                    new Claim(ClaimTypes.Surname, user?.LastName ?? ""),
-                    new Claim(ClaimTypes.GivenName, user?.FirstName ?? ""),
-                    new Claim(ClaimTypes.NameIdentifier, user?.UserName ?? "")
-                }),
+                Subject = new ClaimsIdentity(
+                    new[]
+                    {
+                        new Claim(JwtRegisteredClaimNames.Sub, user.Id),
+                        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                        new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
+                        new Claim(ClaimTypes.Surname, user?.LastName ?? ""),
+                        new Claim(ClaimTypes.GivenName, user?.FirstName ?? ""),
+                        new Claim(ClaimTypes.NameIdentifier, user?.UserName ?? "")
+                    }
+                ),
                 Expires = expires,
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
+                SigningCredentials = new SigningCredentials(
+                    new SymmetricSecurityKey(key),
+                    SecurityAlgorithms.HmacSha256Signature
+                ),
                 Issuer = configuration["Authentication:Jwt:Issuer"],
                 Audience = configuration["Authentication:Jwt:Audience"]
             };

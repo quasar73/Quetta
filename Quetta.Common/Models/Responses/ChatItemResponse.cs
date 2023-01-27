@@ -10,6 +10,10 @@ namespace Quetta.Common.Models.Responses
 
         public ChatType ChatType { get; set; }
 
+        public int AmountOfUnread { get; set; }
+
         public string? LastMessage { get; set; }
+
+        public string? LastMessageSecretVersion { get; set; }
     }
 }

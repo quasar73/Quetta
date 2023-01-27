@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Npgsql;
 using Quetta.Data;
 
@@ -12,6 +13,7 @@ namespace Quetta.Tests.Handlers
         {
             var options = new DbContextOptionsBuilder<QuettaDbContext>()
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning))
                 .Options;
             DbContext = new QuettaDbContext(options);
         }

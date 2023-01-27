@@ -29,12 +29,20 @@ namespace Quetta.Data.Configurations
                 .WithOne(i => i.Sender);
 
             builder
+                .HasMany(u => u.CreatedChats)
+                .WithOne(c => c.Creator);
+
+            builder
+                .HasMany(u => u.SentMessages)
+                .WithOne(m => m.User);
+
+            builder
                 .HasMany(u => u.Chats)
                 .WithMany(c => c.Users);
 
             builder
-                .HasMany(u => u.CreatedChats)
-                .WithOne(c => c.Creator);
+                .HasMany(u => u.ReadMessages)
+                .WithMany(m => m.WhoRead);
 
             builder.Property(u => u.FirstName)
                 .IsRequired()

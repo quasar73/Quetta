@@ -78,14 +78,14 @@ namespace Quetta.Tests.Handlers.Queries
                             ChatType = ChatType.PersonalChat,
                             Id = "00000000-0000-0000-0000-000000000001",
                             LastMessage = "Test text",
-                            Title = "First2 Last2"
+                            Title = "Decrypted message."
                         },
                         new ChatItemResponse
                         {
                             ChatType = ChatType.GroupChat,
                             Id = "00000000-0000-0000-0000-000000000002",
                             LastMessage = null,
-                            Title = "Test title"
+                            Title = "Decrypted message."
                         }
                     },
                 }

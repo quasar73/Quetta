@@ -1,5 +1,5 @@
-import { MessageStatus } from 'src/app/shared/enums/message-status.enum';
-import { ClientMessageModel } from 'src/app/shared/models/client-message.model';
+import { MessageStatus } from '@enums/message-status.enum';
+import { ClientMessageModel } from '@models/client-message.model';
 
 export const testMessages: ClientMessageModel[] = [
     {

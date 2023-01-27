@@ -10,7 +10,7 @@ namespace Quetta.Tests.Handlers.Queries
         {
             new User()
             {
-                Id = Guid.NewGuid().ToString(),
+                Id = "00000000-0000-0000-0000-000000000000",
                 UserName = "username1",
                 FirstName = "First",
                 LastName = "Last"
@@ -73,24 +73,32 @@ namespace Quetta.Tests.Handlers.Queries
                             Date = new DateTime(2022, 01, 01),
                         },
                     },
-                    IncomingQuery = new("00000000-0000-0000-0000-000000000000"),
+                    IncomingQuery = new(
+                        "00000000-0000-0000-0000-000000000000",
+                        null,
+                        3,
+                        "00000000-0000-0000-0000-000000000000"
+                    ),
                     ExpectedReturnedMessages = new MessageResponse[]
                     {
                         new MessageResponse
                         {
-                            Text = "Test message one",
+                            Id = "00000000-0000-0000-0000-000000000000",
+                            Text = "Decrypted message.",
                             Username = "username1",
                             Date = new DateTime(2022, 01, 01),
                         },
                         new MessageResponse
                         {
-                            Text = "Test message two",
+                            Id = "00000000-0000-0000-0000-000000000001",
+                            Text = "Decrypted message.",
                             Username = "username2",
                             Date = new DateTime(2022, 01, 02),
                         },
                         new MessageResponse
                         {
-                            Text = "Test message three",
+                            Id = "00000000-0000-0000-0000-000000000002",
+                            Text = "Decrypted message.",
                             Username = "username3",
                             Date = new DateTime(2022, 01, 03),
                         },
@@ -103,7 +111,12 @@ namespace Quetta.Tests.Handlers.Queries
                 {
                     UsersToAdd = Array.Empty<User>(),
                     MessagesToAdd = Array.Empty<Message>(),
-                    IncomingQuery = new("00000000-0000-0000-0000-000000000000"),
+                    IncomingQuery = new(
+                        "00000000-0000-0000-0000-000000000000",
+                        null,
+                        1,
+                        "00000000-0000-0000-0000-000000000000"
+                    ),
                     ExpectedReturnedMessages = Array.Empty<MessageResponse>(),
                 }
             };

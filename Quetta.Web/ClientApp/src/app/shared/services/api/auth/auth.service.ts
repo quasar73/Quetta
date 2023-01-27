@@ -1,8 +1,8 @@
 import { Observable } from 'rxjs';
 import { BaseService } from './../base/base.service';
 import { Injectable } from '@angular/core';
-import { RegisterGoogleUserModel } from 'src/app/shared/api-models/register-google-user.model';
-import { TokenModel } from 'src/app/shared/api-models/token.model';
+import { RegisterGoogleUserModel } from '@api-models/register-google-user.model';
+import { TokenModel } from '@api-models/token.model';
 
 @Injectable({
     providedIn: 'root',

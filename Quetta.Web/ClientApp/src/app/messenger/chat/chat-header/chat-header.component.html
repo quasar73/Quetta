@@ -12,7 +12,7 @@
             {{ t('messenger.chat.header.selected', { count: ids?.length }) }}
         </div>
         <div class="actions" *transloco="let t">
-            <button tuiButton type="button" appearance="primary" class="tui-space_right-3">
+            <button tuiButton type="button" appearance="primary" class="tui-space_right-3" (click)="delete()">
                 {{ t('messenger.chat.header.delete') }}
             </button>
             <button tuiButton type="button" appearance="cancel" (click)="cancel()">{{ t('messenger.chat.header.cancel') }}</button>

@@ -15,11 +15,13 @@ namespace Quetta.Tests.Validators.Responses
         [InlineData(null)]
         public void GivenAnInvalidIdValue_ShouldHaveValidationError(string id)
         {
-            var model = new ChatItemResponse
-            {
-                Id = id
-            };
+            // Arrange
+            var model = new ChatItemResponse { Id = id };
+
+            // Act
             var result = validator.TestValidate(model);
+
+            // Asssert
             result.ShouldHaveValidationErrorFor(model => model.Id);
         }
 
@@ -29,24 +31,31 @@ namespace Quetta.Tests.Validators.Responses
         [InlineData(null)]
         public void GivenAnInvalidTitleValue_ShouldHaveValidationError(string title)
         {
-            var model = new ChatItemResponse
-            {
-                Title = title   
-            };
+            // Arrange
+            var model = new ChatItemResponse { Title = title };
+
+            // Act
             var result = validator.TestValidate(model);
+
+            // Asssert
             result.ShouldHaveValidationErrorFor(model => model.Title);
         }
 
         [Fact]
         public void GivenValidValues_ShouldNotHaveValidationError()
         {
+            // Arrange
             var model = new ChatItemResponse()
             {
                 Id = "someid",
                 Title = "Some Title",
                 ChatType = ChatType.PersonalChat
             };
+
+            // Act
             var result = validator.TestValidate(model);
+
+            // Asssert
             result.ShouldNotHaveAnyValidationErrors();
         }
     }

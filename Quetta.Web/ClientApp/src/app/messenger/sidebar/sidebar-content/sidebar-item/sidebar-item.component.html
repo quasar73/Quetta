@@ -16,5 +16,8 @@
                 </ng-template>
             </div>
         </div>
+        <div class="unread-notification" *ngIf="data?.amountOfUnread ?? 0 > 0">
+            <tui-badge [status]="active ? 'default' : 'primary'" class="tui-space_right-2" [value]="data.amountOfUnread"></tui-badge>
+        </div>
     </div>
 </div>

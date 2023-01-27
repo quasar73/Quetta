@@ -34,7 +34,7 @@
         width: 100%;
         height: fit-content;
         display: grid;
-        grid-template-columns: max-content 1fr;
+        grid-template-columns: max-content 1fr max-content;
         column-gap: 16px;
 
         .avatar-wrap {
@@ -96,6 +96,12 @@
                 width: 26px;
                 color: var(--tui-primary-hover);
             }
+        }
+
+        .unread-notification {
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
     }
 }

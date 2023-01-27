@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { TranslocoService } from '@ngneat/transloco';
-import { availableLanguage } from 'src/app/shared/consts/languages.const';
+import { availableLanguage } from '@consts/languages.const';
 
 @Component({
     selector: 'qtt-sidebar-footer',

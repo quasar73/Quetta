@@ -19,7 +19,7 @@ namespace Quetta.Logic.Handlers.Commands
             this.userManager = userManager;
         }
 
-        public async Task<Unit> Handle(AcceptInviteCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(AcceptInviteCommand request,CancellationToken cancellationToken)
         {
             var invite = dbContext.Invites.FirstOrDefault(i => i.Id == request.InviteId);
 

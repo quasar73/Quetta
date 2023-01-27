@@ -26,7 +26,14 @@
                     <button tuiButton appearance="secondary" type="button" icon="tuiIconSettingsLarge" class="tui-space_top-4">
                         {{ t('messenger.sidebar.header.actions.settings') }}
                     </button>
-                    <button tuiButton appearance="secondary" type="button" icon="tuiIconLogoutLarge" class="tui-space_top-2">
+                    <button
+                        tuiButton
+                        appearance="secondary"
+                        type="button"
+                        icon="tuiIconLogoutLarge"
+                        class="tui-space_top-2"
+                        (click)="logout()"
+                    >
                         {{ t('messenger.sidebar.header.actions.logout') }}
                     </button>
                 </ng-container>

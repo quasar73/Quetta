@@ -28,7 +28,7 @@ export class AuthenticationService implements AuthService {
 
     public refreshToken(): Observable<AccessData | null> {
         return this.tokenStorage.getRefreshToken().pipe(
-            switchMap((refreshToken: string) => this.http.post<AccessData>('auth/refresh', { refreshToken })),
+            switchMap((refreshToken: string) => this.http.get<AccessData>('auth/refresh', { refreshToken })),
             tap((tokens: AccessData | null) => this.saveAccessData(tokens)),
             catchError(err => {
                 this.logout();

@@ -1,7 +1,7 @@
-import { MessageApiService } from 'src/app/shared/services/api/message/message.service';
+import { MessageApiService } from '@api-services/message/message.service';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
-import { MessageModel } from 'src/app/shared/api-models/message.model';
+import { MessageModel } from '@api-models/message.model';
 import { Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
@@ -15,7 +15,7 @@ export class MessagesResolver implements Resolve<MessageModel[] | null> {
         const chatId = route.paramMap.get('id');
 
         if (chatId) {
-            return this.messageService.getMessages(chatId);
+            return this.messageService.getMessages(chatId, null, 20);
         } else {
             return [];
         }

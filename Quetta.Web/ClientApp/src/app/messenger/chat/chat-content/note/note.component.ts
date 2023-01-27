@@ -1,10 +1,8 @@
 import { state, trigger, style, transition, animate } from '@angular/animations';
-import { ClientMessageModel } from 'src/app/shared/models/client-message.model';
-import { map, tap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { ClientMessageModel } from '@models/client-message.model';
+import { tap } from 'rxjs/operators';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, OnChanges, OnInit } from '@angular/core';
-import { AuthenticationService } from 'src/app/shared/services/auth/authentication.service';
-import { MessageStatus } from 'src/app/shared/enums/message-status.enum';
+import { MessageStatus } from '@enums/message-status.enum';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -23,13 +21,14 @@ import { FormControl } from '@angular/forms';
 export class NoteComponent implements OnInit, OnChanges {
     @Output() messageCopy = new EventEmitter<string>();
     @Output() messageSelected = new EventEmitter<boolean>();
+    @Output() messageDeleted = new EventEmitter<void>();
 
     @Input() message!: ClientMessageModel;
     @Input() isSelectingMode!: boolean;
 
     readonly selectControl = new FormControl<boolean>(false);
 
-    constructor(private readonly authService: AuthenticationService) {}
+    constructor() {}
 
     ngOnInit(): void {
         this.selectControl.valueChanges.pipe(tap(value => this.messageSelected.emit(value ?? false))).subscribe();
@@ -39,22 +38,14 @@ export class NoteComponent implements OnInit, OnChanges {
         this.selectControl.setValue(this.message.isSelected);
     }
 
-    isUserOwner(): Observable<boolean> {
-        return this.authService.getUserInfo().pipe(
-            map(info => {
-                return info.username === this.message.username;
-            })
-        );
-    }
-
     getStatus(): string {
         switch (this.message.status) {
             case MessageStatus.Pending:
                 return 'tuiIconTime';
-            case MessageStatus.Unreaded:
-                return 'tuiIconCheck';
-            default:
+            case MessageStatus.Read:
                 return 'tuiIconEyeOpen';
+            default:
+                return 'tuiIconCheck';
         }
     }
 
@@ -64,5 +55,9 @@ export class NoteComponent implements OnInit, OnChanges {
 
     select(): void {
         this.messageSelected.emit(true);
+    }
+
+    delete(): void {
+        this.messageDeleted.emit();
     }
 }

@@ -1,7 +1,8 @@
-import { ChatItemModel } from './../../../../shared/api-models/chat-item.model';
+import { ChatItemModel } from '@api-models/chat-item.model';
 import { TranslocoService } from '@ngneat/transloco';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { ChatType } from 'src/app/shared/enums/chat-type.enum';
+import { ChangeDetectionStrategy, Component, Input, OnInit, ChangeDetectorRef } from '@angular/core';
+import { ChatType } from '@enums/chat-type.enum';
+import { ChatUnreadModel, ChatUnreadService } from '@services/chat-unread/chat-unread.service';
 
 @Component({
     selector: 'qtt-sidebar-item',
@@ -9,7 +10,7 @@ import { ChatType } from 'src/app/shared/enums/chat-type.enum';
     styleUrls: ['./sidebar-item.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SidebarItemComponent {
+export class SidebarItemComponent implements OnInit {
     @Input() active = false;
     @Input() data!: ChatItemModel;
 
@@ -39,5 +40,17 @@ export class SidebarItemComponent {
         return '';
     }
 
-    constructor(private readonly translocoSerivce: TranslocoService) {}
+    constructor(
+        private readonly translocoSerivce: TranslocoService,
+        private readonly chatUnreadService: ChatUnreadService,
+        private readonly cdr: ChangeDetectorRef
+    ) {}
+
+    ngOnInit(): void {
+        this.chatUnreadService.addChat(this.data.id);
+        this.chatUnreadService.getChatAsObservable(this.data.id)?.subscribe((model: ChatUnreadModel) => {
+            this.data = { ...this.data, amountOfUnread: model.amount, lastMessage: model.text ?? this.data.lastMessage };
+            this.cdr.markForCheck();
+        });
+    }
 }

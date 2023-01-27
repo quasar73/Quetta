@@ -19,5 +19,9 @@ namespace Quetta.Data.Models
         public virtual ICollection<Invite> InvitesIncoming { get; set; }
 
         public virtual ICollection<Invite> InvitesOutcoming { get; set; }
+
+        public virtual ICollection<Message> ReadMessages { get; set; }
+
+        public virtual ICollection<Message> SentMessages { get; set; }
     }
 }
